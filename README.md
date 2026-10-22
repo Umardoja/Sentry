@@ -19,7 +19,7 @@ npm run demo:prepare
 npm run dev -- --hostname 127.0.0.1
 ```
 
-`demo:prepare` performs the expensive deterministic seed build before the server accepts visitors. It is idempotent. Open `http://127.0.0.1:3000/login`, choose Presenter, Operator, Independent Reviewer or Auditor, then select **Enter demo**. No credentials are provisioned. **Switch account** rotates the current session while preserving that visitor's scenario; reveal grants remain bound to the revoked prior session. Two visitors, including two visitors selecting the same persona, receive different server-generated workspaces and run IDs. Expired disposable workspaces are lazily removed after `DEMO_WORKSPACE_TTL_HOURS` (default 24); `DEMO_WORKSPACE_MAX` defaults to 100. Local SQLite requires a persistent filesystem and a single application process, so this mode is not suitable for ephemeral/serverless multi-instance hosting.
+`demo:prepare` performs the expensive deterministic seed build before the server accepts visitors. It is idempotent. Open `http://127.0.0.1:3000/login`, choose Presenter, Operator, Independent Reviewer or Auditor, then select **Enter demo**. No credentials are provisioned. **Switch account** rotates the current session while preserving that visitor's scenario; reveal grants remain bound to the revoked prior session. Two visitors, including two visitors selecting the same persona, receive different server-generated workspaces and run IDs. On each demo entry, visitor workspaces unused for `DEMO_WORKSPACE_TTL_HOURS` (default 6) are deleted, and at `DEMO_WORKSPACE_MAX` (default 40) the least recently used workspace is retired to make room. Retiring a workspace revokes its sessions, and each removal is logged to stdout and the auth store's security audit. Only server-named `WS-…` directories are ever deleted, never `_templates/` or the auth database. Local SQLite requires a persistent filesystem and a single application process, so this mode is not suitable for ephemeral/serverless multi-instance hosting.
 
 The prepared workspace also includes one independent Access Bridge example on the Operator screen. It can issue only `VIEW_RESTRICTION_STATUS` for one assigned sample case/customer, for `ACCESS_BRIDGE_TTL_MINUTES` (default 10, bounded to 1–60). This is a local permission-gate simulation, not an IAM/PAM or bank-system grant. The server rechecks the session, workspace/run, assignment, approved coverage, eligibility, complaint evidence, case state, operation, expiry and revocation on every protected read.
 
@@ -70,9 +70,31 @@ The following table documents that CLI/test sequence; the normal product header 
 | S3.1 to S3.4 | 22:05 to 22:10 | Bisi: 35 -> 55 -> 70 -> 85, export blocked. Gate: Approve suspension |
 | S4.1 | 22:15 | Leak tracer: Staff-B4E0 viewed all 5 victims -> 35 Verify, CASE-0003 |
 
+## Deploy (one container, one instance)
+
+The `Dockerfile` builds on `node:22-bookworm-slim` (`npm ci`, `npm run build`). On every start it runs `npm run demo:prepare`, then `npm start` bound to `0.0.0.0:$PORT`. `demo:prepare` is idempotent: the first start builds the visitor template on the volume (about a minute) and later starts skip it. Mount a persistent volume at `/data`.
+
+Required environment:
+
+| Variable | Value |
+|---|---|
+| `SENTRY_DEMO_MODE` | `1` (the image default) |
+| `APP_ORIGIN` | the exact public HTTPS URL, e.g. `https://sentry-demo.up.railway.app`, with no trailing slash |
+| `DB_PATH` / `AUTH_DB_PATH` / `DEMO_WORKSPACE_ROOT` | on the mounted volume: `/data/business.db`, `/data/auth.db`, `/data/visitors` (the image defaults) |
+| `INGEST_KEY` | a long random secret, e.g. `openssl rand -hex 32`. Leave it unset to keep `/api/ingest/events` closed |
+
+`AUTH_ALLOW_INSECURE_LOOPBACK` must **not** be set in a deployment. Run **exactly one instance**: SQLite files, workspaces and the live clock live on one volume and one process, so do not scale out or run replicas.
+
+Hosts such as Railway and Render terminate TLS and forward plain HTTP to the container; no extra proxy setting is needed. Cookie security and CSRF origin checks derive from `APP_ORIGIN`, not from the forwarded request: session cookies are `Secure; HttpOnly; SameSite=Strict` whenever `APP_ORIGIN` is https, and every mutation must carry exactly that `Origin`.
+
+```bash
+docker build -t sentry-demo .
+docker run -p 8080:8080 -e PORT=8080 -e APP_ORIGIN=https://your.public.host -e INGEST_KEY=$(openssl rand -hex 32) -v sentry-data:/data sentry-demo
+```
+
 ## Live simulated activity
 
-All of it is synthetic. Signed in as Presenter, the console's **Live activity: On/Off** switch makes each console refresh generate the events due since the previous refresh (at most 20) for that visitor's workspace, on a separate live clock that starts at the scenario clock, runs at 4x and never falls behind it. A banner reads "Live simulated activity · synthetic staff". `src/server/sim/live.ts` draws, per staff member and simulated minute from the seeded RNG, work for rostered reversal and customer-service staff who are on shift: reversals of a new failed debit back to the debited account and record views on open customer-service cases, on their usual terminal. About 3% is honest noise that review policy treats as soft: a reversal to the same customer's other account, or a little work up to 30 minutes after the shift. A record view with no case is deliberately not generated, because review policy makes it a confirmed finding that opens a case. The generator skips scripted characters, anyone with an open case, and anyone whose last 24 hours already need review, and it never opens a case itself. The late shift ends at 21:00, so activity tails off after that.
+All of it is synthetic. Signed in as Presenter, the console's **Live activity: On/Off** switch makes each console refresh generate the events due since the previous refresh (at most 20) for that visitor's workspace, on a separate live clock that starts at the scenario clock, runs at 4x and never falls behind it. A banner reads "Live simulated activity · synthetic staff". `src/server/sim/live.ts` draws, per staff member and simulated minute from the seeded RNG, work for rostered reversal and customer-service staff who are on shift: reversals of a new failed debit back to the debited account and record views on open customer-service cases, on their usual terminal. About 3% is honest noise that review policy treats as soft: a reversal to the same customer's other account, or a little work up to 30 minutes after the shift. A record view with no case is deliberately not generated, because review policy makes it a confirmed finding that opens a case. The generator skips scripted characters, anyone with an open case, and anyone whose last 24 hours already need review, and it never opens a case itself. The late shift ends at 21:00, so the first time live mode is switched on in a workspace it also opens an **evening operations desk**. Twelve non-scripted reversal staff get an approved overtime ticket and 17:00–23:59 overtime on the scenario day, each approved by a different colleague on the same team (audited as `LIVE_DESK_OPENED`). Their live work is matched and inside overtime, so a prepared visitor workspace at 21:47 shows live events within seconds and still opens no case.
 
 From outside the app, `INGEST_KEY=… npm run live-feed -- --url http://127.0.0.1:3000 [--workspace WS-…] [--duration 60]` posts the same generated batches to `/api/ingest/events` every 3 seconds. It prints what it sent and SENTRY's response, then a summary. It reads rosters from the seed database beside `DB_PATH` (or `--context`).
 

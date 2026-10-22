@@ -1,0 +1,67 @@
+{
+  "name": "sentry",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "start": "next start",
+    "build": "next build",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "format": "prettier --write src tests",
+    "seed": "tsx --conditions=react-server scripts/seed.ts",
+    "db:init": "tsx --conditions=react-server scripts/db-init.ts",
+    "demo-reset": "tsx --conditions=react-server scripts/demo-reset.ts",
+    "demo:prepare": "tsx --conditions=react-server scripts/prepare-demo-template.ts",
+    "notes-cache": "tsx --conditions=react-server scripts/notes-cache.ts",
+    "false-alarms": "tsx --conditions=react-server scripts/false-alarms.ts",
+    "rehearse": "tsx --conditions=react-server scripts/rehearse.ts",
+    "auth:provision": "tsx --conditions=react-server scripts/auth-provision.ts",
+    "evaluate:freeze": "tsx --conditions=react-server scripts/freeze-pass4.ts",
+    "evaluate:parity": "tsx --conditions=react-server scripts/evaluate-pass4-parity.ts",
+    "evaluate:pass4": "tsx --conditions=react-server scripts/evaluate-pass4.ts",
+    "evaluate:freeze:pass5": "tsx --conditions=react-server scripts/freeze-pass5.ts",
+    "evaluate:pass5": "tsx --conditions=react-server scripts/evaluate-pass5.ts",
+    "live-feed": "tsx --conditions=react-server scripts/live-feed.ts"
+  },
+  "dependencies": {
+    "@fontsource/inter": "5.1.1",
+    "@fontsource/plus-jakarta-sans": "5.1.1",
+    "better-sqlite3": "12.4.1",
+    "lucide-react": "0.468.0",
+    "next": "15.5.9",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "recharts": "2.15.1",
+    "server-only": "0.0.1",
+    "zod": "3.24.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "3.3.1",
+    "@types/better-sqlite3": "7.6.13",
+    "@types/node": "22.13.1",
+    "@types/react": "19.0.8",
+    "@types/react-dom": "19.0.3",
+    "autoprefixer": "10.4.20",
+    "eslint": "9.19.0",
+    "eslint-config-next": "15.5.9",
+    "postcss": "8.5.1",
+    "prettier": "3.5.3",
+    "tailwindcss": "3.4.17",
+    "tsx": "4.19.2",
+    "typescript": "5.7.3",
+    "vitest": "3.0.5"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.4.1": true,
+    "esbuild@0.23.1": true,
+    "esbuild@0.25.12": true,
+    "sharp@0.34.5": true,
+    "unrs-resolver@1.12.2": true,
+    "esbuild@0.18.20": true,
+    "esbuild@0.19.12": true
+  }
+}

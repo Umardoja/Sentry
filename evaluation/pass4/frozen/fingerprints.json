@@ -1,0 +1,15 @@
+{
+  "corpus_sha256": "5ac1d303c8d4757969eea40c4afd7f023b273718593d8b4083a496d89697f72d",
+  "source_sha256": {
+    "src/server/engines/purpose.ts": "8010fbe030859bedb52e8a027c6b7754f78972b30f2fc303ddc264959d7cef2d",
+    "src/server/engines/pipeline.ts": "7f53ffb50dae42870a563f0000b58f824f8bb9aec34aadb57e492fbaff315795",
+    "src/server/engines/signals.ts": "7e536504c40016b36fd03ba4b6485d2b60dcd5ef162432d508841eed3539b25a",
+    "src/server/sim/player.ts": "7d6e6e8aef82a87400276d0c0022fb03f1a31d11610368dd4e067acabfbb03de",
+    "src/server/services/review.ts": "0ddd2fc5c8b82a3c2f5c0b3326d08bd99d17fde5f04540746cc7c03cec4ab894",
+    "src/server/services/run.ts": "11b04ed8ff3a3de993c39dc1fa589acf59b988c8f649611c730e06c23fb9a8bd",
+    "src/server/db/migrate.ts": "ef5a62768caf022fde12f48dd72585cd30e8ef9978a1c880f033d3f93b9a8692",
+    "evaluation/pass4/corpus.ts": "2afa4c0dcd234e81f42bf2e80a3c7412f0626f8da75d7ce395ec1c276a3e646e",
+    "evaluation/pass4/metrics.ts": "87750c629526121e6f19e0dec5dda0a4c4148b1fe2b83df80513b2e3e2ee60ae",
+    "evaluation/pass4/evaluator.ts": "7e6c0de72d7dfc427be2f6187fb8a08c24588d7046d48b9d97756b6fa79f1a46"
+  }
+}

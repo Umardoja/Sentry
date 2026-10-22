@@ -1,0 +1,814 @@
+{
+  "split": "evaluation",
+  "corpus_sha256": "5ac1d303c8d4757969eea40c4afd7f023b273718593d8b4083a496d89697f72d",
+  "episodes": 72,
+  "supported": 66,
+  "unsupported": 6,
+  "errors": 0,
+  "hidden_label_invariance": {
+    "checked": 66,
+    "passed": 66
+  },
+  "configurations": {
+    "A_PURPOSE": {
+      "confusion": {
+        "tp": 36,
+        "fn": 6,
+        "fp": 0,
+        "tn": 24,
+        "legitimate_review_burden": 0,
+        "supported_errors": 0,
+        "precision": 1,
+        "recall": 0.8571428571428571,
+        "false_positive_rate": 0
+      },
+      "evidence_coverage": {
+        "findings": 249,
+        "traceable": 249,
+        "rate": 1
+      },
+      "families": [
+        {
+          "family": "amount_mismatch",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "approved_overtime",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "assigned_record_access",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "distinct_duplicate",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "legitimate_new_terminal",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "missing_original",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "repeated_genuine_ticket",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "routine_reversal",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "source_unavailable",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "unrelated_record_access",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "valid_purpose_identity_concern",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "wrong_destination_genuine_ticket",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        }
+      ]
+    },
+    "B_BEHAVIOUR_IDENTITY": {
+      "confusion": {
+        "tp": 6,
+        "fn": 36,
+        "fp": 0,
+        "tn": 24,
+        "legitimate_review_burden": 0,
+        "supported_errors": 0,
+        "precision": 1,
+        "recall": 0.14285714285714285,
+        "false_positive_rate": 0
+      },
+      "evidence_coverage": {
+        "findings": 36,
+        "traceable": 36,
+        "rate": 1
+      },
+      "families": [
+        {
+          "family": "amount_mismatch",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "approved_overtime",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "assigned_record_access",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "distinct_duplicate",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "legitimate_new_terminal",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "missing_original",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "repeated_genuine_ticket",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "routine_reversal",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "source_unavailable",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "unrelated_record_access",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "valid_purpose_identity_concern",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "wrong_destination_genuine_ticket",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        }
+      ]
+    },
+    "C_SIMPLE_UNION": {
+      "confusion": {
+        "tp": 42,
+        "fn": 0,
+        "fp": 0,
+        "tn": 24,
+        "legitimate_review_burden": 0,
+        "supported_errors": 0,
+        "precision": 1,
+        "recall": 1,
+        "false_positive_rate": 0
+      },
+      "evidence_coverage": {
+        "findings": 285,
+        "traceable": 285,
+        "rate": 1
+      },
+      "families": [
+        {
+          "family": "amount_mismatch",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "approved_overtime",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "assigned_record_access",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "distinct_duplicate",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "legitimate_new_terminal",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "missing_original",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "repeated_genuine_ticket",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "routine_reversal",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "source_unavailable",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "unrelated_record_access",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "valid_purpose_identity_concern",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "wrong_destination_genuine_ticket",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        }
+      ]
+    },
+    "D_FULL_SENTRY": {
+      "confusion": {
+        "tp": 12,
+        "fn": 30,
+        "fp": 0,
+        "tn": 24,
+        "legitimate_review_burden": 0,
+        "supported_errors": 0,
+        "precision": 1,
+        "recall": 0.2857142857142857,
+        "false_positive_rate": 0
+      },
+      "evidence_coverage": {
+        "findings": 72,
+        "traceable": 72,
+        "rate": 1
+      },
+      "families": [
+        {
+          "family": "amount_mismatch",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "approved_overtime",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "assigned_record_access",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "distinct_duplicate",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "legitimate_new_terminal",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "missing_original",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "repeated_genuine_ticket",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "routine_reversal",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 6,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": 0
+          }
+        },
+        {
+          "family": "source_unavailable",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": null,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "unrelated_record_access",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "valid_purpose_identity_concern",
+          "count": 6,
+          "confusion": {
+            "tp": 6,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": 1,
+            "recall": 1,
+            "false_positive_rate": null
+          }
+        },
+        {
+          "family": "wrong_destination_genuine_ticket",
+          "count": 6,
+          "confusion": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 0,
+            "legitimate_review_burden": 0,
+            "supported_errors": 0,
+            "precision": null,
+            "recall": 0,
+            "false_positive_rate": null
+          }
+        }
+      ]
+    }
+  }
+}

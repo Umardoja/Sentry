@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Console · 21:10 · Ngozi cleared</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            page: '#F7F7F7',
+            surface: '#FFFFFF',
+            border: '#EDEDED',
+            divider: '#E5E7EB',
+            ink: '#1B1B1B',
+            text: '#212529',
+            'text-muted': '#868786',
+            'zenith-red': '#E3000F',
+            'zenith-red-tint': '#FCE5E7',
+            'level-normal': '#868786',
+            'level-normal-tint': '#F7F7F7',
+            'level-watch': '#2563EB',
+            'level-watch-tint': '#DBEAFE',
+            'level-verify': '#0891B2',
+            'level-verify-tint': '#CFFAFE',
+            'level-hold': '#D97706',
+            'level-hold-tint': '#FEF3C7',
+            'level-contain': '#E3000F',
+            'level-contain-tint': '#FCE5E7',
+            ok: '#15803D',
+            'ok-tint': '#DCFCE7',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-page text-text min-h-screen flex flex-col antialiased selection:bg-red-100 selection:text-red-900 font-sans">
+
+  <!-- Top Bar -->
+  <header class="bg-ink text-white px-6 py-3 flex items-center justify-between border-b border-[#2A2A2A] sticky top-0 z-50">
+    <div class="flex items-center space-x-6">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-6 h-6 rounded bg-zenith-red flex items-center justify-center">
+          <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"></path>
+          </svg>
+        </div>
+        <div class="flex items-baseline space-x-1.5 whitespace-nowrap">
+          <span class="font-display font-extrabold text-[17px] tracking-wide text-white">SENTRY</span>
+          <span class="text-[13px] text-[#A0A0A0] font-normal">for Zenith Bank</span>
+        </div>
+      </div>
+
+      <div class="h-4 w-px bg-[#333333]"></div>
+
+      <div class="flex items-center space-x-2 bg-[#262626] border border-[#3A3A3A] px-3 py-1 rounded-full text-xs text-neutral-300 whitespace-nowrap">
+        <svg class="w-3.5 h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke-width="1.8"></circle>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6v6l4 2"></path>
+        </svg>
+        <span class="font-medium">Fri 16 Oct 2026 · 21:10</span>
+      </div>
+
+      <div class="flex items-center space-x-2 bg-[#262626] border border-[#3A3A3A] px-3 py-1 rounded-full text-xs text-neutral-300 cursor-pointer hover:bg-[#303030] transition whitespace-nowrap">
+        <span class="text-neutral-400 font-normal">Scenario:</span>
+        <span class="font-semibold text-white">S1 · Late overtime</span>
+        <svg class="w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-[#262626] border border-[#383838] text-[11px] font-medium text-neutral-300">
+        <svg class="w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        <span class="">Case note: AI cached</span>
+      </div>
+
+      <button class="text-xs px-3 py-1.5 rounded-full border border-[#404040] text-neutral-300 hover:text-white hover:border-neutral-400 transition font-medium">
+        Reset
+      </button>
+
+      <button class="bg-white text-ink text-xs px-4 py-1.5 rounded-full font-semibold shadow-sm hover:bg-neutral-100 transition">
+        Next step
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Body with Nav Rail -->
+  <div class="flex-1 flex overflow-hidden">
+    <!-- Nav Rail -->
+    <aside class="w-16 bg-surface border-r border-border flex flex-col items-center py-4 space-y-6 flex-shrink-0">
+      <button class="flex flex-col items-center group w-12 py-2 rounded-lg bg-page text-ink font-medium" title="Console">
+        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        <span class="text-[10px]">Console</span>
+      </button>
+
+      <button class="flex flex-col items-center group w-12 py-2 rounded-lg text-text-muted hover:text-ink transition" title="Cases">
+        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span class="text-[10px]">Cases</span>
+      </button>
+
+      <button class="flex flex-col items-center group w-12 py-2 rounded-lg text-text-muted hover:text-ink transition" title="Leak tracer">
+        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+        <span class="text-[10px]">Tracer</span>
+      </button>
+
+      <button class="flex flex-col items-center group w-12 py-2 rounded-lg text-text-muted hover:text-ink transition" title="Metrics">
+        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+        <span class="text-[10px]">Metrics</span>
+      </button>
+    </aside>
+
+    <!-- Page Workspace -->
+    <main class="flex-1 p-6 overflow-y-auto relative">
+      <div class="max-w-[1440px] mx-auto grid grid-cols-12 gap-6">
+
+        <!-- Left 60% (7 cols) -->
+        <div class="col-span-12 lg:col-span-7 space-y-4">
+          <div class="bg-surface rounded-xl border border-border p-5">
+            <div class="flex items-center justify-between pb-4 border-b border-divider">
+              <div>
+                <h2 class="font-display font-semibold text-lg text-text">Live actions</h2>
+                <div class="text-xs text-text-muted mt-0.5">Staff-91D2 · 60 reversals · 20:30 to 21:10 · approved overtime</div>
+              </div>
+              <div class="flex items-center space-x-1 bg-page p-1 rounded-full text-xs font-medium">
+                <span class="px-3 py-1 rounded-full bg-surface text-ink shadow-sm">All (47,960)</span>
+                <span class="px-3 py-1 rounded-full text-text-muted">Flagged 0</span>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto mt-2">
+              <table class="w-full text-left text-sm">
+                <thead>
+                  <tr class="text-[12px] text-text-muted font-semibold border-b border-divider">
+                    <th class="py-2.5 px-3">TIME</th>
+                    <th class="py-2.5 px-3">PSEUDONYM</th>
+                    <th class="py-2.5 px-3">ACTION</th>
+                    <th class="py-2.5 px-3">AMOUNT</th>
+                    <th class="py-2.5 px-3">PURPOSE CHECK</th>
+                    <th class="py-2.5 px-3 text-right">POINTS</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-border text-[13px]"><tr class="hover:bg-page transition"><td class="py-3 px-3 text-text-muted [font-variant-numeric:tabular-nums]">21:10</td><td class="py-3 px-3 font-medium text-text">Staff-91D2</td><td class="py-3 px-3">Reversal</td><td class="py-3 px-3 [font-variant-numeric:tabular-nums]">₦24,000</td><td class="py-3 px-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-ok-tint text-ok">Matched</span></td><td class="py-3 px-3 text-right text-text-muted [font-variant-numeric:tabular-nums]">+0</td></tr><tr class="hover:bg-page transition"><td class="py-3 px-3 text-text-muted [font-variant-numeric:tabular-nums]">21:09</td><td class="py-3 px-3 font-medium text-text">Staff-91D2</td><td class="py-3 px-3">Reversal</td><td class="py-3 px-3 [font-variant-numeric:tabular-nums]">₦61,500</td><td class="py-3 px-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-ok-tint text-ok">Matched</span></td><td class="py-3 px-3 text-right text-text-muted [font-variant-numeric:tabular-nums]">+0</td></tr><tr class="hover:bg-page transition"><td class="py-3 px-3 text-text-muted [font-variant-numeric:tabular-nums]">21:09</td><td class="py-3 px-3 font-medium text-text">Staff-91D2</td><td class="py-3 px-3">Reversal</td><td class="py-3 px-3 [font-variant-numeric:tabular-nums]">₦12,000</td><td class="py-3 px-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-ok-tint text-ok">Matched</span></td><td class="py-3 px-3 text-right text-text-muted [font-variant-numeric:tabular-nums]">+0</td></tr><tr class="hover:bg-page transition"><td class="py-3 px-3 text-text-muted [font-variant-numeric:tabular-nums]">21:08</td><td class="py-3 px-3 font-medium text-text">Staff-91D2</td><td class="py-3 px-3">Reversal</td><td class="py-3 px-3 [font-variant-numeric:tabular-nums]">₦96,000</td><td class="py-3 px-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-ok-tint text-ok">Matched</span></td><td class="py-3 px-3 text-right text-text-muted [font-variant-numeric:tabular-nums]">+0</td></tr><tr class="hover:bg-page transition"><td class="py-3 px-3 text-text-muted [font-variant-numeric:tabular-nums]">21:07</td><td class="py-3 px-3 font-medium text-text">Staff-91D2</td><td class="py-3 px-3">Reversal</td><td class="py-3 px-3 [font-variant-numeric:tabular-nums]">₦38,250</td><td class="py-3 px-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-ok-tint text-ok">Matched</span></td><td class="py-3 px-3 text-right text-text-muted [font-variant-numeric:tabular-nums]">+0</td></tr><tr class="hover:bg-page transition"><td class="py-3 px-3 text-text-muted [font-variant-numeric:tabular-nums]">21:06</td><td class="py-3 px-3 font-medium text-text">Staff-91D2</td><td class="py-3 px-3">Reversal</td><td class="py-3 px-3 [font-variant-numeric:tabular-nums]">₦45,000</td><td class="py-3 px-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-ok-tint text-ok">Matched</span></td><td class="py-3 px-3 text-right text-text-muted [font-variant-numeric:tabular-nums]">+0</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 40% (5 cols) -->
+        <div class="col-span-12 lg:col-span-5 space-y-5">
+
+          <!-- 1) Waiting for your decision (Empty state) -->
+          <div class="bg-surface rounded-xl border border-border p-5">
+            <h3 class="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Waiting for your decision</h3>
+            <div class="py-6 flex flex-col items-center justify-center text-center">
+              <div class="w-10 h-10 rounded-full bg-page flex items-center justify-center mb-2.5">
+                <svg class="w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <p class="font-display font-semibold text-base text-text">Nothing needs a decision</p>
+              
+            </div>
+          </div>
+
+          <!-- 2) Highest risk -->
+          <div class="bg-surface rounded-xl border border-border p-5">
+            <h3 class="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Highest risk</h3>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-3 rounded-lg border border-border bg-page">
+                <div>
+                  <div class="font-display font-semibold text-sm text-text">Staff-5E21</div>
+                  <div class="text-xs text-text-muted">Branch operations</div>
+                </div>
+                <div class="flex items-center space-x-2.5">
+                  <span class="font-display font-bold text-base text-text">18</span>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-level-watch-tint text-level-watch">
+                    Watch
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-lg border border-border bg-page">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="font-display font-semibold text-sm text-text">Staff-91D2</div>
+                    <div class="text-xs text-text-muted">Operations, reversals</div>
+                  </div>
+                  <div class="flex items-center space-x-2.5">
+                    <span class="font-display font-bold text-base text-text">6</span>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-level-normal-tint text-level-normal">
+                      Normal
+                    </span>
+                  </div>
+                </div>
+                <div class="text-xs text-text-muted mt-1.5 pt-1.5 border-t border-border">
+                  Raw 17 · cleared by approved overtime
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3) 2x2 Counters -->
+          <div class="grid grid-cols-2 gap-4" style="font-variant-numeric: tabular-nums;">
+            <div class="bg-surface rounded-xl border border-border p-4">
+              <div class="text-xs text-text-muted font-medium">Actions checked</div>
+              <div class="font-display font-bold text-2xl text-text mt-1">47,960</div>
+            </div>
+            <div class="bg-surface rounded-xl border border-border p-4">
+              <div class="text-xs text-text-muted font-medium">Cleared automatically</div>
+              <div class="font-display font-bold text-2xl text-text mt-1">61</div>
+            </div>
+            <div class="bg-surface rounded-xl border border-border p-4">
+              <div class="text-xs text-text-muted font-medium">Cases opened</div>
+              <div class="font-display font-bold text-2xl text-text mt-1">0</div>
+            </div>
+            <div class="bg-surface rounded-xl border border-border p-4">
+              <div class="text-xs text-text-muted font-medium">Transfers blocked</div>
+              <div class="font-display font-bold text-2xl text-text mt-1">0</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Bottom-right Toast -->
+      <div class="fixed bottom-6 right-6 flex items-center space-x-2.5 bg-ok-tint text-ok border border-[#BBF7D0] px-4 py-3 rounded-xl shadow-lg z-50">
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span class="text-sm font-semibold">Cleared automatically: overtime approved, all 60 reversals matched.</span>
+      </div>
+    </main>
+  </div>
+
+
+
+
+
+</body></html>

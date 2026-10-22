@@ -1,0 +1,1098 @@
+{
+  "schema_version": 1,
+  "generated_from": "evaluation/pass4/corpus.ts",
+  "episodes": [
+    {
+      "id": "DEV-001",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed for the same customer, for the same amount, during the rostered shift.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 3101,
+        "neutral_id": "DEV-001"
+      }
+    },
+    {
+      "id": "DEV-002",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "A high but matched reversal workload occurs inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 3102,
+        "neutral_id": "DEV-002"
+      }
+    },
+    {
+      "id": "DEV-003",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine failed debit and genuine ticket do not authorize crediting another customer's account.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 3103,
+        "neutral_id": "DEV-003"
+      }
+    },
+    {
+      "id": "DEV-004",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 3104,
+        "neutral_id": "DEV-004"
+      }
+    },
+    {
+      "id": "DEV-005",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Under the declared healthy and complete synthetic source assumption, no eligible original debit exists.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original",
+        "seed": 3105,
+        "neutral_id": "DEV-005"
+      }
+    },
+    {
+      "id": "DEV-006",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 3106,
+        "neutral_id": "DEV-006"
+      }
+    },
+    {
+      "id": "DEV-007",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "The customer's open service request is assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 3107,
+        "neutral_id": "DEV-007"
+      }
+    },
+    {
+      "id": "DEV-008",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The actor views multiple customer records without an assigned open case.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "unrelated_record_access",
+        "seed": 3108,
+        "neutral_id": "DEV-008"
+      }
+    },
+    {
+      "id": "DEV-009",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal is valid, but an active session appears during approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 3109,
+        "neutral_id": "DEV-009"
+      }
+    },
+    {
+      "id": "DEV-010",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "One rostered, otherwise valid action from a new terminal is an indicator, not sufficient evidence for review under this protocol.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 3110,
+        "neutral_id": "DEV-010"
+      }
+    },
+    {
+      "id": "DEV-011",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeating genuine ticket evidence must not erase an independent wrong-destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 3111,
+        "neutral_id": "DEV-011"
+      }
+    },
+    {
+      "id": "DEV-012",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine failed debit and genuine ticket do not authorize crediting another customer's account.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 3112,
+        "neutral_id": "DEV-012"
+      }
+    },
+    {
+      "id": "EVAL-001",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed for the same customer, for the same amount, during the rostered shift.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 4101,
+        "neutral_id": "EVAL-001"
+      }
+    },
+    {
+      "id": "EVAL-002",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed for the same customer, for the same amount, during the rostered shift.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 4102,
+        "neutral_id": "EVAL-002"
+      }
+    },
+    {
+      "id": "EVAL-003",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed for the same customer, for the same amount, during the rostered shift.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 4103,
+        "neutral_id": "EVAL-003"
+      }
+    },
+    {
+      "id": "EVAL-004",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed for the same customer, for the same amount, during the rostered shift.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 4104,
+        "neutral_id": "EVAL-004"
+      }
+    },
+    {
+      "id": "EVAL-005",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed for the same customer, for the same amount, during the rostered shift.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 4105,
+        "neutral_id": "EVAL-005"
+      }
+    },
+    {
+      "id": "EVAL-006",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed for the same customer, for the same amount, during the rostered shift.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 4106,
+        "neutral_id": "EVAL-006"
+      }
+    },
+    {
+      "id": "EVAL-007",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A high but matched reversal workload occurs inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 4101,
+        "neutral_id": "EVAL-007"
+      }
+    },
+    {
+      "id": "EVAL-008",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A high but matched reversal workload occurs inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 4102,
+        "neutral_id": "EVAL-008"
+      }
+    },
+    {
+      "id": "EVAL-009",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A high but matched reversal workload occurs inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 4103,
+        "neutral_id": "EVAL-009"
+      }
+    },
+    {
+      "id": "EVAL-010",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A high but matched reversal workload occurs inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 4104,
+        "neutral_id": "EVAL-010"
+      }
+    },
+    {
+      "id": "EVAL-011",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A high but matched reversal workload occurs inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 4105,
+        "neutral_id": "EVAL-011"
+      }
+    },
+    {
+      "id": "EVAL-012",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A high but matched reversal workload occurs inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 4106,
+        "neutral_id": "EVAL-012"
+      }
+    },
+    {
+      "id": "EVAL-013",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine failed debit and genuine ticket do not authorize crediting another customer's account.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 4101,
+        "neutral_id": "EVAL-013"
+      }
+    },
+    {
+      "id": "EVAL-014",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine failed debit and genuine ticket do not authorize crediting another customer's account.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 4102,
+        "neutral_id": "EVAL-014"
+      }
+    },
+    {
+      "id": "EVAL-015",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine failed debit and genuine ticket do not authorize crediting another customer's account.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 4103,
+        "neutral_id": "EVAL-015"
+      }
+    },
+    {
+      "id": "EVAL-016",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine failed debit and genuine ticket do not authorize crediting another customer's account.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 4104,
+        "neutral_id": "EVAL-016"
+      }
+    },
+    {
+      "id": "EVAL-017",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine failed debit and genuine ticket do not authorize crediting another customer's account.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 4105,
+        "neutral_id": "EVAL-017"
+      }
+    },
+    {
+      "id": "EVAL-018",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine failed debit and genuine ticket do not authorize crediting another customer's account.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 4106,
+        "neutral_id": "EVAL-018"
+      }
+    },
+    {
+      "id": "EVAL-019",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 4101,
+        "neutral_id": "EVAL-019"
+      }
+    },
+    {
+      "id": "EVAL-020",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 4102,
+        "neutral_id": "EVAL-020"
+      }
+    },
+    {
+      "id": "EVAL-021",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 4103,
+        "neutral_id": "EVAL-021"
+      }
+    },
+    {
+      "id": "EVAL-022",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 4104,
+        "neutral_id": "EVAL-022"
+      }
+    },
+    {
+      "id": "EVAL-023",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 4105,
+        "neutral_id": "EVAL-023"
+      }
+    },
+    {
+      "id": "EVAL-024",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 4106,
+        "neutral_id": "EVAL-024"
+      }
+    },
+    {
+      "id": "EVAL-025",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Under the declared healthy and complete synthetic source assumption, no eligible original debit exists.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original",
+        "seed": 4101,
+        "neutral_id": "EVAL-025"
+      }
+    },
+    {
+      "id": "EVAL-026",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Under the declared healthy and complete synthetic source assumption, no eligible original debit exists.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original",
+        "seed": 4102,
+        "neutral_id": "EVAL-026"
+      }
+    },
+    {
+      "id": "EVAL-027",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Under the declared healthy and complete synthetic source assumption, no eligible original debit exists.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original",
+        "seed": 4103,
+        "neutral_id": "EVAL-027"
+      }
+    },
+    {
+      "id": "EVAL-028",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Under the declared healthy and complete synthetic source assumption, no eligible original debit exists.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original",
+        "seed": 4104,
+        "neutral_id": "EVAL-028"
+      }
+    },
+    {
+      "id": "EVAL-029",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Under the declared healthy and complete synthetic source assumption, no eligible original debit exists.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original",
+        "seed": 4105,
+        "neutral_id": "EVAL-029"
+      }
+    },
+    {
+      "id": "EVAL-030",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Under the declared healthy and complete synthetic source assumption, no eligible original debit exists.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original",
+        "seed": 4106,
+        "neutral_id": "EVAL-030"
+      }
+    },
+    {
+      "id": "EVAL-031",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 4101,
+        "neutral_id": "EVAL-031"
+      }
+    },
+    {
+      "id": "EVAL-032",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 4102,
+        "neutral_id": "EVAL-032"
+      }
+    },
+    {
+      "id": "EVAL-033",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 4103,
+        "neutral_id": "EVAL-033"
+      }
+    },
+    {
+      "id": "EVAL-034",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 4104,
+        "neutral_id": "EVAL-034"
+      }
+    },
+    {
+      "id": "EVAL-035",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 4105,
+        "neutral_id": "EVAL-035"
+      }
+    },
+    {
+      "id": "EVAL-036",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 4106,
+        "neutral_id": "EVAL-036"
+      }
+    },
+    {
+      "id": "EVAL-037",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The customer's open service request is assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 4101,
+        "neutral_id": "EVAL-037"
+      }
+    },
+    {
+      "id": "EVAL-038",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The customer's open service request is assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 4102,
+        "neutral_id": "EVAL-038"
+      }
+    },
+    {
+      "id": "EVAL-039",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The customer's open service request is assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 4103,
+        "neutral_id": "EVAL-039"
+      }
+    },
+    {
+      "id": "EVAL-040",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The customer's open service request is assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 4104,
+        "neutral_id": "EVAL-040"
+      }
+    },
+    {
+      "id": "EVAL-041",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The customer's open service request is assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 4105,
+        "neutral_id": "EVAL-041"
+      }
+    },
+    {
+      "id": "EVAL-042",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The customer's open service request is assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 4106,
+        "neutral_id": "EVAL-042"
+      }
+    },
+    {
+      "id": "EVAL-043",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The actor views multiple customer records without an assigned open case.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "unrelated_record_access",
+        "seed": 4101,
+        "neutral_id": "EVAL-043"
+      }
+    },
+    {
+      "id": "EVAL-044",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The actor views multiple customer records without an assigned open case.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "unrelated_record_access",
+        "seed": 4102,
+        "neutral_id": "EVAL-044"
+      }
+    },
+    {
+      "id": "EVAL-045",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The actor views multiple customer records without an assigned open case.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "unrelated_record_access",
+        "seed": 4103,
+        "neutral_id": "EVAL-045"
+      }
+    },
+    {
+      "id": "EVAL-046",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The actor views multiple customer records without an assigned open case.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "unrelated_record_access",
+        "seed": 4104,
+        "neutral_id": "EVAL-046"
+      }
+    },
+    {
+      "id": "EVAL-047",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The actor views multiple customer records without an assigned open case.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "unrelated_record_access",
+        "seed": 4105,
+        "neutral_id": "EVAL-047"
+      }
+    },
+    {
+      "id": "EVAL-048",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The actor views multiple customer records without an assigned open case.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "unrelated_record_access",
+        "seed": 4106,
+        "neutral_id": "EVAL-048"
+      }
+    },
+    {
+      "id": "EVAL-049",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal is valid, but an active session appears during approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 4101,
+        "neutral_id": "EVAL-049"
+      }
+    },
+    {
+      "id": "EVAL-050",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal is valid, but an active session appears during approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 4102,
+        "neutral_id": "EVAL-050"
+      }
+    },
+    {
+      "id": "EVAL-051",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal is valid, but an active session appears during approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 4103,
+        "neutral_id": "EVAL-051"
+      }
+    },
+    {
+      "id": "EVAL-052",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal is valid, but an active session appears during approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 4104,
+        "neutral_id": "EVAL-052"
+      }
+    },
+    {
+      "id": "EVAL-053",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal is valid, but an active session appears during approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 4105,
+        "neutral_id": "EVAL-053"
+      }
+    },
+    {
+      "id": "EVAL-054",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The reversal is valid, but an active session appears during approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 4106,
+        "neutral_id": "EVAL-054"
+      }
+    },
+    {
+      "id": "EVAL-055",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One rostered, otherwise valid action from a new terminal is an indicator, not sufficient evidence for review under this protocol.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 4101,
+        "neutral_id": "EVAL-055"
+      }
+    },
+    {
+      "id": "EVAL-056",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One rostered, otherwise valid action from a new terminal is an indicator, not sufficient evidence for review under this protocol.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 4102,
+        "neutral_id": "EVAL-056"
+      }
+    },
+    {
+      "id": "EVAL-057",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One rostered, otherwise valid action from a new terminal is an indicator, not sufficient evidence for review under this protocol.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 4103,
+        "neutral_id": "EVAL-057"
+      }
+    },
+    {
+      "id": "EVAL-058",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One rostered, otherwise valid action from a new terminal is an indicator, not sufficient evidence for review under this protocol.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 4104,
+        "neutral_id": "EVAL-058"
+      }
+    },
+    {
+      "id": "EVAL-059",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One rostered, otherwise valid action from a new terminal is an indicator, not sufficient evidence for review under this protocol.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 4105,
+        "neutral_id": "EVAL-059"
+      }
+    },
+    {
+      "id": "EVAL-060",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One rostered, otherwise valid action from a new terminal is an indicator, not sufficient evidence for review under this protocol.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 4106,
+        "neutral_id": "EVAL-060"
+      }
+    },
+    {
+      "id": "EVAL-061",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeating genuine ticket evidence must not erase an independent wrong-destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 4101,
+        "neutral_id": "EVAL-061"
+      }
+    },
+    {
+      "id": "EVAL-062",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeating genuine ticket evidence must not erase an independent wrong-destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 4102,
+        "neutral_id": "EVAL-062"
+      }
+    },
+    {
+      "id": "EVAL-063",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeating genuine ticket evidence must not erase an independent wrong-destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 4103,
+        "neutral_id": "EVAL-063"
+      }
+    },
+    {
+      "id": "EVAL-064",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeating genuine ticket evidence must not erase an independent wrong-destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 4104,
+        "neutral_id": "EVAL-064"
+      }
+    },
+    {
+      "id": "EVAL-065",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeating genuine ticket evidence must not erase an independent wrong-destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 4105,
+        "neutral_id": "EVAL-065"
+      }
+    },
+    {
+      "id": "EVAL-066",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeating genuine ticket evidence must not erase an independent wrong-destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 4106,
+        "neutral_id": "EVAL-066"
+      }
+    },
+    {
+      "id": "EVAL-067",
+      "split": "evaluation",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The current application cannot represent source unavailability separately from a healthy query returning no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status injection boundary exists; absence must not be relabelled as an outage.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 4101,
+        "neutral_id": "EVAL-067"
+      }
+    },
+    {
+      "id": "EVAL-068",
+      "split": "evaluation",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The current application cannot represent source unavailability separately from a healthy query returning no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status injection boundary exists; absence must not be relabelled as an outage.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 4102,
+        "neutral_id": "EVAL-068"
+      }
+    },
+    {
+      "id": "EVAL-069",
+      "split": "evaluation",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The current application cannot represent source unavailability separately from a healthy query returning no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status injection boundary exists; absence must not be relabelled as an outage.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 4103,
+        "neutral_id": "EVAL-069"
+      }
+    },
+    {
+      "id": "EVAL-070",
+      "split": "evaluation",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The current application cannot represent source unavailability separately from a healthy query returning no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status injection boundary exists; absence must not be relabelled as an outage.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 4104,
+        "neutral_id": "EVAL-070"
+      }
+    },
+    {
+      "id": "EVAL-071",
+      "split": "evaluation",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The current application cannot represent source unavailability separately from a healthy query returning no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status injection boundary exists; absence must not be relabelled as an outage.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 4105,
+        "neutral_id": "EVAL-071"
+      }
+    },
+    {
+      "id": "EVAL-072",
+      "split": "evaluation",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The current application cannot represent source unavailability separately from a healthy query returning no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status injection boundary exists; absence must not be relabelled as an outage.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 4106,
+        "neutral_id": "EVAL-072"
+      }
+    }
+  ]
+}

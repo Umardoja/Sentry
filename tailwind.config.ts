@@ -1,0 +1,2 @@
+import type { Config } from 'tailwindcss';
+export default {content:['./src/**/*.{ts,tsx}'],theme:{extend:{colors:{page:'var(--bg-page)',muted:'var(--text-muted)',hold:'var(--level-hold)','hold-tint':'var(--level-hold-tint)',contain:'var(--level-contain)',verify:'var(--level-verify)',watch:'var(--level-watch)',normal:'var(--level-normal)'},borderRadius:{card:'var(--radius-card)'}}},plugins:[]} satisfies Config;

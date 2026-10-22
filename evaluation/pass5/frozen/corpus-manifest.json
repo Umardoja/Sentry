@@ -1,0 +1,1046 @@
+{
+  "schema_version": 1,
+  "generated_from": "evaluation/pass5/corpus.ts",
+  "episodes": [
+    {
+      "id": "P5DEV-001",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed to its debited account for the same amount during rostered work.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 6101,
+        "neutral_id": "P5DEV-001"
+      }
+    },
+    {
+      "id": "P5DEV-002",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "The destination is a different account canonically owned by the same customer, which current R4 explicitly permits.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "same_customer_alternate_destination",
+        "seed": 6102,
+        "neutral_id": "P5DEV-002"
+      }
+    },
+    {
+      "id": "P5DEV-003",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "A successful original transaction has a prior complaint, satisfying the current R2 exception, with matching amount and destination.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "successful_original_with_complaint",
+        "seed": 6103,
+        "neutral_id": "P5DEV-003"
+      }
+    },
+    {
+      "id": "P5DEV-004",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "Matched reversals occur outside roster inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 6104,
+        "neutral_id": "P5DEV-004"
+      }
+    },
+    {
+      "id": "P5DEV-005",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "The viewed customer has an open service request assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 6105,
+        "neutral_id": "P5DEV-005"
+      }
+    },
+    {
+      "id": "P5DEV-006",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "One otherwise valid rostered action from an unfamiliar terminal is an indicator, not sufficient review evidence under this policy.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 6106,
+        "neutral_id": "P5DEV-006"
+      }
+    },
+    {
+      "id": "P5DEV-007",
+      "split": "development",
+      "target": "LEGITIMATE",
+      "rationale": "One otherwise valid action outside roster is unusual but alone does not establish a critical contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_outside_roster",
+        "seed": 6107,
+        "neutral_id": "P5DEV-007"
+      }
+    },
+    {
+      "id": "P5DEV-008",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine ticket supports the transaction but does not authorize another customer's destination.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 6108,
+        "neutral_id": "P5DEV-008"
+      }
+    },
+    {
+      "id": "P5DEV-009",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The requested amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 6109,
+        "neutral_id": "P5DEV-009"
+      }
+    },
+    {
+      "id": "P5DEV-010",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "No original exists under the explicitly healthy and complete local simulator-source assumption.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original_complete_source",
+        "seed": 6110,
+        "neutral_id": "P5DEV-010"
+      }
+    },
+    {
+      "id": "P5DEV-011",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The original succeeded and has no complaint, so it is not eligible under current R2.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "ineligible_original",
+        "seed": 6111,
+        "neutral_id": "P5DEV-011"
+      }
+    },
+    {
+      "id": "P5DEV-012",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 6112,
+        "neutral_id": "P5DEV-012"
+      }
+    },
+    {
+      "id": "P5DEV-013",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A customer record is accessed without an open case assigned to the actor's team under the complete-source assumption.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "single_unrelated_record_access",
+        "seed": 6113,
+        "neutral_id": "P5DEV-013"
+      }
+    },
+    {
+      "id": "P5DEV-014",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Purpose is valid but activity occurs on approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 6114,
+        "neutral_id": "P5DEV-014"
+      }
+    },
+    {
+      "id": "P5DEV-015",
+      "split": "development",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeated genuine support must not erase the independent destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 6115,
+        "neutral_id": "P5DEV-015"
+      }
+    },
+    {
+      "id": "P5DEV-016",
+      "split": "development",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The product cannot represent source unavailability separately from no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status boundary exists; unavailability cannot be evaluated without fabricating evidence.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 6116,
+        "neutral_id": "P5DEV-016"
+      }
+    },
+    {
+      "id": "P5EVAL-001",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed to its debited account for the same amount during rostered work.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-001"
+      }
+    },
+    {
+      "id": "P5EVAL-002",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed to its debited account for the same amount during rostered work.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-002"
+      }
+    },
+    {
+      "id": "P5EVAL-003",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed to its debited account for the same amount during rostered work.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-003"
+      }
+    },
+    {
+      "id": "P5EVAL-004",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A failed debit is reversed to its debited account for the same amount during rostered work.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "routine_reversal",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-004"
+      }
+    },
+    {
+      "id": "P5EVAL-005",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The destination is a different account canonically owned by the same customer, which current R4 explicitly permits.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "same_customer_alternate_destination",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-005"
+      }
+    },
+    {
+      "id": "P5EVAL-006",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The destination is a different account canonically owned by the same customer, which current R4 explicitly permits.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "same_customer_alternate_destination",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-006"
+      }
+    },
+    {
+      "id": "P5EVAL-007",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The destination is a different account canonically owned by the same customer, which current R4 explicitly permits.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "same_customer_alternate_destination",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-007"
+      }
+    },
+    {
+      "id": "P5EVAL-008",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The destination is a different account canonically owned by the same customer, which current R4 explicitly permits.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "same_customer_alternate_destination",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-008"
+      }
+    },
+    {
+      "id": "P5EVAL-009",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A successful original transaction has a prior complaint, satisfying the current R2 exception, with matching amount and destination.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "successful_original_with_complaint",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-009"
+      }
+    },
+    {
+      "id": "P5EVAL-010",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A successful original transaction has a prior complaint, satisfying the current R2 exception, with matching amount and destination.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "successful_original_with_complaint",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-010"
+      }
+    },
+    {
+      "id": "P5EVAL-011",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A successful original transaction has a prior complaint, satisfying the current R2 exception, with matching amount and destination.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "successful_original_with_complaint",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-011"
+      }
+    },
+    {
+      "id": "P5EVAL-012",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "A successful original transaction has a prior complaint, satisfying the current R2 exception, with matching amount and destination.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "successful_original_with_complaint",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-012"
+      }
+    },
+    {
+      "id": "P5EVAL-013",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "Matched reversals occur outside roster inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-013"
+      }
+    },
+    {
+      "id": "P5EVAL-014",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "Matched reversals occur outside roster inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-014"
+      }
+    },
+    {
+      "id": "P5EVAL-015",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "Matched reversals occur outside roster inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-015"
+      }
+    },
+    {
+      "id": "P5EVAL-016",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "Matched reversals occur outside roster inside independently approved overtime.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "approved_overtime",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-016"
+      }
+    },
+    {
+      "id": "P5EVAL-017",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The viewed customer has an open service request assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-017"
+      }
+    },
+    {
+      "id": "P5EVAL-018",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The viewed customer has an open service request assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-018"
+      }
+    },
+    {
+      "id": "P5EVAL-019",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The viewed customer has an open service request assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-019"
+      }
+    },
+    {
+      "id": "P5EVAL-020",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "The viewed customer has an open service request assigned to the actor's team before access.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "assigned_record_access",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-020"
+      }
+    },
+    {
+      "id": "P5EVAL-021",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One otherwise valid rostered action from an unfamiliar terminal is an indicator, not sufficient review evidence under this policy.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-021"
+      }
+    },
+    {
+      "id": "P5EVAL-022",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One otherwise valid rostered action from an unfamiliar terminal is an indicator, not sufficient review evidence under this policy.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-022"
+      }
+    },
+    {
+      "id": "P5EVAL-023",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One otherwise valid rostered action from an unfamiliar terminal is an indicator, not sufficient review evidence under this policy.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-023"
+      }
+    },
+    {
+      "id": "P5EVAL-024",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One otherwise valid rostered action from an unfamiliar terminal is an indicator, not sufficient review evidence under this policy.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_new_terminal",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-024"
+      }
+    },
+    {
+      "id": "P5EVAL-025",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One otherwise valid action outside roster is unusual but alone does not establish a critical contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_outside_roster",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-025"
+      }
+    },
+    {
+      "id": "P5EVAL-026",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One otherwise valid action outside roster is unusual but alone does not establish a critical contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_outside_roster",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-026"
+      }
+    },
+    {
+      "id": "P5EVAL-027",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One otherwise valid action outside roster is unusual but alone does not establish a critical contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_outside_roster",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-027"
+      }
+    },
+    {
+      "id": "P5EVAL-028",
+      "split": "evaluation",
+      "target": "LEGITIMATE",
+      "rationale": "One otherwise valid action outside roster is unusual but alone does not establish a critical contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "legitimate_outside_roster",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-028"
+      }
+    },
+    {
+      "id": "P5EVAL-029",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine ticket supports the transaction but does not authorize another customer's destination.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-029"
+      }
+    },
+    {
+      "id": "P5EVAL-030",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine ticket supports the transaction but does not authorize another customer's destination.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-030"
+      }
+    },
+    {
+      "id": "P5EVAL-031",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine ticket supports the transaction but does not authorize another customer's destination.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-031"
+      }
+    },
+    {
+      "id": "P5EVAL-032",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A genuine ticket supports the transaction but does not authorize another customer's destination.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "wrong_destination_genuine_ticket",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-032"
+      }
+    },
+    {
+      "id": "P5EVAL-033",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The requested amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-033"
+      }
+    },
+    {
+      "id": "P5EVAL-034",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The requested amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-034"
+      }
+    },
+    {
+      "id": "P5EVAL-035",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The requested amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-035"
+      }
+    },
+    {
+      "id": "P5EVAL-036",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The requested amount contradicts the canonical original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "amount_mismatch",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-036"
+      }
+    },
+    {
+      "id": "P5EVAL-037",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "No original exists under the explicitly healthy and complete local simulator-source assumption.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original_complete_source",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-037"
+      }
+    },
+    {
+      "id": "P5EVAL-038",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "No original exists under the explicitly healthy and complete local simulator-source assumption.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original_complete_source",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-038"
+      }
+    },
+    {
+      "id": "P5EVAL-039",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "No original exists under the explicitly healthy and complete local simulator-source assumption.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original_complete_source",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-039"
+      }
+    },
+    {
+      "id": "P5EVAL-040",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "No original exists under the explicitly healthy and complete local simulator-source assumption.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "missing_original_complete_source",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-040"
+      }
+    },
+    {
+      "id": "P5EVAL-041",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The original succeeded and has no complaint, so it is not eligible under current R2.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "ineligible_original",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-041"
+      }
+    },
+    {
+      "id": "P5EVAL-042",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The original succeeded and has no complaint, so it is not eligible under current R2.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "ineligible_original",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-042"
+      }
+    },
+    {
+      "id": "P5EVAL-043",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The original succeeded and has no complaint, so it is not eligible under current R2.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "ineligible_original",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-043"
+      }
+    },
+    {
+      "id": "P5EVAL-044",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "The original succeeded and has no complaint, so it is not eligible under current R2.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "ineligible_original",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-044"
+      }
+    },
+    {
+      "id": "P5EVAL-045",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-045"
+      }
+    },
+    {
+      "id": "P5EVAL-046",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-046"
+      }
+    },
+    {
+      "id": "P5EVAL-047",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-047"
+      }
+    },
+    {
+      "id": "P5EVAL-048",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A distinct earlier posted reversal already references the same original debit.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "distinct_duplicate",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-048"
+      }
+    },
+    {
+      "id": "P5EVAL-049",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A customer record is accessed without an open case assigned to the actor's team under the complete-source assumption.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "single_unrelated_record_access",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-049"
+      }
+    },
+    {
+      "id": "P5EVAL-050",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A customer record is accessed without an open case assigned to the actor's team under the complete-source assumption.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "single_unrelated_record_access",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-050"
+      }
+    },
+    {
+      "id": "P5EVAL-051",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A customer record is accessed without an open case assigned to the actor's team under the complete-source assumption.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "single_unrelated_record_access",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-051"
+      }
+    },
+    {
+      "id": "P5EVAL-052",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "A customer record is accessed without an open case assigned to the actor's team under the complete-source assumption.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "single_unrelated_record_access",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-052"
+      }
+    },
+    {
+      "id": "P5EVAL-053",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Purpose is valid but activity occurs on approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-053"
+      }
+    },
+    {
+      "id": "P5EVAL-054",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Purpose is valid but activity occurs on approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-054"
+      }
+    },
+    {
+      "id": "P5EVAL-055",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Purpose is valid but activity occurs on approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-055"
+      }
+    },
+    {
+      "id": "P5EVAL-056",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Purpose is valid but activity occurs on approved leave from a never-used terminal.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "valid_purpose_identity_concern",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-056"
+      }
+    },
+    {
+      "id": "P5EVAL-057",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeated genuine support must not erase the independent destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-057"
+      }
+    },
+    {
+      "id": "P5EVAL-058",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeated genuine support must not erase the independent destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-058"
+      }
+    },
+    {
+      "id": "P5EVAL-059",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeated genuine support must not erase the independent destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-059"
+      }
+    },
+    {
+      "id": "P5EVAL-060",
+      "split": "evaluation",
+      "target": "REVIEW_WARRANTED",
+      "rationale": "Repeated genuine support must not erase the independent destination contradiction.",
+      "supported": true,
+      "unsupported_reason": null,
+      "input": {
+        "family": "repeated_genuine_ticket",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-060"
+      }
+    },
+    {
+      "id": "P5EVAL-061",
+      "split": "evaluation",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The product cannot represent source unavailability separately from no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status boundary exists; unavailability cannot be evaluated without fabricating evidence.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 7201,
+        "neutral_id": "P5EVAL-061"
+      }
+    },
+    {
+      "id": "P5EVAL-062",
+      "split": "evaluation",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The product cannot represent source unavailability separately from no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status boundary exists; unavailability cannot be evaluated without fabricating evidence.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 7202,
+        "neutral_id": "P5EVAL-062"
+      }
+    },
+    {
+      "id": "P5EVAL-063",
+      "split": "evaluation",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The product cannot represent source unavailability separately from no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status boundary exists; unavailability cannot be evaluated without fabricating evidence.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 7203,
+        "neutral_id": "P5EVAL-063"
+      }
+    },
+    {
+      "id": "P5EVAL-064",
+      "split": "evaluation",
+      "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+      "rationale": "The product cannot represent source unavailability separately from no row.",
+      "supported": false,
+      "unsupported_reason": "No source-status boundary exists; unavailability cannot be evaluated without fabricating evidence.",
+      "input": {
+        "family": "source_unavailable",
+        "seed": 7204,
+        "neutral_id": "P5EVAL-064"
+      }
+    }
+  ]
+}

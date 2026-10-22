@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case · Bisi · 85 · Contain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            page: '#F7F7F7',
+            surface: '#FFFFFF',
+            border: '#EDEDED',
+            divider: '#E5E7EB',
+            ink: '#1B1B1B',
+            text: '#212529',
+            'text-muted': '#868786',
+            'zenith-red': '#E3000F',
+            'zenith-red-tint': '#FCE5E7',
+            'level-normal': '#868786',
+            'level-normal-tint': '#F7F7F7',
+            'level-watch': '#2563EB',
+            'level-watch-tint': '#DBEAFE',
+            'level-verify': '#0891B2',
+            'level-verify-tint': '#CFFAFE',
+            'level-hold': '#D97706',
+            'level-hold-tint': '#FEF3C7',
+            'level-contain': '#E3000F',
+            'level-contain-tint': '#FCE5E7',
+            ok: '#15803D',
+            'ok-tint': '#DCFCE7',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-page text-text min-h-screen flex flex-col antialiased selection:bg-red-100 selection:text-red-900 font-sans">
+
+  <!-- Top Bar -->
+  <header class="bg-ink text-white px-6 py-3 flex items-center justify-between border-b border-[#2A2A2A] sticky top-0 z-50">
+    <div class="flex items-center space-x-6">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-6 h-6 rounded bg-zenith-red flex items-center justify-center">
+          <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"></path>
+          </svg>
+        </div>
+        <div class="flex items-baseline space-x-1.5 whitespace-nowrap">
+          <span class="font-display font-extrabold text-[17px] tracking-wide text-white">SENTRY</span>
+          <span class="text-[13px] text-[#A0A0A0] font-normal">for Zenith Bank</span>
+        </div>
+      </div>
+
+      <div class="h-4 w-px bg-[#333333]"></div>
+
+      <div class="flex items-center space-x-2 bg-[#262626] border border-[#3A3A3A] px-3 py-1 rounded-full text-xs text-neutral-300 whitespace-nowrap">
+        <svg class="w-3.5 h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke-width="1.8"></circle>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6v6l4 2"></path>
+        </svg>
+        <span class="font-medium">Fri 16 Oct 2026 · 22:10</span>
+      </div>
+
+      <div class="flex items-center space-x-2 bg-[#262626] border border-[#3A3A3A] px-3 py-1 rounded-full text-xs text-neutral-300 cursor-pointer hover:bg-[#303030] transition whitespace-nowrap">
+        <span class="text-neutral-400 font-normal">Scenario:</span>
+        <span class="font-semibold text-white">S3 · Stolen login</span>
+        <svg class="w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-[#262626] border border-[#383838] text-[11px] font-medium text-neutral-300">
+        <svg class="w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        <span class="">Case note: AI cached</span>
+      </div>
+
+      <button class="text-xs px-3 py-1.5 rounded-full border border-[#404040] text-neutral-300 hover:text-white hover:border-neutral-400 transition font-medium">
+        Reset
+      </button>
+
+      <div class="flex flex-col items-center">
+        <button disabled="" class="bg-[#383838] text-neutral-400 text-xs px-4 py-1.5 rounded-full font-semibold cursor-not-allowed">
+          Next step
+        </button>
+        <span class="text-[10px] text-neutral-400 mt-0.5">Waiting for analyst decision</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <div class="bg-zenith-red-tint text-zenith-red border-b border-[#F8B4B9] px-6 py-2.5 flex items-center justify-between text-xs font-semibold">
+    <div class="flex items-center space-x-2">
+      <svg class="w-4 h-4 text-zenith-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+      </svg>
+      <span class="">Contain · session suspension waiting for your approval</span>
+    </div>
+  </div>
+
+  <!-- Main Body with Nav Rail -->
+  <div class="flex-1 flex overflow-hidden">
+    <!-- Nav Rail -->
+    <aside class="w-16 bg-surface border-r border-border flex flex-col items-center py-4 space-y-6 flex-shrink-0">
+      <button class="flex flex-col items-center group w-12 py-2 rounded-lg text-text-muted hover:text-ink transition" title="Console">
+        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        <span class="text-[10px]">Console</span>
+      </button>
+
+      <button class="flex flex-col items-center group w-12 py-2 rounded-lg bg-page text-ink font-medium" title="Cases">
+        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span class="text-[10px]">Cases</span>
+      </button>
+
+      <button class="flex flex-col items-center group w-12 py-2 rounded-lg text-text-muted hover:text-ink transition" title="Leak tracer">
+        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+        <span class="text-[10px]">Tracer</span>
+      </button>
+
+      <button class="flex flex-col items-center group w-12 py-2 rounded-lg text-text-muted hover:text-ink transition" title="Metrics">
+        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+        <span class="text-[10px]">Metrics</span>
+      </button>
+    </aside>
+
+    <!-- Workspace -->
+    <main class="flex-1 p-6 overflow-y-auto">
+      <div class="max-w-[1440px] mx-auto space-y-6">
+
+        <!-- Case Header -->
+        <div class="bg-surface rounded-xl border border-border p-6 flex items-center justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center space-x-3">
+              <span class="text-xs font-semibold text-text-muted tracking-wider" style="font-variant-numeric: tabular-nums;">CASE-0002</span>
+              <button class="px-2.5 py-1 rounded-full border border-border text-xs font-medium text-text flex items-center space-x-1.5 hover:bg-page transition">
+                <svg class="w-3.5 h-3.5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+                <span class="">Unmask</span>
+              </button>
+            </div>
+            <div class="flex items-center space-x-4">
+              <h1 class="font-display font-extrabold text-2xl text-text">Staff-2C91</h1>
+              <span class="text-sm text-text-muted font-medium">Customer service</span>
+            </div>
+            <div class="flex items-center space-x-2 pt-1">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-level-normal-tint text-text-muted border border-border">
+                Contractor
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-level-normal-tint text-text-muted border border-border">
+                On approved leave · 12 to 23 Oct
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-level-normal-tint text-text-muted border border-border">
+                Never-used terminal · TRM-0777
+              </span>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-6">
+            <div class="text-right">
+              <div class="flex items-center space-x-3 justify-end">
+                <span class="font-display font-extrabold text-5xl text-zenith-red">85</span>
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-zenith-red-tint text-zenith-red">
+                  Contain
+                </span>
+              </div>
+              <div class="mt-1">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-page text-text-muted border border-border">
+                  Open
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex items-center space-x-6 border-b border-border text-sm font-semibold">
+          <button class="pb-3 border-b-2 border-zenith-red text-text font-display">Overview</button>
+          <button class="pb-3 text-text-muted hover:text-text transition">Evidence</button>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid grid-cols-12 gap-6">
+
+          <!-- Left Column (7 cols) -->
+          <div class="col-span-12 lg:col-span-7 space-y-6">
+
+            <!-- 1) Score over time -->
+            <div class="bg-surface rounded-xl border border-border p-5">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-display font-semibold text-base text-text">Score over time</h3>
+                <span class="text-xs text-text-muted">Horizon: 22:05 – 22:10</span>
+              </div>
+
+              <!-- Bands Chart -->
+              <div class="relative bg-page rounded-lg p-4 border border-border">
+                <div class="flex justify-between text-[11px] font-semibold text-text-muted mb-6 pb-2 border-b border-border">
+                  <span class="">0–14 NORMAL</span>
+                  <span class="">15–29 WATCH</span>
+                  <span class="">30–59 VERIFY</span>
+                  <span class="">60–79 HOLD</span>
+                  <span class="">80–100 CONTAIN</span>
+                </div>
+
+                <!-- Step Line Representation -->
+                <div class="relative h-24 flex items-center justify-between px-6">
+                  <!-- Level lines background -->
+                  <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-0.5 bg-border -z-0"></div>
+
+                  <!-- Dot 1 -->
+                  <div class="relative z-10 flex flex-col items-center">
+                    <span class="text-xs font-bold text-level-verify font-display">35</span>
+                    <div class="w-3.5 h-3.5 rounded-full bg-level-verify border-2 border-white shadow-sm my-1"></div>
+                    <span class="text-[11px] text-text-muted" style="font-variant-numeric: tabular-nums;">22:05</span>
+                    <span class="text-[10px] font-semibold text-level-verify">VERIFY</span>
+                  </div>
+
+                  <!-- Dot 2 -->
+                  <div class="relative z-10 flex flex-col items-center">
+                    <span class="text-xs font-bold text-level-verify font-display">55</span>
+                    <div class="w-3.5 h-3.5 rounded-full bg-level-verify border-2 border-white shadow-sm my-1"></div>
+                    <span class="text-[11px] text-text-muted" style="font-variant-numeric: tabular-nums;">22:06</span>
+                    <span class="text-[10px] font-semibold text-level-verify">VERIFY</span>
+                  </div>
+
+                  <!-- Dot 3 -->
+                  <div class="relative z-10 flex flex-col items-center">
+                    <span class="text-xs font-bold text-level-hold font-display">70</span>
+                    <div class="w-3.5 h-3.5 rounded-full bg-level-hold border-2 border-white shadow-sm my-1"></div>
+                    <span class="text-[11px] text-text-muted" style="font-variant-numeric: tabular-nums;">22:08</span>
+                    <span class="text-[10px] font-semibold text-level-hold">HOLD</span>
+                  </div>
+
+                  <!-- Dot 4 -->
+                  <div class="relative z-10 flex flex-col items-center">
+                    <span class="text-xs font-bold text-zenith-red font-display">85</span>
+                    <div class="w-3.5 h-3.5 rounded-full bg-zenith-red border-2 border-white shadow-sm my-1"></div>
+                    <span class="text-[11px] text-text-muted" style="font-variant-numeric: tabular-nums;">22:10</span>
+                    <span class="text-[10px] font-semibold text-zenith-red">CONTAIN</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2) Signals -->
+            <div class="bg-surface rounded-xl border border-border p-5">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-display font-semibold text-base text-text">Signals</h3>
+                <span class="text-xs text-text-muted">4 Active Triggers</span>
+              </div>
+
+              <div class="space-y-2.5 text-sm">
+                <div class="flex items-center justify-between py-1.5 border-b border-border">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-zenith-red"></span>
+                    <span class="">Activity while on approved leave</span>
+                  </div>
+                  <span class="font-semibold text-text" style="font-variant-numeric: tabular-nums;">+25</span>
+                </div>
+                <div class="flex items-center justify-between py-1.5 border-b border-border">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-zenith-red"></span>
+                    <span class="">Never-used terminal</span>
+                  </div>
+                  <span class="font-semibold text-text" style="font-variant-numeric: tabular-nums;">+10</span>
+                </div>
+                <div class="flex items-center justify-between py-1.5 border-b border-border">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-zenith-red"></span>
+                    <span class="">Customer records viewed with no case (60)</span>
+                  </div>
+                  <span class="font-semibold text-text" style="font-variant-numeric: tabular-nums;">+35</span>
+                </div>
+                <div class="flex items-center justify-between py-1.5 border-b border-border">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-zenith-red"></span>
+                    <span class="">Bulk export with no approved ticket</span>
+                  </div>
+                  <span class="font-semibold text-text" style="font-variant-numeric: tabular-nums;">+15</span>
+                </div>
+
+                <div class="flex items-center justify-between pt-3 text-base font-display font-bold">
+                  <span class="">Total</span>
+                  <span class="text-zenith-red">85 · Contain</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3) Activity -->
+            <div class="bg-surface rounded-xl border border-border p-5">
+              <h3 class="font-display font-semibold text-base text-text mb-3">Activity</h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex items-start space-x-3 py-1.5 border-b border-border">
+                  <span class="text-text-muted text-xs pt-0.5" style="font-variant-numeric: tabular-nums;">22:05</span>
+                  <div class="text-text">Login from terminal TRM-0777 (never used by this user)</div>
+                </div>
+                <div class="flex items-start space-x-3 py-1.5 border-b border-border">
+                  <span class="text-text-muted text-xs pt-0.5" style="font-variant-numeric: tabular-nums;">22:06</span>
+                  <div class="text-text">12 customer records viewed, no open case</div>
+                </div>
+                <div class="flex items-start space-x-3 py-1.5 border-b border-border">
+                  <span class="text-text-muted text-xs pt-0.5" style="font-variant-numeric: tabular-nums;">22:08</span>
+                  <div class="text-text">48 more customer records viewed, no open case</div>
+                </div>
+                <div class="flex items-start justify-between space-x-3 py-1.5">
+                  <div class="flex items-start space-x-3">
+                    <span class="text-text-muted text-xs pt-0.5" style="font-variant-numeric: tabular-nums;">22:10</span>
+                    <div class="text-text">Bulk export of 5,000 customer rows, no approved ticket</div>
+                  </div>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-zenith-red-tint text-zenith-red flex-shrink-0">
+                    Blocked
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column (5 cols) -->
+          <div class="col-span-12 lg:col-span-5 space-y-5">
+
+            <!-- 1) Decisions -->
+            <div class="bg-surface rounded-xl border border-border p-5 space-y-4">
+              <h3 class="font-display font-semibold text-base text-text">Decisions</h3>
+
+              <!-- Automatic decision -->
+              <div class="p-3.5 rounded-lg border border-border bg-page space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-sm text-text">Restrict data access</span>
+                  <span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-surface text-text-muted border border-border">
+                    Automatic
+                  </span>
+                </div>
+                <div class="text-xs text-text-muted">Further record views and exports are blocked</div>
+                <div class="text-[11px] text-text-muted font-medium pt-1 border-t border-border">Active since 22:08</div>
+              </div>
+
+              <!-- Pending decision -->
+              <div class="p-4 rounded-lg border border-border bg-surface space-y-3">
+                <div>
+                  <div class="font-semibold text-sm text-text">Suspend this session</div>
+                  <div class="text-xs text-text-muted mt-0.5">Suspends Staff-2C91's active session until reviewed.</div>
+                </div>
+                <div class="flex items-center space-x-2.5 pt-1">
+                  <button class="bg-zenith-red text-white text-xs px-4 py-2 rounded-full font-semibold hover:bg-red-700 transition">
+                    Approve suspension
+                  </button>
+                  <button class="border border-border text-text text-xs px-4 py-2 rounded-full font-semibold hover:bg-page transition">
+                    Reject
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2) Case note -->
+            <div class="bg-surface rounded-xl border border-border p-5 space-y-3">
+              <div class="flex items-center justify-between border-b border-divider pb-2.5">
+                <h3 class="font-display font-semibold text-sm text-text">Case note</h3>
+                <span class="flex items-center space-x-1 text-[11px] text-text-muted">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                  <span class="">AI cached</span>
+                </span>
+              </div>
+
+              <div class="text-xs leading-relaxed space-y-2 text-text">
+                <p class="">1. The user logged in at 22:05 while on approved leave.</p>
+                <p class="">2. The login came from terminal TRM-0777, which the user has never used.</p>
+                <p class="">3. 60 customer records were viewed with no open case.</p>
+                <p class="">4. A bulk export of 5,000 customer rows had no approved ticket; it was blocked.</p>
+                <p class="">5. Recommended: suspend session, keep data restriction, escalate to Information Security.</p>
+                <p class="font-bold text-ink">6. Analyst decision required.</p>
+              </div>
+            </div>
+
+            <!-- 3) Muted callout -->
+            <div class="p-4 rounded-xl border border-border bg-page text-xs text-text-muted italic leading-relaxed">
+              "Stolen login or inside job? SENTRY doesn't need to know. No reason, no access."
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+
+
+
+
+</body></html>

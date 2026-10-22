@@ -1,0 +1,39 @@
+{
+  "harness_check_only": true,
+  "steps": [
+    {
+      "id": "S1.1",
+      "scenario": "S1 · Late overtime",
+      "label": "Ngozi posts 60 reversals on approved overtime",
+      "sim_time": "2026-10-16T21:10:00+01:00",
+      "focus": "/"
+    },
+    {
+      "id": "S2.0",
+      "scenario": "S2 · Reversal diversion",
+      "label": "Tunde on a normal Monday",
+      "sim_time": "2026-10-16T21:10:00+01:00",
+      "focus": "/staff/STF-0101"
+    },
+    {
+      "id": "S2.1",
+      "scenario": "S2 · Reversal diversion",
+      "label": "Reversal of a real failed debit, credited to someone else",
+      "sim_time": "2026-10-16T21:47:00+01:00",
+      "focus": "/cases/CASE-0001"
+    },
+    {
+      "id": "S2.2",
+      "scenario": "S2 · Reversal diversion",
+      "label": "Score verified ticket; destination mismatch remains",
+      "sim_time": "2026-10-16T21:48:00+01:00",
+      "focus": "/cases/CASE-0001"
+    }
+  ],
+  "s21_score": 38,
+  "ticket_valid": true,
+  "purpose_status_after_ticket": "WRONG_BENEFICIARY",
+  "wrong_beneficiary_signal_points": 20,
+  "s22_score": 38,
+  "passed": true
+}

@@ -1,0 +1,1948 @@
+[
+  {
+    "id": "DEV-001",
+    "family": "routine_reversal",
+    "seed": 3101,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-002",
+    "family": "approved_overtime",
+    "seed": 3102,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 12,
+        "findings": [
+          {
+            "code": "OUTSIDE_ROSTER",
+            "source_refs": [
+              "ACT-EVAL-1",
+              "ACT-EVAL-2",
+              "ACT-EVAL-3",
+              "ACT-EVAL-4",
+              "ACT-EVAL-5",
+              "ACT-EVAL-6",
+              "ACT-EVAL-7",
+              "ACT-EVAL-8"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "VOLUME_ANOMALY",
+            "source_refs": [
+              "ACT-EVAL-1",
+              "ACT-EVAL-2",
+              "ACT-EVAL-3",
+              "ACT-EVAL-4",
+              "ACT-EVAL-5",
+              "ACT-EVAL-6",
+              "ACT-EVAL-7",
+              "ACT-EVAL-8"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": [
+          {
+            "code": "OUTSIDE_ROSTER",
+            "source_refs": [
+              "ACT-EVAL-1",
+              "ACT-EVAL-2",
+              "ACT-EVAL-3",
+              "ACT-EVAL-4",
+              "ACT-EVAL-5",
+              "ACT-EVAL-6",
+              "ACT-EVAL-7",
+              "ACT-EVAL-8"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "VOLUME_ANOMALY",
+            "source_refs": [
+              "ACT-EVAL-1",
+              "ACT-EVAL-2",
+              "ACT-EVAL-3",
+              "ACT-EVAL-4",
+              "ACT-EVAL-5",
+              "ACT-EVAL-6",
+              "ACT-EVAL-7",
+              "ACT-EVAL-8"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 6,
+        "findings": [
+          {
+            "code": "OUTSIDE_ROSTER",
+            "source_refs": [
+              "ACT-EVAL-1",
+              "ACT-EVAL-2",
+              "ACT-EVAL-3",
+              "ACT-EVAL-4",
+              "ACT-EVAL-5",
+              "ACT-EVAL-6",
+              "ACT-EVAL-7",
+              "ACT-EVAL-8"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "VOLUME_ANOMALY",
+            "source_refs": [
+              "ACT-EVAL-1",
+              "ACT-EVAL-2",
+              "ACT-EVAL-3",
+              "ACT-EVAL-4",
+              "ACT-EVAL-5",
+              "ACT-EVAL-6",
+              "ACT-EVAL-7",
+              "ACT-EVAL-8"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-003",
+    "family": "wrong_destination_genuine_ticket",
+    "seed": 3103,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 20,
+        "findings": [
+          {
+            "code": "REVERSAL_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "first_outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 20,
+        "findings": [
+          {
+            "code": "REVERSAL_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-004",
+    "family": "amount_mismatch",
+    "seed": 3104,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R3",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R3",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 10,
+        "findings": [
+          {
+            "code": "AMOUNT_MISMATCH",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-005",
+    "family": "missing_original",
+    "seed": 3105,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R1",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R2",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R3",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R1",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R2",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R3",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 25,
+        "findings": [
+          {
+            "code": "REVERSAL_NO_MATCH",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-006",
+    "family": "distinct_duplicate",
+    "seed": 3106,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R5",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R5",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 15,
+        "findings": [
+          {
+            "code": "REVERSAL_DUPLICATE",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-007",
+    "family": "assigned_record_access",
+    "seed": 3107,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-008",
+    "family": "unrelated_record_access",
+    "seed": 3108,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-1"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-10"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-11"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-12"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-13"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-14"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-15"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-16"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-17"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-18"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-19"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-2"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-20"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-21"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-22"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-23"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-24"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-25"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-26"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-27"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-28"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-29"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-3"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-30"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-31"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-32"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-33"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-34"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-35"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-36"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-37"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-38"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-39"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-4"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-40"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-41"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-42"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-43"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-44"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-45"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-46"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-47"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-48"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-49"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-50"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-51"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-52"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-53"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-54"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-55"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-6"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-7"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-8"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-9"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 12,
+        "findings": [
+          {
+            "code": "VOLUME_ANOMALY",
+            "source_refs": [
+              "ACT-EVAL-1",
+              "ACT-EVAL-2",
+              "ACT-EVAL-3",
+              "ACT-EVAL-4",
+              "ACT-EVAL-5",
+              "ACT-EVAL-6",
+              "ACT-EVAL-7",
+              "ACT-EVAL-8",
+              "ACT-EVAL-9",
+              "ACT-EVAL-10",
+              "ACT-EVAL-11",
+              "ACT-EVAL-12",
+              "ACT-EVAL-13",
+              "ACT-EVAL-14",
+              "ACT-EVAL-15",
+              "ACT-EVAL-16",
+              "ACT-EVAL-17",
+              "ACT-EVAL-18",
+              "ACT-EVAL-19",
+              "ACT-EVAL-20",
+              "ACT-EVAL-21",
+              "ACT-EVAL-22",
+              "ACT-EVAL-23",
+              "ACT-EVAL-24",
+              "ACT-EVAL-25",
+              "ACT-EVAL-26",
+              "ACT-EVAL-27",
+              "ACT-EVAL-28",
+              "ACT-EVAL-29",
+              "ACT-EVAL-30",
+              "ACT-EVAL-31",
+              "ACT-EVAL-32",
+              "ACT-EVAL-33",
+              "ACT-EVAL-34",
+              "ACT-EVAL-35",
+              "ACT-EVAL-36",
+              "ACT-EVAL-37",
+              "ACT-EVAL-38",
+              "ACT-EVAL-39",
+              "ACT-EVAL-40",
+              "ACT-EVAL-41",
+              "ACT-EVAL-42",
+              "ACT-EVAL-43",
+              "ACT-EVAL-44",
+              "ACT-EVAL-45",
+              "ACT-EVAL-46",
+              "ACT-EVAL-47",
+              "ACT-EVAL-48",
+              "ACT-EVAL-49",
+              "ACT-EVAL-50",
+              "ACT-EVAL-51",
+              "ACT-EVAL-52",
+              "ACT-EVAL-53",
+              "ACT-EVAL-54",
+              "ACT-EVAL-55"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-1"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-10"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-11"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-12"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-13"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-14"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-15"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-16"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-17"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-18"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-19"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-2"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-20"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-21"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-22"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-23"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-24"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-25"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-26"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-27"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-28"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-29"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-3"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-30"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-31"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-32"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-33"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-34"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-35"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-36"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-37"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-38"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-39"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-4"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-40"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-41"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-42"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-43"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-44"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-45"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-46"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-47"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-48"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-49"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-50"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-51"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-52"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-53"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-54"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-55"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-6"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-7"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-8"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-EVAL-9"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "VOLUME_ANOMALY",
+            "source_refs": [
+              "ACT-EVAL-1",
+              "ACT-EVAL-2",
+              "ACT-EVAL-3",
+              "ACT-EVAL-4",
+              "ACT-EVAL-5",
+              "ACT-EVAL-6",
+              "ACT-EVAL-7",
+              "ACT-EVAL-8",
+              "ACT-EVAL-9",
+              "ACT-EVAL-10",
+              "ACT-EVAL-11",
+              "ACT-EVAL-12",
+              "ACT-EVAL-13",
+              "ACT-EVAL-14",
+              "ACT-EVAL-15",
+              "ACT-EVAL-16",
+              "ACT-EVAL-17",
+              "ACT-EVAL-18",
+              "ACT-EVAL-19",
+              "ACT-EVAL-20",
+              "ACT-EVAL-21",
+              "ACT-EVAL-22",
+              "ACT-EVAL-23",
+              "ACT-EVAL-24",
+              "ACT-EVAL-25",
+              "ACT-EVAL-26",
+              "ACT-EVAL-27",
+              "ACT-EVAL-28",
+              "ACT-EVAL-29",
+              "ACT-EVAL-30",
+              "ACT-EVAL-31",
+              "ACT-EVAL-32",
+              "ACT-EVAL-33",
+              "ACT-EVAL-34",
+              "ACT-EVAL-35",
+              "ACT-EVAL-36",
+              "ACT-EVAL-37",
+              "ACT-EVAL-38",
+              "ACT-EVAL-39",
+              "ACT-EVAL-40",
+              "ACT-EVAL-41",
+              "ACT-EVAL-42",
+              "ACT-EVAL-43",
+              "ACT-EVAL-44",
+              "ACT-EVAL-45",
+              "ACT-EVAL-46",
+              "ACT-EVAL-47",
+              "ACT-EVAL-48",
+              "ACT-EVAL-49",
+              "ACT-EVAL-50",
+              "ACT-EVAL-51",
+              "ACT-EVAL-52",
+              "ACT-EVAL-53",
+              "ACT-EVAL-54",
+              "ACT-EVAL-55"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": 47,
+        "findings": [
+          {
+            "code": "RECORD_VIEW_NO_CASE",
+            "source_refs": [
+              "ACT-EVAL-1",
+              "ACT-EVAL-2",
+              "ACT-EVAL-3",
+              "ACT-EVAL-4",
+              "ACT-EVAL-5",
+              "ACT-EVAL-6",
+              "ACT-EVAL-7",
+              "ACT-EVAL-8",
+              "ACT-EVAL-9",
+              "ACT-EVAL-10",
+              "ACT-EVAL-11",
+              "ACT-EVAL-12",
+              "ACT-EVAL-13",
+              "ACT-EVAL-14",
+              "ACT-EVAL-15",
+              "ACT-EVAL-16",
+              "ACT-EVAL-17",
+              "ACT-EVAL-18",
+              "ACT-EVAL-19",
+              "ACT-EVAL-20",
+              "ACT-EVAL-21",
+              "ACT-EVAL-22",
+              "ACT-EVAL-23",
+              "ACT-EVAL-24",
+              "ACT-EVAL-25",
+              "ACT-EVAL-26",
+              "ACT-EVAL-27",
+              "ACT-EVAL-28",
+              "ACT-EVAL-29",
+              "ACT-EVAL-30",
+              "ACT-EVAL-31",
+              "ACT-EVAL-32",
+              "ACT-EVAL-33",
+              "ACT-EVAL-34",
+              "ACT-EVAL-35",
+              "ACT-EVAL-36",
+              "ACT-EVAL-37",
+              "ACT-EVAL-38",
+              "ACT-EVAL-39",
+              "ACT-EVAL-40",
+              "ACT-EVAL-41",
+              "ACT-EVAL-42",
+              "ACT-EVAL-43",
+              "ACT-EVAL-44",
+              "ACT-EVAL-45",
+              "ACT-EVAL-46",
+              "ACT-EVAL-47",
+              "ACT-EVAL-48",
+              "ACT-EVAL-49",
+              "ACT-EVAL-50",
+              "ACT-EVAL-51",
+              "ACT-EVAL-52",
+              "ACT-EVAL-53",
+              "ACT-EVAL-54",
+              "ACT-EVAL-55"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "VOLUME_ANOMALY",
+            "source_refs": [
+              "ACT-EVAL-1",
+              "ACT-EVAL-2",
+              "ACT-EVAL-3",
+              "ACT-EVAL-4",
+              "ACT-EVAL-5",
+              "ACT-EVAL-6",
+              "ACT-EVAL-7",
+              "ACT-EVAL-8",
+              "ACT-EVAL-9",
+              "ACT-EVAL-10",
+              "ACT-EVAL-11",
+              "ACT-EVAL-12",
+              "ACT-EVAL-13",
+              "ACT-EVAL-14",
+              "ACT-EVAL-15",
+              "ACT-EVAL-16",
+              "ACT-EVAL-17",
+              "ACT-EVAL-18",
+              "ACT-EVAL-19",
+              "ACT-EVAL-20",
+              "ACT-EVAL-21",
+              "ACT-EVAL-22",
+              "ACT-EVAL-23",
+              "ACT-EVAL-24",
+              "ACT-EVAL-25",
+              "ACT-EVAL-26",
+              "ACT-EVAL-27",
+              "ACT-EVAL-28",
+              "ACT-EVAL-29",
+              "ACT-EVAL-30",
+              "ACT-EVAL-31",
+              "ACT-EVAL-32",
+              "ACT-EVAL-33",
+              "ACT-EVAL-34",
+              "ACT-EVAL-35",
+              "ACT-EVAL-36",
+              "ACT-EVAL-37",
+              "ACT-EVAL-38",
+              "ACT-EVAL-39",
+              "ACT-EVAL-40",
+              "ACT-EVAL-41",
+              "ACT-EVAL-42",
+              "ACT-EVAL-43",
+              "ACT-EVAL-44",
+              "ACT-EVAL-45",
+              "ACT-EVAL-46",
+              "ACT-EVAL-47",
+              "ACT-EVAL-48",
+              "ACT-EVAL-49",
+              "ACT-EVAL-50",
+              "ACT-EVAL-51",
+              "ACT-EVAL-52",
+              "ACT-EVAL-53",
+              "ACT-EVAL-54",
+              "ACT-EVAL-55"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-009",
+    "family": "valid_purpose_identity_concern",
+    "seed": 3109,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": 35,
+        "findings": [
+          {
+            "code": "ON_LEAVE",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "ON_LEAVE",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": 35,
+        "findings": [
+          {
+            "code": "ON_LEAVE",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-010",
+    "family": "legitimate_new_terminal",
+    "seed": 3110,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 10,
+        "findings": [
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": [
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 10,
+        "findings": [
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-011",
+    "family": "repeated_genuine_ticket",
+    "seed": 3111,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 20,
+        "findings": [
+          {
+            "code": "REVERSAL_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "first_outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 20,
+        "findings": [
+          {
+            "code": "REVERSAL_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "DEV-012",
+    "family": "wrong_destination_genuine_ticket",
+    "seed": 3112,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 20,
+        "findings": [
+          {
+            "code": "REVERSAL_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "first_outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-EVAL",
+              "TXN-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 20,
+        "findings": [
+          {
+            "code": "REVERSAL_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-EVAL"
+            ],
+            "traceable": true
+          }
+        ]
+      }
+    },
+    "hidden_label_invariant": true
+  }
+]

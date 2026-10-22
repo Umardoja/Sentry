@@ -1,0 +1,1138 @@
+[
+  {
+    "id": "P5DEV-001",
+    "family": "routine_reversal",
+    "seed": 6101,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": [],
+        "reason_codes": [],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-002",
+    "family": "same_customer_alternate_destination",
+    "seed": 6102,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": [],
+        "reason_codes": [],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-003",
+    "family": "successful_original_with_complaint",
+    "seed": 6103,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": [],
+        "reason_codes": [],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-004",
+    "family": "approved_overtime",
+    "seed": 6104,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 12,
+        "findings": [
+          {
+            "code": "OUTSIDE_ROSTER",
+            "source_refs": [
+              "ACT-P5-1",
+              "ACT-P5-2",
+              "ACT-P5-3",
+              "ACT-P5-4",
+              "ACT-P5-5",
+              "ACT-P5-6"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "VOLUME_ANOMALY",
+            "source_refs": [
+              "ACT-P5-1",
+              "ACT-P5-2",
+              "ACT-P5-3",
+              "ACT-P5-4",
+              "ACT-P5-5",
+              "ACT-P5-6"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": [
+          {
+            "code": "OUTSIDE_ROSTER",
+            "source_refs": [
+              "ACT-P5-1",
+              "ACT-P5-2",
+              "ACT-P5-3",
+              "ACT-P5-4",
+              "ACT-P5-5",
+              "ACT-P5-6"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "VOLUME_ANOMALY",
+            "source_refs": [
+              "ACT-P5-1",
+              "ACT-P5-2",
+              "ACT-P5-3",
+              "ACT-P5-4",
+              "ACT-P5-5",
+              "ACT-P5-6"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 6,
+        "findings": [
+          {
+            "code": "OUTSIDE_ROSTER",
+            "source_refs": [
+              "ACT-P5-1",
+              "ACT-P5-2",
+              "ACT-P5-3",
+              "ACT-P5-4",
+              "ACT-P5-5",
+              "ACT-P5-6"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "VOLUME_ANOMALY",
+            "source_refs": [
+              "ACT-P5-1",
+              "ACT-P5-2",
+              "ACT-P5-3",
+              "ACT-P5-4",
+              "ACT-P5-5",
+              "ACT-P5-6"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-005",
+    "family": "assigned_record_access",
+    "seed": 6105,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": [],
+        "reason_codes": [],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-006",
+    "family": "legitimate_new_terminal",
+    "seed": 6106,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 10,
+        "findings": [
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": [
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 10,
+        "findings": [
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-007",
+    "family": "legitimate_outside_roster",
+    "seed": 6107,
+    "target": "LEGITIMATE",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 5,
+        "findings": [
+          {
+            "code": "OUTSIDE_ROSTER",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "C_SIMPLE_UNION": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": [
+          {
+            "code": "OUTSIDE_ROSTER",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 5,
+        "findings": [
+          {
+            "code": "OUTSIDE_ROSTER",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-008",
+    "family": "wrong_destination_genuine_ticket",
+    "seed": 6108,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "REVIEW_REQUIRED",
+        "score": 20,
+        "findings": [
+          {
+            "code": "REVERSAL_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "POLICY_R4_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [
+          "R4_WRONG_BENEFICIARY"
+        ],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "first_outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "REVIEW_REQUIRED",
+        "score": 20,
+        "findings": [
+          {
+            "code": "REVERSAL_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "POLICY_R4_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [
+          "R4_WRONG_BENEFICIARY"
+        ],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-009",
+    "family": "amount_mismatch",
+    "seed": 6109,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R3",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R3",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "REVIEW_REQUIRED",
+        "score": 10,
+        "findings": [
+          {
+            "code": "AMOUNT_MISMATCH",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "POLICY_R3_AMOUNT_MISMATCH",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [
+          "R3_AMOUNT_MISMATCH"
+        ],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-010",
+    "family": "missing_original_complete_source",
+    "seed": 6110,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R1",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R2",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R3",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R1",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R2",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R3",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "REVIEW_REQUIRED",
+        "score": 25,
+        "findings": [
+          {
+            "code": "REVERSAL_NO_MATCH",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "POLICY_R1_ORIGINAL_MISSING",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [
+          "R1_ORIGINAL_MISSING"
+        ],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-011",
+    "family": "ineligible_original",
+    "seed": 6111,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R2",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R2",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "REVIEW_REQUIRED",
+        "score": 25,
+        "findings": [
+          {
+            "code": "REVERSAL_NO_MATCH",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "POLICY_R2_ORIGINAL_INELIGIBLE",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [
+          "R2_ORIGINAL_INELIGIBLE"
+        ],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-012",
+    "family": "distinct_duplicate",
+    "seed": 6112,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R5",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R5",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "REVIEW_REQUIRED",
+        "score": 15,
+        "findings": [
+          {
+            "code": "REVERSAL_DUPLICATE",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "POLICY_R5_DUPLICATE_REVERSAL",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [
+          "R5_DUPLICATE_REVERSAL"
+        ],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-013",
+    "family": "single_unrelated_record_access",
+    "seed": 6113,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_V1",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "REVIEW_REQUIRED",
+        "score": 0,
+        "findings": [
+          {
+            "code": "POLICY_V1_UNRELATED_RECORD_ACCESS",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [
+          "V1_UNRELATED_RECORD_ACCESS"
+        ],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-014",
+    "family": "valid_purpose_identity_concern",
+    "seed": 6114,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": null,
+        "findings": []
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": 35,
+        "findings": [
+          {
+            "code": "ON_LEAVE",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "ON_LEAVE",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": 35,
+        "findings": [
+          {
+            "code": "ON_LEAVE",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "NEW_TERMINAL",
+            "source_refs": [
+              "TRM-NEW"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [
+          "SCORE_THRESHOLD"
+        ],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-015",
+    "family": "repeated_genuine_ticket",
+    "seed": 6115,
+    "target": "REVIEW_WARRANTED",
+    "status": "OK",
+    "reason": null,
+    "outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "REVIEW_REQUIRED",
+        "score": 20,
+        "findings": [
+          {
+            "code": "REVERSAL_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "POLICY_R4_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [
+          "R4_WRONG_BENEFICIARY"
+        ],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "first_outputs": {
+      "A_PURPOSE": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "B_BEHAVIOUR_IDENTITY": {
+        "review": false,
+        "recommendation": "NO_REVIEW",
+        "score": 0,
+        "findings": []
+      },
+      "C_SIMPLE_UNION": {
+        "review": true,
+        "recommendation": "VERIFY",
+        "score": null,
+        "findings": [
+          {
+            "code": "PURPOSE_R4",
+            "source_refs": [
+              "ACT-P5",
+              "TXN-P5"
+            ],
+            "traceable": true
+          }
+        ]
+      },
+      "D_FULL_SENTRY": {
+        "review": true,
+        "recommendation": "REVIEW_REQUIRED",
+        "score": 20,
+        "findings": [
+          {
+            "code": "REVERSAL_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          },
+          {
+            "code": "POLICY_R4_WRONG_BENEFICIARY",
+            "source_refs": [
+              "ACT-P5"
+            ],
+            "traceable": true
+          }
+        ],
+        "reason_codes": [
+          "R4_WRONG_BENEFICIARY"
+        ],
+        "policy_version": "risk-review-v2"
+      }
+    },
+    "hidden_label_invariant": true
+  },
+  {
+    "id": "P5DEV-016",
+    "family": "source_unavailable",
+    "seed": 6116,
+    "target": "INSUFFICIENT_EVIDENCE_OR_UNSUPPORTED",
+    "status": "UNSUPPORTED",
+    "reason": "No source-status boundary exists; unavailability cannot be evaluated without fabricating evidence.",
+    "outputs": {}
+  }
+]
