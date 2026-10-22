@@ -8,7 +8,7 @@ Verified from the repository and installed tree on 21 October 2026. “Installed
 |---|---:|---|
 | Node.js | `>=20` / `v24.20.0` | Server runtime and scripts; `package.json#engines` and local `node --version`. |
 | npm | `11.19.0` | Lockfile/package runner. |
-| Next.js | `15.5.9` / `15.5.9` | App Router pages and Node.js Route Handlers under `src/app`; `next.config.ts` supports an isolated `SENTRY_NEXT_DIST_DIR`. |
+| Next.js | `15.5.9` / `15.5.9` | App Router pages and Node.js Route Handlers under `src/app`; `next.config.mjs` supports an isolated `SENTRY_NEXT_DIST_DIR`. |
 | React / React DOM | `19.0.0` / `19.0.0` | Client screens, hooks and server-rendered shell. |
 | TypeScript | `5.7.3` / `5.7.3` | Strict source and `tsc --noEmit`. |
 

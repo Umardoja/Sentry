@@ -59,6 +59,12 @@ describe("POST /api/ingest/events", () => {
     expect((await ingestRoute(request({ "X-Ingest-Key": "wrong-key" }))).status).toBe(401);
     expect((await ingestRoute(request({ "X-Ingest-Key": "test-ingest-key" }, { events: [] }))).status).toBe(400);
     expect((await ingestRoute(request({ "X-Ingest-Key": "test-ingest-key" }, { events: [{ type: "reversal", id: "X1" }] }))).status).toBe(400);
+    // In demo mode a batch must name a visitor workspace; it never seeds the default database.
+    process.env.SENTRY_DEMO_MODE = "1";
+    const noWorkspace = { events: [{ type: "failed_debit", id: "TXN-T-0", ts: "2026-10-16T20:00:00+01:00", debit_account_id: "ACC-000100", amount: 500 }] };
+    expect((await ingestRoute(request({ "X-Ingest-Key": "test-ingest-key" }, noWorkspace))).status).toBe(400);
+    expect((await ingestRoute(request({ "X-Ingest-Key": "test-ingest-key" }, { ...noWorkspace, workspace_id: `WS-${"0".repeat(32)}` }))).status).toBe(404);
+    delete process.env.SENTRY_DEMO_MODE;
     delete process.env.INGEST_KEY;
     expect((await ingestRoute(request({ "X-Ingest-Key": "test-ingest-key" }))).status).toBe(401);
     process.env.INGEST_KEY = configured;

@@ -1,5 +1,5 @@
 import "server-only";
-import type Database from "better-sqlite3";
+import Database from "better-sqlite3";
 import { addMinutes, dateOf, hhmmOf, minutesBetween, toMinutes, weekday } from "../time";
 import { purposeEngine, savePurpose, type ActionRow, type Check, type PurposeStatus } from "./purpose";
 import { decideReview, type ReviewDecision } from "./reviewPolicy";
@@ -16,13 +16,42 @@ type LeakHit = { staff_id: string; ts: string; action_ids: string[]; evidence: R
 
 const inside = (hhmm: string, start: string, end: string) => hhmm >= start && hhmm <= end;
 
+/** Rows written per transaction by the bulk backfills, so a 512 MB host never holds the whole baseline in memory. */
+const CHUNK = 5_000;
+
+/**
+ * Streams a large read in order and hands it over in chunks of CHUNK rows. better-sqlite3 cannot
+ * write on a connection while one of its iterators is open, so a file database is read through a
+ * second, read-only connection (a WAL snapshot of committed rows); an in-memory database is paged.
+ */
+function forEachChunk<T>(db: Database.Database, sql: string, params: unknown[], handle: (rows: T[]) => void): void {
+  if (db.memory || db.inTransaction) {
+    const rows = db.prepare(sql).all(...params) as T[];
+    for (let i = 0; i < rows.length; i += CHUNK) handle(rows.slice(i, i + CHUNK));
+    return;
+  }
+  const reader = new Database(db.name, { readonly: true, fileMustExist: true });
+  // A forward-only scan gains nothing from a large page cache.
+  reader.pragma("cache_size = -2000");
+  try {
+    let chunk: T[] = [];
+    for (const row of reader.prepare(sql).iterate(...params) as IterableIterator<T>) {
+      chunk.push(row);
+      if (chunk.length === CHUNK) { handle(chunk); chunk = []; }
+    }
+    if (chunk.length) handle(chunk);
+  } finally {
+    reader.close();
+  }
+}
+
 /** Peer statistics: per role and action type, mean and SD of weekday daily counts (SD floored at 1). */
 export function computePeerStats(db: Database.Database): PeerStats {
   const rows = db.prepare(`
     SELECT s.role, r.staff_id, r.date, a.action_type, COUNT(a.id) AS n
     FROM roster r JOIN staff s ON s.id = r.staff_id
     LEFT JOIN sensitive_actions a ON a.staff_id = r.staff_id AND substr(a.ts,1,10) = r.date
-    GROUP BY r.staff_id, r.date, a.action_type`).all() as { role: string; staff_id: string; date: string; action_type: string | null; n: number }[];
+    GROUP BY r.staff_id, r.date, a.action_type`).iterate() as IterableIterator<{ role: string; staff_id: string; date: string; action_type: string | null; n: number }>;
   const days = new Map<string, Set<string>>();
   const counts = new Map<string, Map<string, number[]>>();
   for (const r of rows) {
@@ -210,13 +239,17 @@ export function createEvaluator(db: Database.Database) {
   return { evaluate };
 }
 
-/** Runs purpose checks on every action without a result. */
+/** Runs purpose checks on the given actions, or on every action without a result (streamed in chunks). */
 export function runPurpose(db: Database.Database, actionIds?: string[]): void {
   const engine = purposeEngine(db);
-  const rows = (actionIds
-    ? actionIds.map((id) => db.prepare("SELECT * FROM sensitive_actions WHERE id = ?").get(id))
-    : db.prepare("SELECT a.* FROM sensitive_actions a LEFT JOIN purpose_results p ON p.action_id = a.id WHERE p.action_id IS NULL ORDER BY a.ts, a.id").all()) as ActionRow[];
-  db.transaction(() => savePurpose(db, rows.map((r) => engine.evaluate(r))))();
+  const save = (rows: ActionRow[]) => db.transaction(() => savePurpose(db, rows.map((r) => engine.evaluate(r))))();
+  if (actionIds) {
+    const one = db.prepare("SELECT * FROM sensitive_actions WHERE id = ?");
+    save(actionIds.map((id) => one.get(id) as ActionRow));
+    return;
+  }
+  // A purpose result never depends on another purpose result, so chunking cannot change any outcome.
+  forEachChunk<ActionRow>(db, "SELECT a.* FROM sensitive_actions a LEFT JOIN purpose_results p ON p.action_id = a.id WHERE p.action_id IS NULL ORDER BY a.ts, a.id", [], save);
 }
 
 export function saveScore(db: Database.Database, e: Evaluation, stepId: string | null): void {
@@ -237,9 +270,11 @@ export function saveSignals(db: Database.Database, e: Evaluation): void {
 /** Baseline history: one score per staff member per rostered day, then the current score at the sim clock. */
 export function backfill(db: Database.Database, clock: string): void {
   const ev = createEvaluator(db);
-  const days = db.prepare("SELECT staff_id, date FROM roster ORDER BY staff_id, date").all() as { staff_id: string; date: string }[];
+  // Same order as one big transaction, so the risk_scores ids are unchanged.
+  forEachChunk<{ staff_id: string; date: string }>(db, "SELECT staff_id, date FROM roster WHERE date < ? ORDER BY staff_id, date", [dateOf(clock)], (days) => db.transaction(() => {
+    for (const d of days) saveScore(db, ev.evaluate(d.staff_id, `${d.date}T23:59:00+01:00`), null);
+  })());
   db.transaction(() => {
-    for (const d of days) if (d.date < dateOf(clock)) saveScore(db, ev.evaluate(d.staff_id, `${d.date}T23:59:00+01:00`), null);
     const staff = db.prepare("SELECT id FROM staff WHERE employment_type <> 'AGENT' ORDER BY id").all() as { id: string }[];
     for (const s of staff) saveScore(db, ev.evaluate(s.id, clock), "START");
   })();
