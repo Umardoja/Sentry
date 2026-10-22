@@ -24,6 +24,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  // "Switch to <role>" links pre-select that role, so entering takes one click.
+  useEffect(() => {
+    const role = new URLSearchParams(window.location.search).get("role");
+    if (role && role in PERSONA_META) setSelected(role as Persona["id"]);
+  }, []);
   useEffect(() => {
     if (modeCache) return;
     void fetch("/api/auth/mode", { cache: "no-store" }).then((response) => response.json()).then((value: Mode) => {

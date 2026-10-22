@@ -5,6 +5,7 @@ import { clockOf, pendingDecision, runTracer, waitingForOperatorAction } from ".
 import { STEPS } from "../sim/scenarios";
 import { SCAM_CALLER } from "../sim/generator";
 import { liveState } from "../sim/live";
+import { partnerCaseRows, partnerDecisionCard, partnerList, pendingPartnerResponse } from "./partners";
 import { formatFull } from "../time";
 import { formatSimulatedTime } from "../../shared/time";
 import { currentRunId } from "./run";
@@ -88,6 +89,20 @@ export function metrics(db: Database.Database): Metrics {
   return value;
 }
 
+/**
+ * "Cleared automatically": unusual actions cleared with a valid reason, i.e. actions outside the
+ * rostered shift (or on an unrostered day) that approved overtime covers and whose reason check
+ * matched. Driven from the few overtime rows so it never scans the baseline.
+ */
+function clearedWithReason(db: Database.Database, clock: string): number {
+  return one<{ n: number }>(db, `SELECT COUNT(DISTINCT a.id) n FROM overtime o
+    CROSS JOIN sensitive_actions a ON a.staff_id = o.staff_id
+      AND a.ts >= o.date || 'T' || o.start || ':00+01:00' AND a.ts <= o.date || 'T' || o."end" || ':59+01:00'
+    JOIN purpose_results p ON p.action_id = a.id AND p.status = 'MATCHED'
+    LEFT JOIN roster r ON r.staff_id = a.staff_id AND r.date = o.date
+    WHERE a.ts <= ? AND (r.id IS NULL OR substr(a.ts, 12, 5) < r.shift_start OR substr(a.ts, 12, 5) > r.shift_end)`, clock)?.n ?? 0;
+}
+
 function computeMetrics(db: Database.Database) {
   const clock = viewClock(db);
   const n = (sql: string, ...a: unknown[]) => (one<{ n: number }>(db, sql, ...a)?.n ?? 0);
@@ -103,7 +118,7 @@ function computeMetrics(db: Database.Database) {
   return {
     actions_checked: checked,
     actions_matched: checked - notMatched,
-    unusual_cleared: n("SELECT COUNT(*) n FROM risk_scores WHERE raw_score >= 15 AND score < 15"),
+    unusual_cleared: clearedWithReason(db, clock),
     cases_opened: cases.length,
     true_cases: trueCases,
     false_alerts: cases.length - trueCases,
@@ -188,12 +203,15 @@ export function feed(db: Database.Database, limit = 8, flaggedOnly = false) {
 }
 
 export function topRisk(db: Database.Database, limit = 3) {
-  return all<{ staff_id: string }>(db, `SELECT r.staff_id FROM risk_scores r JOIN (SELECT staff_id, MAX(id) id FROM risk_scores GROUP BY staff_id) m ON m.id = r.id
+  const staff = all<{ staff_id: string }>(db, `SELECT r.staff_id FROM risk_scores r JOIN (SELECT staff_id, MAX(id) id FROM risk_scores GROUP BY staff_id) m ON m.id = r.id
     ORDER BY r.score DESC, r.staff_id LIMIT ?`, limit).map((r) => {
     const c = staffCard(db, r.staff_id);
     const caseRow = one<{ id: string }>(db, "SELECT id FROM cases WHERE staff_id = ?", r.staff_id);
-    return { ...c, case_id: caseRow?.id ?? null, note: c.raw_score >= 15 && c.score < 15 ? `Raw ${c.raw_score} · cleared by approved overtime` : null };
+    return { ...c, case_id: caseRow?.id ?? null, note: c.raw_score >= 15 && c.score < 15 ? `Raw ${c.raw_score} · cleared by approved overtime` : null, kind: "STAFF" as const, href: caseRow ? `/cases/${caseRow.id}` : `/staff/${r.staff_id}` };
   });
+  // Partner cases join the list, labelled "Partner"; before S5 there are none, so the staff list is unchanged.
+  const partnerCases = partnerCaseRows(db).filter((p) => p.case_status === "OPEN" || p.case_status === "CONTAINED");
+  return [...staff, ...partnerCases].sort((a, b) => b.score - a.score);
 }
 
 export function simState(db: Database.Database) {
@@ -204,7 +222,7 @@ export function simState(db: Database.Database) {
   return {
     run_id: currentRunId(db), clock, clock_label: formatFull(clock), step_index: index, total_steps: STEPS.length,
     scenario: index === 0 ? "Ready · normal Friday evening" : current!.scenario, next_step_label: next ? `${next.id} · ${next.label}` : null,
-    waiting_for_intervention_id: pendingDecision(db), waiting_for_operator_action_id: waitingForOperatorAction(db), focus: get(db, "focus") ?? "/", toast: get(db, "toast") || null, last_step: get(db, "last_step") ?? null,
+    waiting_for_intervention_id: pendingDecision(db), waiting_for_partner_response_id: pendingPartnerResponse(db), waiting_for_operator_action_id: waitingForOperatorAction(db), focus: get(db, "focus") ?? "/", toast: get(db, "toast") || null, last_step: get(db, "last_step") ?? null,
     note_mode: "Template",
   };
 }
@@ -216,7 +234,7 @@ function liveView(db: Database.Database) {
 
 function buildConsoleView(db: Database.Database, flaggedOnly: boolean) {
   const m = metrics(db);
-  return { state: simState(db), live: liveView(db), feed: feed(db, 8, flaggedOnly), flagged: one<{ n: number }>(db, `SELECT COUNT(*) n FROM purpose_results p CROSS JOIN sensitive_actions a ON a.id = p.action_id WHERE p.status IN ${NOT_MATCHED} AND a.ts <= ? AND a.scenario_tag IS NOT NULL`, viewClock(db))!.n, top_risk: topRisk(db), decision: decisionCard(db), metrics: m };
+  return { state: simState(db), live: liveView(db), feed: feed(db, 8, flaggedOnly), flagged: one<{ n: number }>(db, `SELECT COUNT(*) n FROM purpose_results p CROSS JOIN sensitive_actions a ON a.id = p.action_id WHERE p.status IN ${NOT_MATCHED} AND a.ts <= ? AND a.scenario_tag IS NOT NULL`, viewClock(db))!.n, top_risk: topRisk(db), decision: decisionCard(db) ?? partnerDecisionCard(db), metrics: m };
 }
 
 function consoleKey(db: Database.Database, flaggedOnly: boolean): string {
@@ -231,6 +249,9 @@ function consoleKey(db: Database.Database, flaggedOnly: boolean): string {
     (SELECT COUNT(*) FROM cases) cases,
     (SELECT COUNT(*) FROM interventions) interventions,
     (SELECT COUNT(*) FROM interventions WHERE status <> 'PENDING_APPROVAL') decisions,
+    (SELECT COALESCE(MAX(id), 0) FROM partner_risk_scores) partner_score_id,
+    (SELECT COUNT(*) || ':' || COALESCE(GROUP_CONCAT(status), '') FROM partner_responses) partner_responses,
+    (SELECT COALESCE(GROUP_CONCAT(status), '') FROM partner_cases) partner_cases,
     (SELECT value FROM sim_state WHERE key = 'live_state') live`);
   return `${flaggedOnly ? 1 : 0}:${JSON.stringify(version)}`;
 }
@@ -252,9 +273,15 @@ export function consoleView(db: Database.Database, flaggedOnly = false) {
 const LEVEL_FROM = (score: number) => (score >= 80 ? "CONTAIN" : score >= 60 ? "HOLD" : score >= 30 ? "VERIFY" : score >= 15 ? "WATCH" : "NORMAL");
 
 export function caseList(db: Database.Database) {
-  return all<{ id: string; staff_id: string; status: string; peak_score: number; level: string; opened_at: string }>(db, "SELECT * FROM cases ORDER BY id").map((c) => ({
-    ...c, ...staffCard(db, c.staff_id), case_status: c.status,
+  const staff = all<{ id: string; staff_id: string; status: string; peak_score: number; level: string; opened_at: string }>(db, "SELECT * FROM cases ORDER BY id").map((c) => ({
+    ...c, ...staffCard(db, c.staff_id), case_status: c.status, kind: "STAFF" as const, href: `/cases/${c.id}`,
   }));
+  return [...staff, ...partnerCaseRows(db)];
+}
+
+/** Partners on the open-banking APIs: type, risk level, consent coverage, calls today and key status. */
+export function partners(db: Database.Database) {
+  return partnerList(db, viewClock(db));
 }
 
 export function caseView(db: Database.Database, id: string, revealName = false) {

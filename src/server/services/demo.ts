@@ -1,24 +1,43 @@
 import "server-only";
 import type Database from "better-sqlite3";
-import { copyFileSync, existsSync, mkdirSync, rmSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
+import { basename, dirname, join } from "node:path";
 import { DB_PATH, DEMO_WORKSPACE_ROOT, SEED, demoModeEnabled } from "../config";
 import { closeDb, getDb, setDb } from "../db/client";
 import { openDatabase } from "../db/migrate";
 import { nextStep } from "../sim/player";
-import { seedDatabase } from "../sim/seed";
+import { seedDatabase, TEMPLATE_VERSION } from "../sim/seed";
 import { clearMetricsCache } from "./read";
 import { rotateRunId } from "./run";
 import { currentWorkspaceId, workspaceDatabasePath, workspaceRoot } from "./workspace";
 
 const activePath = () => currentWorkspaceId() ? workspaceDatabasePath(currentWorkspaceId()!) : DB_PATH;
+/** Template file names carry TEMPLATE_VERSION, so a new release never reuses an older template. */
+export const showcaseTemplateName = (seed = SEED) => `showcase-access-${TEMPLATE_VERSION}-${seed}.db`;
+export const seedTemplateName = (seed = SEED) => `seed-${seed}-${TEMPLATE_VERSION}.db`;
 const templatePath = (seed: number, path: string) => currentWorkspaceId()
-  ? join(workspaceRoot(), "_templates", `showcase-access-v1-${seed}.db`)
-  : join(dirname(path), `seed-${seed}.db`);
+  ? join(workspaceRoot(), "_templates", showcaseTemplateName(seed))
+  : join(dirname(path), seedTemplateName(seed));
+
+/** Deletes older versions of a template beside the current one (same seed, different version). */
+function removeStaleTemplates(template: string, seed: number): void {
+  const name = basename(template);
+  const showcase = name.startsWith("showcase-access-");
+  // showcase-access-v<N>-<seed>.db, or seed-<seed>.db / seed-<seed>-v<N>.db
+  const older = (file: string) => showcase
+    ? file.startsWith("showcase-access-v") && file.endsWith(`-${seed}.db`)
+    : file === `seed-${seed}.db` || (file.startsWith(`seed-${seed}-v`) && file.endsWith(".db"));
+  for (const file of readdirSync(dirname(template))) {
+    if (file === name || !older(file)) continue;
+    for (const suffix of ["", "-wal", "-shm"]) rmSync(join(dirname(template), file + suffix), { force: true });
+    console.info(`[sentry] removed older template ${file}`);
+  }
+}
 
 function ensureTemplate(template: string, seed: number, preparedShowcase = false): boolean {
   if (existsSync(template)) return false;
   mkdirSync(dirname(template), { recursive: true });
+  removeStaleTemplates(template, seed);
   const { db: seeded } = seedDatabase(template, seed);
   if (preparedShowcase) {
     // A fresh demo visitor lands on the first open investigation: legitimate
@@ -38,7 +57,7 @@ function ensureTemplate(template: string, seed: number, preparedShowcase = false
  */
 export function prepareDemoWorkspaceTemplate(seed = SEED): { path: string; created: boolean } {
   if (!demoModeEnabled() || !DEMO_WORKSPACE_ROOT) throw new Error("SENTRY_DEMO_MODE=1 and DEMO_WORKSPACE_ROOT are required");
-  const template = join(workspaceRoot(), "_templates", `showcase-access-v1-${seed}.db`);
+  const template = join(workspaceRoot(), "_templates", showcaseTemplateName(seed));
   return { path: template, created: ensureTemplate(template, seed, true) };
 }
 
@@ -49,6 +68,13 @@ export function db(): Database.Database {
   const d = getDb(path);
   const seeded = d.prepare("SELECT value FROM sim_state WHERE key = 'clock'").get();
   if (!seeded) {
+    resetDemo();
+    return getDb(path);
+  }
+  // Seeded from an older template (before this release's data): discard it and start fresh.
+  const version = (d.prepare("SELECT value FROM sim_state WHERE key = 'template_version'").get() as { value: string } | undefined)?.value;
+  if (version !== TEMPLATE_VERSION) {
+    console.info(`[sentry] rebuilding ${currentWorkspaceId() ?? "default database"} from template ${TEMPLATE_VERSION} (was ${version ?? "v1"})`);
     resetDemo();
     return getDb(path);
   }

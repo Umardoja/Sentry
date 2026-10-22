@@ -24,7 +24,7 @@ const CHUNK = 5_000;
  * write on a connection while one of its iterators is open, so a file database is read through a
  * second, read-only connection (a WAL snapshot of committed rows); an in-memory database is paged.
  */
-function forEachChunk<T>(db: Database.Database, sql: string, params: unknown[], handle: (rows: T[]) => void): void {
+export function forEachChunk<T>(db: Database.Database, sql: string, params: unknown[], handle: (rows: T[]) => void): void {
   if (db.memory || db.inTransaction) {
     const rows = db.prepare(sql).all(...params) as T[];
     for (let i = 0; i < rows.length; i += CHUNK) handle(rows.slice(i, i + CHUNK));

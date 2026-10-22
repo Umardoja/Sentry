@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { BarChart3, ChevronDown, ClipboardList, FolderOpen, LogOut, Monitor, Network, Repeat2, Shield, UserCircle } from "lucide-react";
+import { BarChart3, Building2, ChevronDown, ClipboardList, FolderOpen, Info, LogOut, Monitor, Network, Repeat2, Shield, UserCircle } from "lucide-react";
 import { clearClientSession, post, useSession } from "@/lib/client";
 import { purposeTextLabel, riskLevelLabel, roleLabel } from "@/lib/presentation";
 import { formatSimulatedTime } from "@/shared/time";
@@ -30,11 +30,11 @@ export function PurposeChip({ ok, label }: { ok: boolean; label: string }) {
   return <span className={`chip ${ok ? "ok" : "bad"}`}>{purposeTextLabel(label)}</span>;
 }
 
-export function Counter({ label, value, icon }: { label: string; value: string; icon?: React.ReactNode }) {
+export function Counter({ label, value, icon, hint }: { label: string; value: string; icon?: React.ReactNode; hint?: string }) {
   return (
-    <div className="counter">
+    <div className="counter" title={hint}>
       <div className="between muted small">
-        <span>{label}</span>
+        <span className="row" style={{ gap: 6 }}>{label}{hint && <span className="counter-hint" tabIndex={0} role="img" aria-label={hint}><Info size={14} aria-hidden="true" /></span>}</span>
         {icon}
       </div>
       <div className="v">{value}</div>
@@ -98,6 +98,7 @@ const NAV = [
   { href: "/", label: "Console", icon: Monitor, match: (p: string) => p === "/" },
   { href: "/cases", label: "Cases", icon: FolderOpen, match: (p: string) => p.startsWith("/cases") || p.startsWith("/staff") },
   { href: "/tracer", label: "Data leak tracer", icon: Network, match: (p: string) => p.startsWith("/tracer") },
+  { href: "/partners", label: "Partners", icon: Building2, match: (p: string) => p.startsWith("/partners") },
   { href: "/metrics", label: "Metrics", icon: BarChart3, match: (p: string) => p.startsWith("/metrics") },
 ];
 

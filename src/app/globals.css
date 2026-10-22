@@ -178,7 +178,25 @@ a { color: inherit; text-decoration: none; }
 .console-feed-table { min-width: 930px !important; }
 .console-feed-table th:last-child, .console-feed-table td:last-child { width: 78px; }
 .simulated-time { font-size: 13px; }
-.tracer-customer-column { min-width: 220px; }
+.tracer-customer-column { min-width: 150px; padding-right: 8px !important; }
+.tracer-staff-column { text-align: center; text-transform: none; font-size: 13px; padding-left: 6px !important; padding-right: 6px !important; white-space: normal; }
+.tracer-viewed { height: 24px; font-size: 12px; padding: 0 8px; gap: 4px; background: var(--surface); border: 1px solid var(--neutral-tint); }
+.tracer-common-chip { background: var(--zenith-red); color: var(--on-ink); height: 20px; font-size: 10px; padding: 0 7px; margin-top: 4px; }
+.row.nowrap { flex-wrap: nowrap; }
+.counter-hint { display: inline-flex; color: var(--text-muted); cursor: help; }
+.decision-card { margin-bottom: 20px; }
+.metrics-counters { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+.partner-label { height: 20px; font-size: 11px; padding: 0 8px; margin-left: 8px; vertical-align: middle; }
+.partner-grid { align-items: start; }
+.factor-row { padding: 10px 0; border-bottom: 1px solid var(--border); gap: 12px; }
+.factor-row:last-child { border-bottom: none; }
+.evidence-columns { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+.evidence-list { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 6px; }
+.reason-call { padding: 10px 0; border-bottom: 1px solid var(--border); display: grid; gap: 4px; }
+.reason-call:last-child { border-bottom: none; }
+.activity-row { padding: 6px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.partner-header { gap: var(--space-md); flex-wrap: wrap; }
+@media (max-width: 720px) { .evidence-columns { grid-template-columns: 1fr; } }
 .table th { text-align: left; font: 600 13px "Plus Jakarta Sans", sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); background: var(--page); height: 44px; padding: 0 16px; }
 .table td { height: 56px; padding: 0 16px; border-bottom: 1px solid var(--border); white-space: nowrap; }
 .table tr.hl td { background: var(--level-hold-tint); font-weight: 600; }

@@ -5,7 +5,7 @@ import { usePoll } from "@/lib/client";
 import { AccessBridgeMonitor } from "./access-bridge-monitor";
 import { formatSimulatedTime } from "@/shared/time";
 
-type CaseRow = { id: string; pseudo_id: string; role: string; employment_type: string; peak_score: number; score: number; level: string; case_status: string; opened_at: string; review: { required: boolean } };
+type CaseRow = { kind?: "STAFF" | "PARTNER"; href?: string; id: string; pseudo_id: string; role: string; employment_type: string; peak_score: number; score: number; level: string; case_status: string; opened_at: string; review: { required: boolean } };
 
 export default function CasesPage() {
   const { data, error, reload } = usePoll<CaseRow[]>("/api/cases", 2500);
@@ -20,12 +20,12 @@ export default function CasesPage() {
       <div className="table-scroll" role="region" aria-label="Cases" tabIndex={0}>
       <table className="table">
         <thead>
-          <tr><th>Case</th><th>Staff ID</th><th>Role</th><th>Time</th><th className="right">Risk score</th><th>Risk level</th><th>Status</th></tr>
+          <tr><th>Case</th><th>Staff ID / partner</th><th>Role</th><th>Time</th><th className="right">Risk score</th><th>Risk level</th><th>Status</th></tr>
         </thead>
         <tbody>
           {data.map((c) => (
             <tr key={c.id}>
-              <td><Link href={`/cases/${c.id}`} style={{ fontWeight: 700, textDecoration: "underline" }}>{c.id}</Link></td>
+              <td><Link href={c.href ?? `/cases/${c.id}`} style={{ fontWeight: 700, textDecoration: "underline" }}>{c.id}</Link>{c.kind === "PARTNER" && <span className="chip grey partner-label">Partner</span>}</td>
               <td style={{ fontWeight: 600 }}>{c.pseudo_id}</td>
               <td>{c.role}{c.employment_type === "CONTRACTOR" ? " · Contractor" : ""}</td>
               <td className="numeric">{formatSimulatedTime(c.opened_at)}</td>

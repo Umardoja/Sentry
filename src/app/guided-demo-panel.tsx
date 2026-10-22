@@ -10,6 +10,7 @@ type GuideState = {
   last_step: string | null;
   next_step_label: string | null;
   waiting_for_intervention_id: string | null;
+  waiting_for_partner_response_id?: string | null;
   waiting_for_operator_action_id: string | null;
   focus: string;
 };
@@ -24,9 +25,11 @@ export function GuidedDemoPanel() {
   if (!data) return <section className="card guide-card loading-card" role="status">Loading scenario runner…</section>;
 
   const gate = data.waiting_for_operator_action_id
-    ? { role: "Operations Officer", text: "Waiting for Operations Officer to submit ticket TKT-2291.", href: "/login?switch=1" }
+    ? { role: "Operations Officer", text: "Waiting for Operations Officer to submit ticket TKT-2291.", href: "/login?switch=1&role=operator" }
     : data.waiting_for_intervention_id
-      ? { role: "Reviewer", text: "Waiting for Reviewer to decide the proposed response.", href: "/login?switch=1" }
+      ? { role: "Reviewer", text: "Waiting for Reviewer to decide the proposed response.", href: "/login?switch=1&role=reviewer" }
+      : data.waiting_for_partner_response_id
+        ? { role: "Reviewer", text: "Waiting for Reviewer to decide the proposed key suspension.", href: "/login?switch=1&role=reviewer" }
       : null;
   const next = async () => {
     setBusy(true); setMessage("");

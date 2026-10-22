@@ -1,6 +1,6 @@
 import "server-only";
 
-export type Engine = "Purpose" | "Behaviour" | "Identity" | "Money" | "Leaks";
+export type Engine = "Purpose" | "Behaviour" | "Identity" | "Money" | "Leaks" | "Partners";
 export type SignalDefinition = { engine: Engine; tiers: readonly number[]; label: string; kind: "money" | "data" | "other" };
 
 /** The only home of signal codes, tiers and points (SPEC.md › Scoring, plus Upgrades v1.1). */
@@ -25,7 +25,18 @@ export const SIGNALS = {
   FAN_OUT: { engine: "Money", tiers: [17], label: "Money spreading to many accounts", kind: "money" },
   SHARED_IDENTIFIER: { engine: "Money", tiers: [15], label: "Beneficiary shares a phone or BVN with the user", kind: "money" },
   LEAK_COMMON_VIEWER: { engine: "Leaks", tiers: [35], label: "Viewed every customer in a scam cluster", kind: "data" },
+  // Third-party partners on the open-banking APIs (S5). Scored per partner, never per staff member.
+  CALL_OUTSIDE_CONSENT: { engine: "Partners", tiers: [25, 40], label: "Call outside the customer's consent", kind: "data" },
+  CONSENT_REVOKED_OR_EXPIRED: { engine: "Partners", tiers: [25], label: "Call after consent ended", kind: "data" },
+  LOOKUP_WITHOUT_BUSINESS: { engine: "Partners", tiers: [10, 20], label: "Many lookups, almost no real transactions", kind: "data" },
+  KEY_MULTI_NETWORK: { engine: "Partners", tiers: [20, 30], label: "One key used from many networks", kind: "other" },
+  SEQUENTIAL_ENUMERATION: { engine: "Partners", tiers: [20], label: "Accounts looked up in sequence", kind: "data" },
+  PARTNER_VOLUME_ANOMALY: { engine: "Partners", tiers: [6, 12], label: "Unusual volume for this partner", kind: "other" },
 } as const satisfies Record<string, SignalDefinition>;
+
+/** Partner risk factors, kept apart from the staff evaluation. */
+export const PARTNER_SIGNALS = ["CALL_OUTSIDE_CONSENT", "CONSENT_REVOKED_OR_EXPIRED", "LOOKUP_WITHOUT_BUSINESS", "KEY_MULTI_NETWORK", "SEQUENTIAL_ENUMERATION", "PARTNER_VOLUME_ANOMALY"] as const satisfies readonly SignalCode[];
+export type PartnerSignalCode = (typeof PARTNER_SIGNALS)[number];
 
 export type SignalCode = keyof typeof SIGNALS;
 

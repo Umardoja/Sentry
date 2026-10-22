@@ -69,6 +69,12 @@ const SIGNAL_LABELS: Record<string, string> = {
   FAN_OUT: "Transfers to many accounts",
   SHARED_IDENTIFIER: "Beneficiary shares an identifier with the user",
   LEAK_COMMON_VIEWER: "Viewed every customer in the reported group",
+  CALL_OUTSIDE_CONSENT: "Call outside the customer's consent",
+  CONSENT_REVOKED_OR_EXPIRED: "Call after consent ended",
+  LOOKUP_WITHOUT_BUSINESS: "Many lookups, almost no real transactions",
+  KEY_MULTI_NETWORK: "One key used from many networks",
+  SEQUENTIAL_ENUMERATION: "Accounts looked up in sequence",
+  PARTNER_VOLUME_ANOMALY: "Unusual volume for this partner",
 };
 
 export const purposeStatusLabel = (status: string) => PURPOSE_STATUS[status] ?? status.replaceAll("_", " ").toLowerCase();
@@ -108,6 +114,9 @@ const ROLE_DESCRIPTIONS: Record<string, string> = {
   auditor: "Inspect cases, decisions and audit records.",
 };
 
+/** Definition shown with the "Cleared automatically" counter on Console and Metrics. */
+export const CLEARED_AUTOMATICALLY_HINT = "Unusual actions cleared with a valid reason: actions outside the rostered shift that approved overtime covered and whose reason check passed.";
+
 export const riskLevelLabel = (level: string) => RISK_LEVEL_LABELS[level] ?? level.replaceAll("_", " ").toLowerCase();
 export const roleLabel = (role: string) => ROLE_LABELS[role] ?? role;
 export const roleDescription = (role: string, fallback: string) => ROLE_DESCRIPTIONS[role] ?? fallback;
@@ -132,7 +141,24 @@ const AUDIT_ACTION_LABELS: Record<string, string> = {
   DECISION_STALE: "Outdated response rejected",
   RUN_TRACER: "Data leak trace run",
   BVN_WATCHLIST: "BVN watchlist updated",
+  PARTNER_CASE_OPENED: "Partner case opened",
+  PARTNER_RESPONSE_APPLIED: "Partner key rate-limited",
+  PARTNER_RESPONSE_PROPOSED: "Key suspension sent for approval",
+  PARTNER_CASE_JUSTIFIED: "Partner case closed as justified",
+  LIVE_DESK_OPENED: "Evening operations desk opened",
+  LIVE_ON: "Live activity switched on",
+  LIVE_OFF: "Live activity switched off",
 };
+
+const KEY_STATUS_LABELS: Record<string, string> = { ACTIVE: "Active", RATE_LIMITED: "Rate-limited", SUSPENDED: "Suspended" };
+const PARTNER_RESPONSE_LABELS: Record<string, string> = { RATE_LIMIT_KEY: "Rate-limit key", SUSPEND_KEY: "Suspend key" };
+const PARTNER_CHECK_STATUS: Record<string, string> = { MATCHED: "Within consent", OUTSIDE_CONSENT: "Outside consent", CONSENT_ENDED: "Consent ended" };
+const CALL_RESULT_LABELS: Record<string, string> = { ALLOWED: "Allowed", RATE_LIMITED: "Rate-limited (429)", BLOCKED: "Blocked (403)" };
+
+export const keyStatusLabel = (status: string) => KEY_STATUS_LABELS[status] ?? status;
+export const partnerResponseLabel = (type: string) => PARTNER_RESPONSE_LABELS[type] ?? type;
+export const partnerCheckStatusLabel = (status: string) => PARTNER_CHECK_STATUS[status] ?? status;
+export const callResultLabel = (status: string) => CALL_RESULT_LABELS[status] ?? status;
 
 export const scenarioStepLabel = (label: string) => Object.entries(SCENARIO_STEP_LABELS)
   .reduce((shown, [internal, display]) => shown.replace(internal, display), label);

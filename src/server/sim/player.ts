@@ -10,6 +10,8 @@ import { FAN_OUT_BANKS, STEPS } from "./scenarios";
 import { type VerifiedPrincipal, requireIndependentReviewer, requireOwnAction, scenarioOperator } from "../auth/policy";
 import { currentRunId, requireCurrentRun } from "../services/run";
 import { recordEvidenceEvaluation, requireReviewedContext, reviewContext } from "../services/review";
+import { decidePartnerResponse, partnerReviewContext, pendingPartnerResponse, recordPartnerCalls } from "../services/partners";
+import { S5_PARTNER, s5Calls } from "./partners";
 
 const pad = (n: number, w: number) => String(n).padStart(w, "0");
 const getState = (db: Database.Database, key: string) => (db.prepare("SELECT value FROM sim_state WHERE key = ?").get(key) as { value: string } | undefined)?.value;
@@ -268,6 +270,14 @@ function runStep(db: Database.Database, stepId: string): Record<string, unknown>
       const scores = result.common_viewer_ids.map((id) => score(db, id, t, stepId).score);
       return { staff_id: CHARACTERS.kemi, score: scores[0] ?? 0 };
     }
+    case "S5.1":
+    case "S5.2":
+    case "S5.3":
+    case "S5.4": {
+      const { results, scored } = recordPartnerCalls(db, s5Calls(stepId, t), stepId);
+      const e = scored[0]!;
+      return { partner_id: S5_PARTNER.id, score: e.score, level: e.level, calls: results.length, blocked: results.filter((r) => r.status === "BLOCKED").length };
+    }
     default:
       throw new Error(`unknown step ${stepId}`);
   }
@@ -288,7 +298,7 @@ export class GateError extends Error {}
 
 /** Advances the demo by one step. Throws GateError while an analyst decision is pending. */
 export function nextStep(db: Database.Database) {
-  if (pendingDecision(db)) throw new GateError("Waiting for analyst decision");
+  if (pendingDecision(db) || pendingPartnerResponse(db)) throw new GateError("Waiting for analyst decision");
   if (waitingForOperatorAction(db)) throw new GateError("Waiting for the operator to submit the genuine ticket");
   const index = Number(getState(db, "step_index") ?? "0");
   if (index >= STEPS.length) return { done: true, step: null, result: null };
@@ -403,6 +413,12 @@ export function rehearse(db: Database.Database) {
     if (gate) {
       const context = reviewContext(db, gate);
       decideVerified(db, { kind: "simulation", account_id: "simulation:rehearsal", username: "synthetic rehearsal", staff_id: "STF-0007", roles: ["REVIEWER"], capabilities: ["READ_INVESTIGATIONS", "DECIDE_INTERVENTION", "REVEAL_IDENTITY"], session_id: null }, context.run_id, context.review_ref, gate, "APPROVED", "synthetic CLI/test rehearsal");
+      continue;
+    }
+    const partnerGate = pendingPartnerResponse(db);
+    if (partnerGate) {
+      const context = partnerReviewContext(db, partnerGate);
+      decidePartnerResponse(db, { kind: "simulation", account_id: "simulation:rehearsal", username: "synthetic rehearsal", staff_id: "STF-0007", roles: ["REVIEWER"], capabilities: ["READ_INVESTIGATIONS", "DECIDE_INTERVENTION", "REVEAL_IDENTITY"], session_id: null }, context.run_id, context.review_ref, partnerGate, "APPROVED", "synthetic CLI/test rehearsal");
       continue;
     }
     if (waitingForOperatorAction(db)) answerTicket(db, scenarioOperator(CHARACTERS.tunde), currentRunId(db), "ACT-S2-1", "TKT-2291", clockOf(db));

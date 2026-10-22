@@ -7,6 +7,8 @@ import { addMinutes, addSeconds, dateOf, fromMinutes, hhmmOf, toSeconds } from "
 import { ingestEvents, type IngestSummary } from "../services/ingest";
 import { CHARACTERS } from "./generator";
 import { clockOf } from "./player";
+import { livePartnerCalls } from "./partners";
+import { ingestPartnerCalls } from "../services/partners";
 
 /** Simulated seconds per real second while live activity is on. */
 export const LIVE_SPEED = 4;
@@ -156,12 +158,12 @@ export function liveSource(db: Database.Database, from: string): (date: string) 
   };
 }
 
-type Totals = { ticks: number; events: number; actions: number; matched: number; noise: number; cases_opened: number };
-export type LiveState = { enabled: boolean; clock: string | null; cursor: string; wall_ms: number | null; totals: Totals; last: LiveTick | null; desk: string[] | null };
-export type LiveTick = { from: string; to: string; events: number; actions: number; matched: number; noise: number; cases_opened: string[]; capped: boolean };
+type Totals = { ticks: number; events: number; actions: number; matched: number; noise: number; cases_opened: number; partner_calls: number; partner_cases_opened: number };
+export type LiveState = { enabled: boolean; clock: string | null; cursor: string; wall_ms: number | null; totals: Totals; last: LiveTick | null; desk: string[] | null; partner_minute: number | null };
+export type LiveTick = { from: string; to: string; events: number; actions: number; matched: number; noise: number; cases_opened: string[]; capped: boolean; partner_calls: number; partner_cases_opened: string[] };
 
 const KEY = "live_state";
-const EMPTY: LiveState = { enabled: false, clock: null, cursor: "", wall_ms: null, totals: { ticks: 0, events: 0, actions: 0, matched: 0, noise: 0, cases_opened: 0 }, last: null, desk: null };
+const EMPTY: LiveState = { enabled: false, clock: null, cursor: "", wall_ms: null, totals: { ticks: 0, events: 0, actions: 0, matched: 0, noise: 0, cases_opened: 0, partner_calls: 0, partner_cases_opened: 0 }, last: null, desk: null, partner_minute: null };
 
 export function liveState(db: Database.Database): LiveState {
   const row = db.prepare("SELECT value FROM sim_state WHERE key = ?").get(KEY) as { value: string } | undefined;
@@ -224,18 +226,25 @@ export function liveTick(db: Database.Database, nowMs: number): LiveTick | null 
   const window = liveWindow(liveSource(db, from.clock), from, to, loggedIn);
   const result: IngestSummary | null = window.events.length ? ingestEvents(db, window.events) : null;
   const actions = result?.actions ?? [];
+  // Normal partner API traffic for each whole simulated minute passed, always within consent.
+  const lastMinute = Math.floor(toSeconds(window.next.clock) / 60);
+  const firstMinute = Math.max(s.partner_minute === null ? lastMinute : s.partner_minute + 1, lastMinute - 2);
+  const partnerCalls = Array.from({ length: Math.max(0, lastMinute - firstMinute + 1) }, (_, i) => livePartnerCalls(db, firstMinute + i)).flat();
+  const partners = partnerCalls.length ? ingestPartnerCalls(db, partnerCalls) : null;
   const tick: LiveTick = {
     from: from.clock, to: window.next.clock, events: result?.inserted ?? 0, actions: actions.length,
     matched: actions.filter((a) => a.status === "MATCHED").length, noise: window.bundles.filter((b) => b.noise).length,
     cases_opened: result?.cases_opened ?? [], capped: window.capped,
+    partner_calls: partners?.inserted ?? 0, partner_cases_opened: partners?.cases_opened ?? [],
   };
   // Carry unspent wall time forward; after a cap or a long gap, resume from now instead.
   const resume = window.capped || wanted > MAX_ADVANCE_SECONDS;
   saveState(db, {
-    ...s, clock: window.next.clock, cursor: window.next.cursor, wall_ms: resume ? nowMs : wall + (advance * 1000) / LIVE_SPEED, last: tick,
+    ...s, clock: window.next.clock, cursor: window.next.cursor, wall_ms: resume ? nowMs : wall + (advance * 1000) / LIVE_SPEED, last: tick, partner_minute: lastMinute,
     totals: {
       ticks: s.totals.ticks + 1, events: s.totals.events + tick.events, actions: s.totals.actions + tick.actions,
       matched: s.totals.matched + tick.matched, noise: s.totals.noise + tick.noise, cases_opened: s.totals.cases_opened + tick.cases_opened.length,
+      partner_calls: (s.totals.partner_calls ?? 0) + tick.partner_calls, partner_cases_opened: (s.totals.partner_cases_opened ?? 0) + tick.partner_cases_opened.length,
     },
   });
   return tick;

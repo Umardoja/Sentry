@@ -52,7 +52,7 @@ export function MoneyGraph({ caseId }: { caseId: string }) {
               ))}
               {data.accounts.flatMap((a, i) =>
                 a.banks.map((b) => (
-                  <path key={`${a.id}-${b}`} d={`M 640 ${rowY(i)} C 760 ${rowY(i)}, 760 ${rowY(bankIndex.get(b) ?? 0)}, 850 ${rowY(bankIndex.get(b) ?? 0)}`} stroke="var(--zenith-red)" strokeWidth={1.6} strokeDasharray="6 5" fill="none" />
+                  <path key={`${a.id}-${b}`} d={`M 640 ${rowY(i)} C 760 ${rowY(i)}, 760 ${rowY(bankIndex.get(b) ?? 0)}, 820 ${rowY(bankIndex.get(b) ?? 0)}`} stroke="var(--zenith-red)" strokeWidth={1.6} strokeDasharray="6 5" fill="none" />
                 )),
               )}
               <defs>
@@ -90,11 +90,11 @@ export function MoneyGraph({ caseId }: { caseId: string }) {
               ) : null,
             )}
             {data.banks.map((b, i) => (
-              <div key={b.bank} style={{ position: "absolute", left: 850, top: 12 + i * ROW + 6, width: 250, height: ROW - 12, background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 8, padding: "6px 12px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div key={b.bank} style={{ position: "absolute", left: 820, top: 12 + i * ROW + 6, width: 280, height: ROW - 12, background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 8, padding: "6px 12px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div className="row" style={{ gap: 8 }}>
                   <span style={{ width: 24, height: 24, borderRadius: 99, background: "var(--neutral-tint)", fontSize: 12, fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{b.bank.slice(-1)}</span>
                   <div>
-                    <div style={{ fontSize: 14, fontWeight: 600 }}>{b.bank} ({b.accounts} accts)</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, whiteSpace: "nowrap" }}>{b.bank} · {b.accounts} accts</div>
                     <div style={{ fontSize: 12, fontWeight: 700, color: b.blocked ? "var(--zenith-red)" : "var(--text-muted)" }}>{b.blocked ? "BLOCKED" : "SENT"}</div>
                   </div>
                 </div>
@@ -102,7 +102,7 @@ export function MoneyGraph({ caseId }: { caseId: string }) {
               </div>
             ))}
             {data.banks.length === 0 && (
-              <div className="muted" style={{ position: "absolute", left: 850, top: H / 2 - 12 }}>No outbound transfers yet</div>
+              <div className="muted" style={{ position: "absolute", left: 820, top: H / 2 - 12 }}>No outbound transfers yet</div>
             )}
           </div>
         </div>

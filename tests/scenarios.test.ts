@@ -98,7 +98,8 @@ describe("demo path (seed 2026)", () => {
     expect(latest("STF-0389")).toMatchObject({ score: 35, level: "VERIFY" });
     expect(db.prepare("SELECT id FROM cases WHERE staff_id = 'STF-0389'").get()).toEqual({ id: "CASE-0003" });
     for (const id of ["STF-0390", "STF-0391", "STF-0392", "STF-0393"]) expect(latest(id).score).toBeLessThan(30);
-    expect(step().done).toBe(true);
+    // S5 (partner API risk) follows S4.
+    expect(step().step?.id).toBe("S5.1");
   });
 
   it("engines never read ground truth", async () => {

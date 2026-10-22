@@ -22,3 +22,8 @@ npm test, npm run lint, npm run typecheck and npm run build all pass; new endpoi
 
 ## Style
 Engines are small pure functions: rows in, SignalHit[] out. Strict TypeScript, no any. Components use design tokens, never raw hex values.
+
+## Temporary files
+- Put all temporary databases, previews and build outputs for a task under ONE folder: .codex-tmp/<task-name>/ (use NEXT_DIST_DIR or equivalent inside it).
+- Before finishing a task: stop any servers you started and delete .codex-tmp/<task-name>/. Keep only the latest backup in .codex-backups/.
+- Never create new .next-* or .codex-pass* folders at the project root.

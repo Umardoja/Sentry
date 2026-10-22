@@ -163,9 +163,12 @@ describe("live generator", () => {
       cases: db.prepare("SELECT id, staff_id, status, peak_score, level FROM cases ORDER BY id").all(),
       interventions: db.prepare("SELECT id, case_id, staff_id, type, status, target FROM interventions ORDER BY id").all(),
       scripted: db.prepare("SELECT staff_id, ts, score, raw_score, level, breakdown, step_id FROM risk_scores WHERE step_id LIKE 'S_._' ORDER BY id").all(),
+      partner: db.prepare("SELECT partner_id, ts, score, level, breakdown, step_id FROM partner_risk_scores WHERE step_id LIKE 'S5._' ORDER BY id").all(),
+      partnerCases: db.prepare("SELECT * FROM partner_cases ORDER BY id").all(),
+      partnerResponses: db.prepare("SELECT id, case_id, type, status FROM partner_responses ORDER BY id").all(),
     });
     const expected = outcome(clean);
-    expect(expected.log.map((s) => s.step)).toEqual(["S1.1", "S2.0", "S2.1", "S2.2", "S2.3", "S2.4", "S3.1", "S3.2", "S3.3", "S3.4", "S4.1"]);
+    expect(expected.log.map((s) => s.step)).toEqual(["S1.1", "S2.0", "S2.1", "S2.2", "S2.3", "S2.4", "S3.1", "S3.2", "S3.3", "S3.4", "S4.1", "S5.1", "S5.2", "S5.3", "S5.4"]);
     expect(outcome(withLive)).toEqual(expected);
   }, 180_000);
 

@@ -15,6 +15,10 @@ export const STEPS: StepDef[] = [
   { id: "S3.3", scenario: "S3 · Stolen login", label: "48 more record views with no case", sim_time: "2026-10-16T22:08:00+01:00", focus: "/cases/CASE-0002" },
   { id: "S3.4", scenario: "S3 · Stolen login", label: "Bulk export of 5,000 customer rows", sim_time: "2026-10-16T22:10:00+01:00", focus: "/cases/CASE-0002" },
   { id: "S4.1", scenario: "S4 · Scam calls", label: "Trace the scam caller back to staff", sim_time: "2026-10-16T22:15:00+01:00", focus: "/tracer" },
+  { id: "S5.1", scenario: "S5 · Partner API key subleased", label: "Quillmark Pay's API key is used from 9 networks within an hour", sim_time: "2026-10-16T22:20:00+01:00", focus: "/partners/PTR-QMK" },
+  { id: "S5.2", scenario: "S5 · Partner API key subleased", label: "40 account lookups in sequence, with no payments", sim_time: "2026-10-16T22:26:00+01:00", focus: "/partners/PTR-QMK" },
+  { id: "S5.3", scenario: "S5 · Partner API key subleased", label: "A call for a customer who revoked consent the day before", sim_time: "2026-10-16T22:31:00+01:00", focus: "/partners/PTR-QMK" },
+  { id: "S5.4", scenario: "S5 · Partner API key subleased", label: "Further calls on the suspended key are refused", sim_time: "2026-10-16T22:36:00+01:00", focus: "/partners/PTR-QMK" },
 ];
 
 /** S2.4 destination banks (fictional): count of outside accounts and attempted total per bank. */

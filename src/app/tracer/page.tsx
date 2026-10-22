@@ -33,7 +33,7 @@ export default function TracerPage() {
           </div>
           <div style={{ background: "var(--page)", borderRadius: 8, padding: "10px 16px", margin: "14px 0", fontStyle: "italic" }}>“The caller knew my balance and my last transaction.”</div>
           <div className="row" style={{ flexWrap: "wrap" }}>
-            <span className="eyebrow">Victim accounts:</span>
+            <span className="eyebrow">Reporting customers:</span>
             {data.reports.map((r) => <span key={r.report_id} className="chip grey">{r.account_masked} {r.city}</span>)}
           </div>
         </div>
@@ -55,9 +55,9 @@ export default function TracerPage() {
               <tr>
                 <th className="tracer-customer-column">Customer / account</th>
                 {data.viewers.map((v) => (
-                  <th key={v.staff_id} style={{ textAlign: "center", background: v.is_common ? "var(--level-contain-tint)" : undefined, color: v.is_common ? "var(--zenith-red)" : undefined, textTransform: "none", fontSize: 15 }}>
+                  <th key={v.staff_id} className="tracer-staff-column" style={{ background: v.is_common ? "var(--level-contain-tint)" : undefined, color: v.is_common ? "var(--zenith-red)" : undefined }}>
                     {v.pseudo_id}
-                    {v.is_common && <div><span className="chip" style={{ background: "var(--zenith-red)", color: "var(--on-ink)", height: 22, fontSize: 11, marginTop: 4 }}>COMMON TO ALL {data.reports.length}</span></div>}
+                    {v.is_common && <div><span className="chip tracer-common-chip">IN ALL {data.reports.length}</span></div>}
                   </th>
                 ))}
               </tr>
@@ -70,9 +70,9 @@ export default function TracerPage() {
                     <div className="muted" style={{ fontSize: 13 }}>Reported: {formatSimulatedTime(r.reported_at)}</div>
                   </td>
                   {data.viewers.map((v) => (
-                    <td key={v.staff_id} style={{ textAlign: "center", background: v.is_common ? "var(--level-contain-tint)" : undefined }}>
+                    <td key={v.staff_id} className="tracer-staff-column" style={{ background: v.is_common ? "var(--level-contain-tint)" : undefined }}>
                       {v.viewed_customer_ids.includes(r.customer_id) ? (
-                        <span className="chip" style={{ background: "var(--surface)", color: v.is_common ? "var(--zenith-red)" : "var(--text-subtle)", border: "1px solid var(--neutral-tint)", height: 26, fontSize: 13 }}><Check size={14} /> viewed</span>
+                        <span className="chip tracer-viewed" style={{ color: v.is_common ? "var(--zenith-red)" : "var(--text-subtle)" }}><Check size={13} /> Viewed</span>
                       ) : (
                         <span className="muted">—</span>
                       )}
@@ -83,7 +83,7 @@ export default function TracerPage() {
             </tbody>
           </table>
           </div>
-          <div className="row muted small" style={{ background: "var(--page)", margin: 24, borderRadius: 8, padding: "12px 16px" }}><Info size={16} /> Each view had a valid ticket. The link only appears when you start from the victims.</div>
+          <div className="row muted small" style={{ background: "var(--page)", margin: 24, borderRadius: 8, padding: "12px 16px" }}><Info size={16} /> Each view had a valid ticket. The link only appears when you start from the customers who reported calls.</div>
         </div>
         {data.focus && (
           <div className="card">
@@ -94,8 +94,8 @@ export default function TracerPage() {
               {data.focus.score > 0 ? <><span className="chip grey">Risk score: {data.focus.score}</span><LevelChip level={data.focus.level} /></> : <span className="chip grey">No risk score yet. Run step S4.1</span>}
             </div>
             <div style={{ background: "var(--page)", borderRadius: 8, padding: 16, margin: "18px 0" }}>
-              <div className="row" style={{ fontWeight: 600 }}><Lightbulb size={16} color="var(--zenith-red)" /> Key finding</div>
-              <div style={{ fontWeight: 600, marginTop: 4 }}>Every view had a real ticket. The pattern only shows when you start from the victims.</div>
+              <div className="row" style={{ fontWeight: 600 }}><Lightbulb size={16} color="var(--zenith-red)" /> Why it&apos;s worth examining</div>
+              <div style={{ fontWeight: 600, marginTop: 4 }}>Every view had a real ticket. The pattern only shows when you start from the customers who reported calls.</div>
             </div>
             {data.focus.case_id ? (
               <Link href={`/cases/${data.focus.case_id}`} className="btn dark lg" style={{ width: "100%" }}><FolderOpen size={18} /> Open case</Link>

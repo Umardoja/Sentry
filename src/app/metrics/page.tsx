@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Counter, LevelChip } from "@/components";
 import { naira, num, usePoll, useSession } from "@/lib/client";
 import { formatSimulatedTime } from "@/shared/time";
-import { auditActionLabel, roleLabel } from "@/lib/presentation";
+import { auditActionLabel, CLEARED_AUTOMATICALLY_HINT, roleLabel } from "@/lib/presentation";
 
 type FA = { seed: number; staff_days: number; events: number; cleared: number; false_alerts: number }[];
 type Metrics = {
@@ -27,9 +27,9 @@ export default function MetricsPage() {
         <h1 style={{ fontSize: 30 }}>Results</h1>
         <div className="muted">Portfolio · 500 staff · 30-day observation window</div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
+      <div className="metrics-counters">
         <Counter label="Actions checked" value={num(data.actions_checked)} />
-        <Counter label="Cleared automatically" value={num(data.unusual_cleared)} />
+        <Counter label="Cleared automatically" hint={CLEARED_AUTOMATICALLY_HINT} value={num(data.unusual_cleared)} />
         <Counter label="Cases opened" value={num(data.cases_opened)} />
         <Counter label="Transfers blocked" value={num(data.transfers_blocked)} />
         <Counter label="Funds held" value={naira(data.funds_held_naira)} />
@@ -62,7 +62,7 @@ export default function MetricsPage() {
             {data.cases.map((c) => (
               <Link key={c.id} href={`/cases/${c.id}`} className="between" style={{ padding: "10px 0", borderBottom: "1px solid var(--border)" }}>
                 <span><strong>{c.pseudo_id}</strong> <span className="muted">· {c.id}</span></span>
-                <span className="row"><span className="numeric" style={{ fontWeight: 700 }}>Risk score {c.peak_score}</span><LevelChip level={c.level} /><span className="muted small">{c.case_status === "CONTAINED" ? "Response applied" : "Open"}</span></span>
+                <span className="row"><span className="row nowrap"><span className="numeric" style={{ fontWeight: 700, whiteSpace: "nowrap" }}>Risk score {c.peak_score}</span><LevelChip level={c.level} /></span><span className="muted small">{c.case_status === "CONTAINED" ? "Response applied" : "Open"}</span></span>
               </Link>
             ))}
             {data.cases.length === 0 && <div className="muted">No cases yet.</div>}

@@ -9,6 +9,8 @@ export const TABLES = [
   "signals", "risk_scores", "cases", "interventions", "case_notes", "audit_log", "sim_state",
   "bvn_watchlist", "scam_reports", "ticket_answers", "evidence_evaluations", "intervention_reviews",
   "access_cases", "case_coverage_delegations", "access_eligibility", "access_requests", "temporary_access_grants",
+  "api_partners", "api_keys", "customer_consents", "partner_api_calls", "partner_call_checks", "partner_signals",
+  "partner_risk_scores", "partner_cases", "partner_responses", "partner_reviews",
 ] as const;
 
 const ddl = `
@@ -164,6 +166,53 @@ CREATE TABLE IF NOT EXISTS temporary_access_grants (
   revoked_reason TEXT, revoked_at_ms INTEGER
 );
 CREATE UNIQUE INDEX IF NOT EXISTS temporary_grant_scope ON temporary_access_grants(run_id, session_id, case_id, customer_id, operation);
+-- S5: third-party partners on the open-banking APIs (sandbox data only).
+CREATE TABLE IF NOT EXISTS api_partners (
+  id TEXT PRIMARY KEY, name TEXT NOT NULL, partner_type TEXT NOT NULL, licence_ref TEXT NOT NULL, onboarded_at TEXT NOT NULL,
+  status TEXT NOT NULL CHECK (status IN ('ACTIVE','SUSPENDED')), owner_staff_id TEXT NOT NULL REFERENCES staff(id)
+);
+CREATE TABLE IF NOT EXISTS api_keys (
+  id TEXT PRIMARY KEY, partner_id TEXT NOT NULL REFERENCES api_partners(id), label TEXT NOT NULL,
+  status TEXT NOT NULL CHECK (status IN ('ACTIVE','RATE_LIMITED','SUSPENDED')), created_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS customer_consents (
+  id TEXT PRIMARY KEY, customer_id TEXT NOT NULL REFERENCES customers(id), partner_id TEXT NOT NULL REFERENCES api_partners(id),
+  scopes TEXT NOT NULL, granted_at TEXT NOT NULL, expires_at TEXT NOT NULL, revoked_at TEXT
+);
+CREATE INDEX IF NOT EXISTS consents_partner_customer ON customer_consents(partner_id, customer_id);
+CREATE TABLE IF NOT EXISTS partner_api_calls (
+  id TEXT PRIMARY KEY, key_id TEXT NOT NULL REFERENCES api_keys(id), endpoint TEXT NOT NULL, scope TEXT NOT NULL,
+  customer_id TEXT NOT NULL REFERENCES customers(id), account_no TEXT NOT NULL, source_network TEXT NOT NULL, ts TEXT NOT NULL,
+  status TEXT NOT NULL CHECK (status IN ('ALLOWED','RATE_LIMITED','BLOCKED')), scenario_tag TEXT
+);
+CREATE INDEX IF NOT EXISTS partner_calls_key_ts ON partner_api_calls(key_id, ts);
+CREATE TABLE IF NOT EXISTS partner_call_checks (
+  call_id TEXT PRIMARY KEY REFERENCES partner_api_calls(id),
+  status TEXT NOT NULL CHECK (status IN ('MATCHED','OUTSIDE_CONSENT','CONSENT_ENDED')), checks TEXT NOT NULL, reason TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS partner_signals (
+  id TEXT PRIMARY KEY, partner_id TEXT NOT NULL REFERENCES api_partners(id), code TEXT NOT NULL, tier INTEGER NOT NULL, points INTEGER NOT NULL,
+  effective_points INTEGER NOT NULL, ts TEXT NOT NULL, first_ts TEXT NOT NULL, call_ids TEXT NOT NULL, evidence TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS partner_signals_partner ON partner_signals(partner_id);
+CREATE TABLE IF NOT EXISTS partner_risk_scores (
+  id INTEGER PRIMARY KEY AUTOINCREMENT, partner_id TEXT NOT NULL REFERENCES api_partners(id), ts TEXT NOT NULL, score INTEGER NOT NULL,
+  level TEXT NOT NULL, breakdown TEXT NOT NULL, review_required INTEGER NOT NULL, step_id TEXT
+);
+CREATE INDEX IF NOT EXISTS partner_risk_partner ON partner_risk_scores(partner_id, id);
+CREATE TABLE IF NOT EXISTS partner_cases (
+  id TEXT PRIMARY KEY, partner_id TEXT NOT NULL REFERENCES api_partners(id), key_id TEXT NOT NULL REFERENCES api_keys(id), opened_at TEXT NOT NULL,
+  status TEXT NOT NULL CHECK (status IN ('OPEN','CONTAINED','CLOSED_JUSTIFIED')), peak_score INTEGER NOT NULL, level TEXT NOT NULL, closed_at TEXT
+);
+CREATE TABLE IF NOT EXISTS partner_responses (
+  id TEXT PRIMARY KEY, case_id TEXT NOT NULL REFERENCES partner_cases(id), partner_id TEXT NOT NULL REFERENCES api_partners(id),
+  key_id TEXT NOT NULL REFERENCES api_keys(id), type TEXT NOT NULL CHECK (type IN ('RATE_LIMIT_KEY','SUSPEND_KEY')),
+  status TEXT NOT NULL CHECK (status IN ('ACTIVE','PENDING_APPROVAL','APPROVED','REJECTED','RELEASED')),
+  automatic INTEGER NOT NULL, created_at TEXT NOT NULL, decided_by TEXT, decided_at TEXT, note TEXT, target TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS partner_reviews (
+  review_ref TEXT PRIMARY KEY, run_id TEXT NOT NULL, subject_id TEXT NOT NULL, material_json TEXT NOT NULL, created_at TEXT NOT NULL
+);
 `;
 
 export function createSchema(database: Database.Database): void {

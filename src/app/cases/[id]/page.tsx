@@ -103,7 +103,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
     <>
       {data.banner && (
         <div className={`banner ${data.banner_level}`}>
-          <AlertTriangle size={18} /> Response · {data.banner.replace("Contain · ", "").replace("Hold · ", "")}
+          <AlertTriangle size={18} /> Response · {data.banner.replace("Contain · ", "").replace("Hold · ", "").replace("waiting for your approval", canDecide ? "waiting for your approval" : "waiting for Reviewer approval")}
         </div>
       )}
       <div className="card" style={{ paddingBottom: 0 }}>

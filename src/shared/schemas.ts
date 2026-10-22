@@ -169,6 +169,18 @@ export const ingestBatchSchema = z.object({
   events: z.array(ingestEventSchema).min(1).max(200),
 }).strict();
 export type IngestEvent = z.infer<typeof ingestEventSchema>;
+export const partnerCallEventSchema = z.object({
+  id: ingestIdSchema, key_id: ingestIdSchema, ts: lagosTsSchema,
+  endpoint: z.enum(["GET /accounts/balance", "GET /accounts/transactions", "POST /payments/name-enquiry", "POST /payments"]),
+  scope: z.enum(["balance", "transactions", "payment_initiation"]),
+  customer_id: ingestIdSchema, account_no: z.string().regex(/^\d{10}$/), source_network: z.string().trim().min(1).max(80),
+}).strict();
+export const partnerCallBatchSchema = z.object({
+  workspace_id: z.string().regex(/^WS-[a-f0-9]{32}$/).nullable().optional(),
+  calls: z.array(partnerCallEventSchema).min(1).max(200),
+}).strict();
+export type PartnerCallEvent = z.infer<typeof partnerCallEventSchema>;
+export const partnerJustifyRequestSchema = z.object({ run_id: runIdSchema, review_ref: reviewRefSchema, note: z.string().trim().min(1).max(500) }).strict();
 export type IngestBatch = z.infer<typeof ingestBatchSchema>;
 export const loginRequestSchema = z.object({
   username: z.string().trim().min(1).max(128),

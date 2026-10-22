@@ -69,10 +69,16 @@ The following table documents that CLI/test sequence; the normal product header 
 | S2.4 | 21:58 | 31 transfers blocked, 81 Contain. Gate: Approve suspension |
 | S3.1 to S3.4 | 22:05 to 22:10 | Bisi: 35 -> 55 -> 70 -> 85, export blocked. Gate: Approve suspension |
 | S4.1 | 22:15 | Leak tracer: Staff-B4E0 viewed all 5 victims -> 35 Verify, CASE-0003 |
+| S5.1 | 22:20 | Quillmark Pay's API key used from 9 networks within an hour -> 20 Watch |
+| S5.2 | 22:26 | 40 account lookups in sequence, no payments -> 50 Needs review, partner case PCASE-0001 |
+| S5.3 | 22:31 | Call for a customer who revoked consent the day before -> 75 Hold; key rate-limited automatically. Gate: Reviewer approves "Suspend key" |
+| S5.4 | 22:36 | Five further calls on the suspended key are refused (403, recorded as BLOCKED) -> 75 Hold, case contained |
 
 ## Deploy (one container, one instance)
 
 The `Dockerfile` builds on `node:22-bookworm-slim` (`npm ci`, `npm run build`) and is sized for a **512 MB** host. The deterministic visitor template is generated in a build stage (`demo:prepare`) and baked into the image at `/app/template/`. The runtime image keeps only production dependencies and does no data generation. On start, `scripts/docker-start.sh` copies the template onto an empty `/data` volume (a few seconds), then runs `next start` on `0.0.0.0:$PORT`. Mount a persistent volume at `/data`.
+
+Template file names carry a version (`TEMPLATE_VERSION`, currently `v2` for S5): `showcase-access-v2-2026.db` for visitors and `seed-2026-v2.db` for the default database. Upgrading an image on an existing volume needs no manual wipe. The start script copies in the new template and removes older template files. Any visitor workspace or database built from an older template is rebuilt on its next use, so the visitor keeps their session and starts fresh, and abandoned ones are removed by the usual 6-hour retirement.
 
 `NODE_OPTIONS` defaults to `--max-old-space-size=384`; override it with `-e NODE_OPTIONS=…`. Measured with `docker run --memory=512m` on an empty volume, the server listened after about 8 s. It used about 110 MB RSS idle, and about 150 MB at peak while one visitor ran S1–S4 to the end with live activity on for two minutes. Each visitor workspace is a copy of the 112 MB template, so size the volume for `DEMO_WORKSPACE_MAX` × 112 MB plus the template (about 5 GB at the default 40). In demo mode `/api/ingest/events` requires a `workspace_id`; it never seeds the unused default database at runtime.
 
@@ -93,6 +99,25 @@ Hosts such as Railway and Render terminate TLS and forward plain HTTP to the con
 docker build -t sentry-demo .
 docker run -p 8080:8080 -e PORT=8080 -e APP_ORIGIN=https://your.public.host -e INGEST_KEY=$(openssl rand -hex 32) -v sentry-data:/data sentry-demo
 ```
+
+## S5 · third-party partner risk (open-banking APIs)
+
+Sandbox data only. Six invented open-banking fintechs connect to the bank's APIs with customer consent: Quillmark Pay, Lumenridge Wallet, Harbourline Finance, Copperleaf Payments, Brackenfield Savings and Brindlewood Ledger. Their networks use private-use AS numbers. (The brief's example "Kora Pay" was not used because it is close to a real company's name.) The template holds 30 days of normal, consented traffic: about 36k calls to balance, transactions and payee name enquiries, which are mostly followed by a payment.
+
+Every call gets a reason check: an active consent (not expired, not revoked) from that customer, for that partner and scope. Partner risk factors live in the existing signals catalogue (`src/server/engines/signals.ts`, engine `Partners`):
+
+| Factor | Plain label | Points (tiers) |
+|---|---|---|
+| `CALL_OUTSIDE_CONSENT` | Call outside the customer's consent | 25 / 40 (3 or more calls) |
+| `CONSENT_REVOKED_OR_EXPIRED` | Call after consent ended | 25; a hard contradiction that always triggers review |
+| `LOOKUP_WITHOUT_BUSINESS` | Many lookups, almost no real transactions | 10 / 20 (20 or more name enquiries in 60 minutes with under 10% paid; 100 or more) |
+| `KEY_MULTI_NETWORK` | One key used from many networks | 20 / 30 (5 or more networks in 60 minutes; 10 or more) |
+| `SEQUENTIAL_ENUMERATION` | Accounts looked up in sequence | 20 (10 or more consecutive account numbers within 60 minutes) |
+| `PARTNER_VOLUME_ANOMALY` | Unusual volume for this partner | 6 / 12 (z > 2 / > 3 against its own weekday baseline) |
+
+Partners get a risk score and level on the same bands as staff. A partner case opens when review is required. At Hold the key is rate-limited automatically (more than 5 calls a minute are refused with 429) and "Suspend key" is proposed. Only a Reviewer can decide it, independently (never the partner's relationship owner), against evidence-bound review references, and every decision is audited. Approval suspends the key, so later calls get 403 and are recorded as BLOCKED. Rejection keeps the key rate-limited. **Justified** closes the partner case, restores the key and releases its responses. Customers appear only as ••••last4, and keys only by label (no key secret is stored).
+
+**Partners** in the navigation (Investigation Lead, Reviewer, Auditor) lists each partner with its type, risk level, consent coverage, calls today and key status. The partner case view shows reason checks per call, risk factors, evidence for and against, the suspend-key decision, activity and the calls table. The console's highest-risk list and the cases list include partner cases, labelled "Partner".
 
 ## Live simulated activity
 
@@ -127,13 +152,15 @@ Pass 5 has a separate frozen corpus under `evaluation/pass5/frozen`; Pass 4 arti
 
 Public: GET `/api/health`, GET `/api/auth/mode`; POST `/api/auth/login` in normal mode and POST `/api/auth/demo` in explicitly enabled demo mode. Authenticated: GET `/api/auth/session`; POST `/api/auth/logout`. Switching personas calls `/api/auth/demo` with the current session's CSRF token and exact Origin.
 
-Capability-protected reads: GET `/api/console` `/api/sim/state` `/api/scenarios` `/api/actions` `/api/risk/top` `/api/staff/{id}` `/api/staff/{id}/timeline` `/api/cases` `/api/cases/{id}` `/api/graph/{case_id}` `/api/metrics` `/api/audit` `/api/tracer/{caller}` `/api/stream`.
+Capability-protected reads: GET `/api/console` `/api/sim/state` `/api/scenarios` `/api/actions` `/api/risk/top` `/api/staff/{id}` `/api/staff/{id}/timeline` `/api/cases` `/api/cases/{id}` `/api/graph/{case_id}` `/api/metrics` `/api/audit` `/api/tracer/{caller}` `/api/stream` `/api/partners` `/api/partners/{id}`.
 
 Access Bridge reads: GET `/api/access-bridge` (operator assignment or reviewer/auditor activity projection) and GET `/api/access-bridge/grants/{id}/restriction` (grant-enforced sample restriction status). Mutations: POST `/api/access-bridge/request` and POST `/api/access-bridge/cases/{id}/complete`. They require the authenticated operator, CSRF/run binding and canonical assignment; client-supplied identities, roles and approval flags are rejected.
 
-Capability- and CSRF-protected mutations: POST `/api/sim/reset` `/api/scenarios/{id}/next` (409 at a gate) `/api/interventions/{id}/approve|reject` `/api/cases/{id}/unmask` `/api/actions/{id}/answer` `/api/sim/live` (`{ run_id, enabled }`, Presenter's *Live activity* switch). POST `/api/scenarios/rehearse` is intentionally disabled (410); the isolated CLI helper is not an HTTP authority path.
+Capability- and CSRF-protected mutations: POST `/api/sim/reset` `/api/scenarios/{id}/next` (409 at a gate) `/api/interventions/{id}/approve|reject` `/api/cases/{id}/unmask` `/api/actions/{id}/answer` `/api/sim/live` (`{ run_id, enabled }`, Presenter's *Live activity* switch) `/api/partner-responses/{id}/approve|reject` (`{ run_id, review_ref, note }`; Reviewer only) `/api/partner-cases/{id}/justify` (`{ run_id, review_ref, note }`; Reviewer only). POST `/api/scenarios/rehearse` is intentionally disabled (410); the isolated CLI helper is not an HTTP authority path.
 
 Machine ingest (no session; header `X-Ingest-Key` must equal env `INGEST_KEY`, otherwise 401, and closed while `INGEST_KEY` is unset): POST `/api/ingest/events` with `{ workspace_id?, events: [...] }`, 1–200 Zod-validated events of type `login`, `reversal` (`original_txn_id`, `credit_account_id`, `amount`), `record_view` (`customer_id`, `ticket_ref`), `export` (`ticket_ref`, `rows`, `scope`) or `failed_debit` (the core-banking debit a reversal is checked against). `workspace_id` may name an existing demo visitor workspace, never a new one. Events are idempotent on `id` (repeats are reported under `duplicates`); events for scripted S1–S4 characters or records are rejected. After insert, purpose checks and the scenario scoring path (signals, evidence, score, review ladder) run for each affected staff member, so a genuinely contradicted event can still open a case. The response lists inserted, duplicate and rejected ids, each action's purpose status, the new scores and any cases opened.
+
+POST `/api/ingest/partner-calls` with the same `X-Ingest-Key` takes `{ workspace_id?, calls: [...] }`: 1–200 calls with `id`, `key_id`, `endpoint`, `scope`, `customer_id`, `account_no`, `source_network` and `ts`. It is idempotent on `id`, rejects calls on the scripted S5 partner, records each call as the gateway would (403 when the key is suspended, 429 beyond a rate-limited key's allowance), checks consent, then runs the partner scoring path. Live mode and `npm run live-feed` send normal partner calls, always within consent, through the same path, and they open no partner cases.
 
 Business mutations carry the currently rendered `run_id`. Decisions additionally carry the server-issued `review_ref` for the rendered material evidence and target scope. A reset or material change returns a stable 409 (`RUN_STALE`, `REVIEW_REQUIRED`, or `REVIEW_STALE`) without applying the local effect. Reveal grants are scoped to session + run + case. Decision cards deliberately retain the reviewed reference until the reviewer chooses “review updated evidence”; polling does not silently upgrade an old decision.
 
