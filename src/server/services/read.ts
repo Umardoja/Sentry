@@ -6,6 +6,7 @@ import { STEPS } from "../sim/scenarios";
 import { SCAM_CALLER } from "../sim/generator";
 import { liveState } from "../sim/live";
 import { formatFull } from "../time";
+import { formatSimulatedTime } from "../../shared/time";
 import { currentRunId } from "./run";
 import { freshness, reviewContext } from "./review";
 import { currentReviewDecision } from "./riskReview";
@@ -293,11 +294,11 @@ export function caseView(db: Database.Database, id: string, revealName = false) 
     score: score.score, level: score.level || LEVEL_FROM(score.score), review: currentReviewDecision(db, c.staff_id), freshness: freshness(db, c.staff_id),
     banner: pending ? (pending.type === "HOLD_FUNDS" ? "Hold · funds hold waiting for your approval" : "Contain · session suspension waiting for your approval") : null,
     banner_level: pending?.type === "HOLD_FUNDS" ? "HOLD" : "CONTAIN",
-    timeline: timeline.map((p) => ({ time: p.ts.slice(11, 16), score: p.score, level: p.level })),
+    timeline: timeline.map((p) => ({ time: p.ts, score: p.score, level: p.level })),
     signals,
-    purpose: failedAction ? { title: `${ACTION_LABEL[failedAction.action_type]} of ${naira(failedAction.amount ?? 0)} at ${failedAction.ts.slice(11, 16)}`, checks: JSON.parse(failedAction.checks) as { code: string; passed: boolean; detail: string }[] } : null,
-    activity: activity.map((a) => ({ ...a, time: a.ts.slice(11, 16) })),
-    interventions: interventions.filter((i) => i.type !== "CONTACT_BVN_OWNER").map((i) => ({ ...i, automatic: !!i.automatic, target: JSON.parse(i.target), decided_time: i.decided_at?.slice(11, 16) ?? null, ...(i.status === "PENDING_APPROVAL" ? reviewContext(db, i.id) : {}) })),
+    purpose: failedAction ? { title: `${ACTION_LABEL[failedAction.action_type]} of ${naira(failedAction.amount ?? 0)} · ${formatSimulatedTime(failedAction.ts)}`, checks: JSON.parse(failedAction.checks) as { code: string; passed: boolean; detail: string }[] } : null,
+    activity: activity.map((a) => ({ ...a, time: a.ts })),
+    interventions: interventions.filter((i) => i.type !== "CONTACT_BVN_OWNER").map((i) => ({ ...i, automatic: !!i.automatic, target: JSON.parse(i.target), decided_time: i.decided_at, ...(i.status === "PENDING_APPROVAL" ? reviewContext(db, i.id) : {}) })),
     contact_tasks: contactTasks,
     watchlist: all(db, "SELECT * FROM bvn_watchlist WHERE case_id = ?", id).length,
     note: note ? { version: note.version, source: note.source, sentences: JSON.parse(note.sentences) as { text: string; evidence: string[] }[] } : null,

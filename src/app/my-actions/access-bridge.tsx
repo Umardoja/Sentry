@@ -55,9 +55,10 @@ export function AccessBridgePanel() {
 
   if (error && !data) return <section className="card" role="alert"><h2>Temporary access unavailable</h2><p className="muted">{error}</p><button className="btn" onClick={reload}>Try again</button></section>;
   if (!data) return <section className="card loading-card" role="status">Loading assigned access work…</section>;
+  const heading = data.cases.some((item) => item.grant?.status === "ACTIVE") ? "Access granted" : data.cases.some((item) => item.status === "OPEN") ? "Access needed" : "Access ended";
   return <section className="card access-bridge" aria-labelledby="access-bridge-title">
     <div className="between">
-      <div><div className="eyebrow">Access Bridge</div><h2 id="access-bridge-title">Access needed</h2></div>
+      <div><div className="eyebrow">Access Bridge</div><h2 id="access-bridge-title">{heading}</h2></div>
       <span className="chip grey"><LockKeyhole size={15} /> Read-only</span>
     </div>
     <p className="muted">Continue an assigned complaint while its ordinary owner is unavailable. Access is limited to one case, one customer and one approved operation.</p>
@@ -83,9 +84,10 @@ export function AccessBridgePanel() {
             <button className="btn" disabled={busy} onClick={() => viewRestriction(accessCase, true)}>Check another customer</button>
             <button className="btn" disabled={busy} onClick={() => complete(accessCase)}>Complete case</button>
           </>}
+          {!active && accessCase.status !== "OPEN" && accessCase.grant && <button className="btn" disabled={busy} onClick={() => viewRestriction(accessCase)}>Try viewing again</button>}
         </div>
         {details && <div className={`access-result ${details.startsWith("Scope boundary") || details.startsWith("Access denied") ? "denied" : ""}`} role="status">
-          {details.startsWith("Scope boundary") ? <XCircle size={17} /> : <CheckCircle2 size={17} />}{details}
+          {details.startsWith("Scope boundary") || details.startsWith("Access denied") ? <XCircle size={17} /> : <CheckCircle2 size={17} />}{details}
         </div>}
         <details className="technical-details"><summary>Technical details</summary>Operation: {accessCase.operation} · Case: {accessCase.id}{accessCase.grant ? ` · Grant: ${accessCase.grant.id}` : ""}</details>
       </div>;

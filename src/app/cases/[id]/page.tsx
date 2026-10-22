@@ -4,7 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { AlertTriangle, Ban, CheckCircle2, ClipboardCheck, Gavel, Lock, Power, ShieldAlert, Sparkles, XCircle } from "lucide-react";
 import { LevelChip, levelOf, ScoreSteps } from "@/components";
 import { post, usePoll, useSession } from "@/lib/client";
-import { purposeCheckLabel, reviewReasonLabel, signalLabel } from "@/lib/presentation";
+import { purposeCheckDisplay, reviewReasonSentence, signalLabel } from "@/lib/presentation";
+import { formatSimulatedTime } from "@/shared/time";
 import { MoneyGraph } from "./graph";
 
 type Intervention = { id: string; type: string; status: string; automatic: boolean; decided_by: string | null; decided_time: string | null; created_at: string; target: { amount?: number }; run_id?: string; review_ref?: string; evidence_codes?: string[] };
@@ -133,12 +134,12 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
             </div>
           </div>
         </div>
-        <div className="muted small" style={{ marginTop: 10 }}>Risk score last calculated at simulated event time {data.freshness.score?.sim_time.slice(11, 16) ?? "—"}. Evidence last checked at {data.freshness.evidence?.sim_time.slice(11, 16) ?? "—"}.{!data.freshness.score_is_current && " The evidence is newer than the displayed risk score."}</div>
+        <div className="muted small" style={{ marginTop: 10 }}>Risk score last calculated {formatSimulatedTime(data.freshness.score?.sim_time)}. Evidence last checked {formatSimulatedTime(data.freshness.evidence?.sim_time)}.{!data.freshness.score_is_current && " The evidence is newer than the displayed risk score."}</div>
         {data.review.required && (
           <div style={{ marginTop: 10, padding: "10px 12px", border: "1px solid var(--level-verify-border)", borderRadius: 8, background: "var(--level-verify-tint)" }}>
             <div className="row" style={{ color: "var(--level-verify)", fontWeight: 700 }}><ShieldAlert size={16} /> Review needed</div>
             <div className="muted small" style={{ marginTop: 4 }}>
-              Score remains {data.score} ({levelOf(data.level).label}). Review is needed because {data.review.reason_codes.map(reviewReasonLabel).join("; ")}.
+              Score remains {data.score} ({levelOf(data.level).label}). Review is needed because {reviewReasonSentence(data.review.reason_codes)}.
             </div>
           </div>
         )}
@@ -220,12 +221,12 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
                     {data.purpose.checks.map((ch) =>
                       ch.passed ? (
                         <div key={ch.code} className="list-row">
-                          <span className="row"><CheckCircle2 size={18} color="var(--ok)" /> {purposeCheckLabel(ch.code)}</span>
+                          <span className="row"><CheckCircle2 size={18} color="var(--ok)" /> {purposeCheckDisplay(ch.code, true)}</span>
                           <span className="muted small">{ch.detail}</span>
                         </div>
                       ) : (
                         <div key={ch.code} style={{ background: "var(--level-contain-tint)", borderRadius: 8, padding: "14px 16px", color: "var(--zenith-red)" }}>
-                          <div className="row jakarta" style={{ fontWeight: 700, fontSize: 17 }}><XCircle size={18} /> {purposeCheckLabel(ch.code)}</div>
+                          <div className="row jakarta" style={{ fontWeight: 700, fontSize: 17 }}><XCircle size={18} /> {purposeCheckDisplay(ch.code, false)}</div>
                           <div style={{ marginTop: 4, paddingLeft: 30 }}>{ch.detail}</div>
                         </div>
                       ),
@@ -239,7 +240,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
                   <div className="card-title" style={{ marginBottom: 12 }}>Activity</div>
                   {data.activity.map((a, i) => (
                     <div key={i} className="between" style={{ padding: "12px 0", borderBottom: "1px solid var(--border)" }}>
-                      <span className="row"><span className="numeric muted">{a.time}</span> {a.text}</span>
+                      <span className="row"><span className="numeric muted">{formatSimulatedTime(a.time)}</span> {a.text}</span>
                       {a.chip && <span className="chip bad">{a.chip}</span>}
                     </div>
                   ))}
@@ -287,7 +288,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
                           <div>
                             <div style={{ fontWeight: 600 }}>{t.title}</div>
                             <div className="muted small">
-                              {i.status === "APPROVED" ? `Approved by ${i.decided_by} at ${i.decided_time}` : i.status === "REJECTED" ? `Rejected by ${i.decided_by}` : t.sub}
+                              {i.status === "APPROVED" ? `Approved by ${i.decided_by} · ${formatSimulatedTime(i.decided_time)}` : i.status === "REJECTED" ? `Rejected by ${i.decided_by}` : t.sub}
                             </div>
                           </div>
                         </div>

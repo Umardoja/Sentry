@@ -5,12 +5,14 @@ import { Activity, Ban, CheckCircle2, Eye, FolderOpen, Hourglass, Lock, User } f
 import { Counter, LevelChip, levelOf, PurposeChip } from "@/components";
 import { naira, num, post, usePoll, useSession } from "@/lib/client";
 import { signalLabel } from "@/lib/presentation";
+import { formatSimulatedTime } from "@/shared/time";
+import { GuidedDemoPanel } from "./guided-demo-panel";
 
-type FeedRow = { key: string; time: string; pseudo_id: string; staff_id?: string; action: string; amount: number | null; ok: boolean; purpose_label: string; points: number; highlight: boolean };
+type FeedRow = { key: string; ts: string; time: string; pseudo_id: string; staff_id?: string; action: string; amount: number | null; ok: boolean; purpose_label: string; points: number; highlight: boolean };
 type Risk = { staff_id?: string; pseudo_id: string; role: string; employment_type: string; score: number; level: string; case_id: string | null; note: string | null; review: { required: boolean; score_threshold_met: boolean } };
 type Freshness = { score: { snapshot_id: number; sim_time: string; step_id: string | null } | null; evidence: { evaluation_id: number; sim_time: string; trigger: string } | null; score_is_current: boolean };
 type Decision = { id: string; run_id: string; review_ref: string; evidence_codes: string[]; kicker: string; title: string; subtitle: string; approve_label: string; case_id: string; freshness: Freshness };
-type Live = { enabled: boolean; clock_label: string | null; totals: { actions: number; matched: number; cases_opened: number } };
+type Live = { enabled: boolean; clock: string | null; clock_label: string | null; totals: { actions: number; matched: number; cases_opened: number } };
 type ConsoleData = {
   state: { run_id: string; toast: string | null; last_step: string | null };
   live: Live;
@@ -50,13 +52,14 @@ export default function ConsolePage() {
   const ngozi = data.feed.filter((r) => r.staff_id === "STF-0042").length > 3 && data.state.last_step === "S1.1";
   return (
     <>
+      {canControl && <GuidedDemoPanel />}
       {(canControl || data.live.enabled) && (
         <div className="live-bar">
           {data.live.enabled && (
             <div className="banner live" role="status">
               <Activity size={18} aria-hidden="true" /> Live simulated activity · synthetic staff
               <span className="live-detail">
-                {data.live.clock_label ? `${data.live.clock_label} · ` : ""}{num(data.live.totals.actions)} actions, {num(data.live.totals.matched)} matched · {num(data.live.totals.cases_opened)} cases opened
+                {data.live.clock ? `${formatSimulatedTime(data.live.clock)} · ` : ""}{num(data.live.totals.actions)} actions, {num(data.live.totals.matched)} matched · {num(data.live.totals.cases_opened)} cases opened
               </span>
             </div>
           )}
@@ -67,7 +70,7 @@ export default function ConsolePage() {
           )}
         </div>
       )}
-      <div className="grid-2">
+      <div className="grid-2 console-grid">
         <div className="card" style={{ padding: 0 }}>
           <div className="between" style={{ padding: "24px 24px 16px" }}>
             <div>
@@ -84,7 +87,7 @@ export default function ConsolePage() {
             </div>
           </div>
           <div className="table-scroll" role="region" aria-label="Live sensitive actions" tabIndex={0}>
-          <table className="table">
+          <table className="table console-feed-table">
             <thead>
               <tr>
                 <th>Simulated time</th>
@@ -98,7 +101,7 @@ export default function ConsolePage() {
             <tbody>
               {data.feed.map((r) => (
                 <tr key={r.key} className={r.highlight ? "hl" : ""}>
-                  <td className="numeric">{r.time}</td>
+                  <td className="numeric simulated-time">{formatSimulatedTime(r.ts)}</td>
                   <td style={{ fontWeight: 600 }}>{r.pseudo_id}</td>
                   <td>{r.action}</td>
                   <td className="right numeric">{r.amount ? naira(r.amount) : "—"}</td>

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Counter, LevelChip } from "@/components";
 import { naira, num, usePoll, useSession } from "@/lib/client";
+import { formatSimulatedTime } from "@/shared/time";
 
 type FA = { seed: number; staff_days: number; events: number; cleared: number; false_alerts: number }[];
 type Metrics = {
@@ -51,7 +52,7 @@ export default function MetricsPage() {
             </table>
             </div>
           ) : (
-            <div className="muted" style={{ padding: "0 24px 24px" }}>Not run yet. Run <code>npm run false-alarms</code>, then refresh.</div>
+            <div className="muted" style={{ padding: "0 24px 24px" }}>Result not available in this deployment.</div>
           )}
         </div>
         <div className="stack">
@@ -71,7 +72,7 @@ export default function MetricsPage() {
             {!canReadAudit && <div className="muted small">Available to the Auditor persona.</div>}
             {canReadAudit && (audit ?? []).map((a) => (
               <div key={a.id} className="row small" style={{ padding: "6px 0", borderBottom: "1px solid var(--border)" }}>
-                <span className="numeric muted">{a.ts.slice(11, 16)}</span>
+                <span className="numeric muted">{formatSimulatedTime(a.ts)}</span>
                 <span style={{ fontWeight: 600 }}>{a.actor}</span>
                 <span>{a.action.replaceAll("_", " ").toLowerCase()}</span>
                 <span className="muted">{a.target_id}</span>

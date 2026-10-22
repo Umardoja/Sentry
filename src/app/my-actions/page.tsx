@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import { post, usePoll } from "@/lib/client";
-import { purposeCheckLabel, purposeStatusLabel } from "@/lib/presentation";
+import { purposeCheckDisplay, purposeStatusLabel } from "@/lib/presentation";
 import { AccessBridgePanel } from "./access-bridge";
+import { formatSimulatedTime } from "@/shared/time";
 
 type OwnAction = { id: string; run_id: string; ts: string; action_type: string; amount: number | null; purpose_status: string; checks: { code: string; passed: boolean; detail: string }[] };
 
@@ -25,10 +26,10 @@ export default function MyActionsPage() {
     {error && <div className="card" role="alert">{error}</div>}{message && <div className="card" role="status">{message}</div>}
     {(data ?? []).map((action) => <div className="card" key={action.id}>
       <div className="between"><strong>{action.action_type}</strong><span className={`chip ${action.purpose_status === "MATCHED" ? "ok" : "bad"}`}>{purposeStatusLabel(action.purpose_status)}</span></div>
-      <div className="muted small">Simulated event time · {action.ts} · {action.amount === null ? "No amount" : `₦${action.amount.toLocaleString("en-US")}`}</div>
-      <div className="stack" style={{ marginTop: 12 }}>{action.checks.map((check) => <div key={check.code}>{check.passed ? "✓" : "✕"} {purposeCheckLabel(check.code)}: {check.detail}</div>)}</div>
+      <div className="muted small">{formatSimulatedTime(action.ts)} · {action.amount === null ? "No amount" : `₦${action.amount.toLocaleString("en-US")}`}</div>
+      <div className="stack" style={{ marginTop: 12 }}>{action.checks.map((check) => <div key={check.code}>{check.passed ? "✓" : "✕"} {purposeCheckDisplay(check.code, check.passed)}: {check.detail}</div>)}</div>
       <details className="technical-details"><summary>Technical details</summary><div>Action {action.id} · status {action.purpose_status}</div><div>Checks: {action.checks.map((check) => check.code).join(", ")}</div></details>
-      {action.purpose_status !== "MATCHED" && <div className="row" style={{ marginTop: 14 }}><input className="input" aria-label="Ticket or case reference" placeholder="Ticket or case reference" maxLength={128} value={refs[action.id] ?? ""} onChange={(e) => { setDraftRuns((old) => old[action.id] ? old : { ...old, [action.id]: action.run_id }); setRefs((old) => ({ ...old, [action.id]: e.target.value })); }} /><button className="btn dark" onClick={() => answer(action.id)}>Submit explanation</button></div>}
+      {action.purpose_status !== "MATCHED" && <div style={{ marginTop: 14 }}><div className="muted small" style={{ marginBottom: 6 }}>Sample ticket: TKT-2291</div><div className="row"><input className="input" aria-label="Ticket or case reference" placeholder="Sample ticket: TKT-2291" maxLength={128} value={refs[action.id] ?? ""} onChange={(e) => { setDraftRuns((old) => old[action.id] ? old : { ...old, [action.id]: action.run_id }); setRefs((old) => ({ ...old, [action.id]: e.target.value })); }} /><button className="btn dark" onClick={() => answer(action.id)}>Submit explanation</button></div></div>}
     </div>)}
   </div>;
 }

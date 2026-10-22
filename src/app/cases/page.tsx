@@ -3,6 +3,7 @@ import Link from "next/link";
 import { LevelChip } from "@/components";
 import { usePoll } from "@/lib/client";
 import { AccessBridgeMonitor } from "./access-bridge-monitor";
+import { formatSimulatedTime } from "@/shared/time";
 
 type CaseRow = { id: string; pseudo_id: string; role: string; employment_type: string; peak_score: number; score: number; level: string; case_status: string; opened_at: string; review: { required: boolean } };
 
@@ -27,7 +28,7 @@ export default function CasesPage() {
               <td><Link href={`/cases/${c.id}`} style={{ fontWeight: 700, textDecoration: "underline" }}>{c.id}</Link></td>
               <td style={{ fontWeight: 600 }}>{c.pseudo_id}</td>
               <td>{c.role}{c.employment_type === "CONTRACTOR" ? " · Contractor" : ""}</td>
-              <td className="numeric">{c.opened_at.slice(11, 16)}</td>
+              <td className="numeric">{formatSimulatedTime(c.opened_at)}</td>
               <td className="right numeric" style={{ fontWeight: 700 }}>{c.score}</td>
               <td><LevelChip level={c.level} /></td>
               <td>{c.case_status === "CONTAINED" ? "Control applied (simulated)" : c.review.required ? "Review needed" : "Open"}</td>

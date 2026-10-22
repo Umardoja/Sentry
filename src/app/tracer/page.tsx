@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Check, FolderOpen, Info, Lightbulb, PhoneCall, TrendingUp } from "lucide-react";
 import { LevelChip } from "@/components";
 import { usePoll } from "@/lib/client";
+import { formatSimulatedTime } from "@/shared/time";
 
 type Tracer = {
   caller_number: string;
@@ -12,17 +13,14 @@ type Tracer = {
   focus: { staff_id: string; pseudo_id: string; role: string; employment_type: string; score: number; level: string; case_id: string | null } | null;
   summary: string; others: number;
 };
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const when = (ts: string) => `${+ts.slice(8, 10)} ${MONTHS[+ts.slice(5, 7) - 1]} ${ts.slice(11, 16)}`;
-
 export default function TracerPage() {
   const { data } = usePoll<Tracer>(`/api/tracer/${encodeURIComponent("0700-000-0555")}`, 3000);
   if (!data) return <div className="muted">Loading tracer…</div>;
   return (
     <div className="stack">
       <div className="row" style={{ alignItems: "baseline" }}>
-        <h1 style={{ fontSize: 30 }}>Customer-data investigation</h1>
-        <span className="muted">/ starting from reported customers</span>
+        <h1 style={{ fontSize: 30 }}>Reporting customers</h1>
+        <span className="muted">/ customer-data investigation</span>
       </div>
       <div className="card between" style={{ alignItems: "stretch" }}>
         <div style={{ flex: 1 }}>
@@ -40,7 +38,7 @@ export default function TracerPage() {
           </div>
         </div>
         <div style={{ width: 300, background: "var(--page)", borderRadius: 10, padding: 18, marginLeft: 24 }}>
-          <div className="row" style={{ color: "var(--zenith-red)", font: "600 13px Plus Jakarta Sans", letterSpacing: "0.05em" }}><TrendingUp size={16} /> PATTERN FINDING</div>
+          <div className="row" style={{ color: "var(--zenith-red)", font: "600 13px Plus Jakarta Sans", letterSpacing: "0.05em" }}><TrendingUp size={16} /> PATTERN WORTH EXAMINING</div>
           <div className="jakarta" style={{ fontSize: 19, fontWeight: 700, marginTop: 8 }}>{data.summary}</div>
           <div className="muted small">{data.others} others viewed one each</div>
         </div>
@@ -55,7 +53,7 @@ export default function TracerPage() {
           <table className="table">
             <thead>
               <tr>
-                <th>Customer / account</th>
+                <th className="tracer-customer-column">Customer / account</th>
                 {data.viewers.map((v) => (
                   <th key={v.staff_id} style={{ textAlign: "center", background: v.is_common ? "var(--level-contain-tint)" : undefined, color: v.is_common ? "var(--zenith-red)" : undefined, textTransform: "none", fontSize: 15 }}>
                     {v.pseudo_id}
@@ -67,9 +65,9 @@ export default function TracerPage() {
             <tbody>
               {data.reports.map((r) => (
                 <tr key={r.report_id}>
-                  <td style={{ whiteSpace: "normal", height: 72 }}>
+                  <td className="tracer-customer-column" style={{ whiteSpace: "normal", height: 72 }}>
                     <div style={{ fontWeight: 700 }}>{r.account_masked} {r.city}</div>
-                    <div className="muted" style={{ fontSize: 13 }}>Reported: {when(r.reported_at)}</div>
+                    <div className="muted" style={{ fontSize: 13 }}>Reported: {formatSimulatedTime(r.reported_at)}</div>
                   </td>
                   {data.viewers.map((v) => (
                     <td key={v.staff_id} style={{ textAlign: "center", background: v.is_common ? "var(--level-contain-tint)" : undefined }}>
@@ -93,8 +91,7 @@ export default function TracerPage() {
             <div className="muted">{data.focus.role}</div>
             <div className="row" style={{ marginTop: 10 }}>
               <span className="chip grey">{data.focus.employment_type === "CONTRACTOR" ? "Contractor" : "Employee"}</span>
-              <span className="chip grey">Score: {data.focus.score}</span>
-              <LevelChip level={data.focus.level} />
+              {data.focus.score > 0 ? <><span className="chip grey">Score: {data.focus.score}</span><LevelChip level={data.focus.level} /></> : <span className="chip grey">Not yet scored. Run step S4.1</span>}
             </div>
             <div style={{ background: "var(--page)", borderRadius: 8, padding: 16, margin: "18px 0" }}>
               <div className="row" style={{ fontWeight: 600 }}><Lightbulb size={16} color="var(--zenith-red)" /> Key finding</div>

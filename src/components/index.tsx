@@ -1,9 +1,11 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, ChevronDown, FolderOpen, LogOut, Monitor, Network, Repeat2, Shield, UserCircle } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { BarChart3, ChevronDown, ClipboardList, FolderOpen, LogOut, Monitor, Network, Repeat2, Shield, UserCircle } from "lucide-react";
 import { clearClientSession, post, useSession } from "@/lib/client";
 import { purposeTextLabel } from "@/lib/presentation";
+import { formatSimulatedTime } from "@/shared/time";
 
 export type Level = "NORMAL" | "WATCH" | "VERIFY" | "HOLD" | "CONTAIN";
 export const LEVEL: Record<Level, { fg: string; bg: string; border: string; label: string }> = {
@@ -57,6 +59,15 @@ const PERSONA_LABELS: Record<string, string> = {
 
 export function TopBar() {
   const session = useSession();
+  const menuRef = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    const close = () => { if (menuRef.current) menuRef.current.open = false; };
+    const key = (event: KeyboardEvent) => { if (event.key === "Escape") { close(); menuRef.current?.querySelector("summary")?.focus(); } };
+    const outside = (event: PointerEvent) => { if (menuRef.current && !menuRef.current.contains(event.target as Node)) close(); };
+    document.addEventListener("keydown", key);
+    document.addEventListener("pointerdown", outside);
+    return () => { document.removeEventListener("keydown", key); document.removeEventListener("pointerdown", outside); };
+  }, []);
   const logout = async () => {
     await post("/api/auth/logout");
     clearClientSession();
@@ -72,13 +83,13 @@ export function TopBar() {
       </Link>
       <div className="topbar-spacer" />
       <div className="topbar-actions">
-        <details className="account-menu">
+        <details className="account-menu" ref={menuRef}>
           <summary aria-label={`Account menu for ${persona || "current account"}`}>
             <UserCircle size={18} /> <span>{persona || "Loading account…"}</span> <ChevronDown size={15} aria-hidden="true" />
           </summary>
           <div className="account-menu-panel">
             <div className="account-menu-context"><span>Current role</span><strong>{persona || "Loading account…"}</strong></div>
-            {session?.principal.auth_mode === "demo" && <Link href="/login?switch=1"><Repeat2 size={16} /> Switch role</Link>}
+            {session?.principal.auth_mode === "demo" && <Link href="/login?switch=1" onClick={() => { if (menuRef.current) menuRef.current.open = false; }}><Repeat2 size={16} /> Switch role</Link>}
             <button type="button" onClick={logout}><LogOut size={16} /> Sign out</button>
           </div>
         </details>
@@ -97,7 +108,15 @@ const NAV = [
 export function NavRail() {
   const path = usePathname() ?? "/";
   const session = useSession();
-  if (!session?.principal.capabilities.includes("READ_INVESTIGATIONS")) return <nav className="rail" />;
+  if (session?.principal.capabilities.includes("ANSWER_OWN_ACTION") && !session.principal.capabilities.includes("READ_INVESTIGATIONS")) return (
+    <nav className="rail">
+      <Link href="/my-actions" className={path.startsWith("/my-actions") ? "active" : ""}>
+        <ClipboardList size={22} strokeWidth={1.75} />
+        My actions
+      </Link>
+    </nav>
+  );
+  if (!session?.principal.capabilities.includes("READ_INVESTIGATIONS")) return null;
   return (
     <nav className="rail">
       {NAV.map(({ href, label, icon: Icon, match }) => (
@@ -133,7 +152,7 @@ export function ScoreSteps({ points }: { points: { time: string; score: number; 
             <div key={`${p.time}-${i}`} style={{ textAlign: "center", position: "relative" }}>
               <div className="jakarta" style={{ fontWeight: 800, fontSize: last ? 20 : 17, color: c.fg }}>{p.score}</div>
               <div style={{ width: last ? 20 : 14, height: last ? 20 : 14, borderRadius: 99, background: c.fg, margin: "4px auto 6px", boxShadow: last ? `0 0 0 6px ${c.bg}` : "none" }} />
-              <div className="small">{p.time}</div>
+              <div className="small">{formatSimulatedTime(p.time)}</div>
               <div style={{ font: "600 11px Plus Jakarta Sans", color: c.fg, letterSpacing: "0.05em" }}>{c.label.toUpperCase()}</div>
             </div>
           );

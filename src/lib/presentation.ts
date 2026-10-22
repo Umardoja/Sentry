@@ -28,6 +28,16 @@ const CHECK_LABELS: Record<string, string> = {
   E1: "Approved export ticket found",
 };
 
+const FAILED_CHECK_LABELS: Record<string, string> = {
+  R1: "Original transaction wasn't found",
+  R2: "Original transaction isn't eligible for reversal",
+  R3: "Refund amount doesn't match",
+  R4: "Refund went to a different account",
+  R5: "An earlier reversal already exists",
+  V1: "Customer has no assigned open case",
+  E1: "Approved export ticket wasn't found",
+};
+
 const REVIEW_REASONS: Record<string, string> = {
   R1_ORIGINAL_MISSING: "Original transaction is missing from the complete sample records",
   R2_ORIGINAL_INELIGIBLE: "Original transaction is not eligible for reversal",
@@ -64,6 +74,14 @@ const SIGNAL_LABELS: Record<string, string> = {
 export const purposeStatusLabel = (status: string) => PURPOSE_STATUS[status] ?? status.replaceAll("_", " ").toLowerCase();
 export const purposeTextLabel = (label: string) => PURPOSE_TEXT[label] ?? label;
 export const purposeCheckLabel = (code: string) => CHECK_LABELS[code] ?? code;
+export const purposeCheckDisplay = (code: string, passed: boolean) => passed ? purposeCheckLabel(code) : FAILED_CHECK_LABELS[code] ?? purposeCheckLabel(code);
 export const reviewReasonLabel = (code: string) => REVIEW_REASONS[code] ?? code;
 export const signalLabel = (code: string, fallback: string) => SIGNAL_LABELS[code] ?? fallback;
+
+export function reviewReasonSentence(codes: string[]): string {
+  const labels = codes.map(reviewReasonLabel).map((label) => label.charAt(0).toLowerCase() + label.slice(1));
+  if (labels.length < 2) return labels[0] ?? "the current evidence needs review";
+  if (labels.length === 2) return `${labels[0]} and ${labels[1]}`;
+  return `${labels.slice(0, -1).join(", ")}, and ${labels.at(-1)}`;
+}
 

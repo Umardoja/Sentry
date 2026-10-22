@@ -6,6 +6,7 @@ import { GET as sessionRoute } from "@/app/api/auth/session/route";
 import { GET as casesRoute } from "@/app/api/cases/route";
 import { GET as stateRoute } from "@/app/api/sim/state/route";
 import { POST as resetRoute } from "@/app/api/sim/reset/route";
+import { POST as nextRoute } from "@/app/api/scenarios/[id]/next/route";
 import { authDb } from "@/server/auth/request";
 import { grantReveal, hasReveal, provisionAccounts } from "@/server/auth/store";
 import { prepareDemoWorkspaceTemplate } from "@/server/services/demo";
@@ -91,6 +92,7 @@ describe("password-free demo account picker", () => {
     expect((await sessionRoute(new Request(`${origin}/api/auth/session`, { headers: { cookie: presenter.cookie } }))).status).toBe(401);
     expect((await sessionRoute(new Request(`${origin}/api/auth/session`, { headers: { cookie: switched.cookie } }))).status).toBe(200);
     expect((await resetRoute(new Request(`${origin}/api/sim/reset`, { method: "POST", headers: mutationHeaders(switched), body: JSON.stringify({ run_id: state.run_id }) }))).status).toBe(403);
+    expect((await nextRoute(new Request(`${origin}/api/scenarios/demo/next`, { method: "POST", headers: mutationHeaders(switched), body: JSON.stringify({ run_id: state.run_id }) }))).status).toBe(403);
   }, 120_000);
 
   it("retains exact-origin and CSRF protection for switches", async () => {
