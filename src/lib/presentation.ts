@@ -39,7 +39,7 @@ const FAILED_CHECK_LABELS: Record<string, string> = {
 };
 
 const REVIEW_REASONS: Record<string, string> = {
-  R1_ORIGINAL_MISSING: "Original transaction is missing from the complete sample records",
+  R1_ORIGINAL_MISSING: "Original transaction is missing from the complete available records",
   R2_ORIGINAL_INELIGIBLE: "Original transaction is not eligible for reversal",
   R3_AMOUNT_MISMATCH: "Refund amount doesn't match the original debit",
   R4_WRONG_BENEFICIARY: "Refund destination doesn't match the debited customer",
@@ -66,7 +66,7 @@ const SIGNAL_LABELS: Record<string, string> = {
   IMPOSSIBLE_LOCATION: "Concurrent logins from different branches",
   AGENT_OUT_OF_SCOPE: "Activity outside the assigned scope",
   NEW_BENEFICIARY_ACCOUNT: "Money sent to a newly opened account",
-  FAN_OUT: "Transfers to multiple accounts",
+  FAN_OUT: "Transfers to many accounts",
   SHARED_IDENTIFIER: "Beneficiary shares an identifier with the user",
   LEAK_COMMON_VIEWER: "Viewed every customer in the reported group",
 };
@@ -77,6 +77,70 @@ export const purposeCheckLabel = (code: string) => CHECK_LABELS[code] ?? code;
 export const purposeCheckDisplay = (code: string, passed: boolean) => passed ? purposeCheckLabel(code) : FAILED_CHECK_LABELS[code] ?? purposeCheckLabel(code);
 export const reviewReasonLabel = (code: string) => REVIEW_REASONS[code] ?? code;
 export const signalLabel = (code: string, fallback: string) => SIGNAL_LABELS[code] ?? fallback;
+
+const RISK_LEVEL_LABELS: Record<string, string> = {
+  NORMAL: "Normal",
+  WATCH: "Watch",
+  VERIFY: "Needs review",
+  HOLD: "Hold",
+  CONTAIN: "Contained",
+};
+
+const ROLE_LABELS: Record<string, string> = {
+  presenter: "Investigation Lead",
+  Presenter: "Investigation Lead",
+  "operator-tunde": "Operations Officer",
+  operator: "Operations Officer",
+  "reviewer-ada": "Reviewer",
+  reviewer: "Reviewer",
+  auditor: "Auditor",
+  "ACC-PRESENTER": "Investigation Lead",
+  "ACC-OP-TUNDE": "Operations Officer",
+  "ACC-REV-ADA": "Reviewer",
+  "ACC-AUDITOR": "Auditor",
+  SENTRY_SIMULATOR: "SENTRY",
+};
+
+const ROLE_DESCRIPTIONS: Record<string, string> = {
+  presenter: "Guide the investigation and run scenario steps.",
+  operator: "Explain assigned actions and request scoped access.",
+  reviewer: "Review evidence and decide responses independently.",
+  auditor: "Inspect cases, decisions and audit records.",
+};
+
+export const riskLevelLabel = (level: string) => RISK_LEVEL_LABELS[level] ?? level.replaceAll("_", " ").toLowerCase();
+export const roleLabel = (role: string) => ROLE_LABELS[role] ?? role;
+export const roleDescription = (role: string, fallback: string) => ROLE_DESCRIPTIONS[role] ?? fallback;
+export const riskLevelForScore = (score: number) => score >= 80 ? "CONTAIN" : score >= 60 ? "HOLD" : score >= 30 ? "VERIFY" : score >= 15 ? "WATCH" : "NORMAL";
+
+const SCENARIO_STEP_LABELS: Record<string, string> = {
+  "Score verified ticket; destination mismatch remains": "Recalculate risk after the verified ticket; destination mismatch remains",
+  "Beneficiaries try to fan out to 31 accounts": "Beneficiaries try to transfer to 31 accounts",
+};
+
+const AUDIT_ACTION_LABELS: Record<string, string> = {
+  DEMO_ENTER: "Signed in",
+  LOGIN: "Signed in",
+  LOGOUT: "Signed out",
+  UNMASK: "Name revealed",
+  IDENTITY_REVEAL: "Name revealed",
+  INTERVENTION_PENDING_APPROVAL: "Response sent for approval",
+  INTERVENTION_APPROVED: "Response approved",
+  INTERVENTION_REJECTED: "Response rejected",
+  APPROVE: "Response approved",
+  REJECT: "Response rejected",
+  DECISION_STALE: "Outdated response rejected",
+  RUN_TRACER: "Data leak trace run",
+  BVN_WATCHLIST: "BVN watchlist updated",
+};
+
+export const scenarioStepLabel = (label: string) => Object.entries(SCENARIO_STEP_LABELS)
+  .reduce((shown, [internal, display]) => shown.replace(internal, display), label);
+export const auditActionLabel = (action: string) => AUDIT_ACTION_LABELS[action] ?? action.replaceAll("_", " ").toLowerCase().replace("intervention", "response");
+export const presentationMessage = (message: string | undefined, fallback: string) => (message ?? fallback)
+  .replaceAll("simulation run", "scenario")
+  .replaceAll("simulated control", "response")
+  .replaceAll("synthetic workspace", "workspace");
 
 export function reviewReasonSentence(codes: string[]): string {
   const labels = codes.map(reviewReasonLabel).map((label) => label.charAt(0).toLowerCase() + label.slice(1));

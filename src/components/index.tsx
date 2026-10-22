@@ -4,16 +4,16 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { BarChart3, ChevronDown, ClipboardList, FolderOpen, LogOut, Monitor, Network, Repeat2, Shield, UserCircle } from "lucide-react";
 import { clearClientSession, post, useSession } from "@/lib/client";
-import { purposeTextLabel } from "@/lib/presentation";
+import { purposeTextLabel, riskLevelLabel, roleLabel } from "@/lib/presentation";
 import { formatSimulatedTime } from "@/shared/time";
 
 export type Level = "NORMAL" | "WATCH" | "VERIFY" | "HOLD" | "CONTAIN";
 export const LEVEL: Record<Level, { fg: string; bg: string; border: string; label: string }> = {
-  NORMAL: { fg: "var(--level-normal)", bg: "var(--level-normal-tint)", border: "var(--level-normal-border)", label: "Normal" },
-  WATCH: { fg: "var(--level-watch)", bg: "var(--level-watch-tint)", border: "var(--level-watch-border)", label: "Watch" },
-  VERIFY: { fg: "var(--level-verify)", bg: "var(--level-verify-tint)", border: "var(--level-verify-border)", label: "Verify" },
-  HOLD: { fg: "var(--level-hold)", bg: "var(--level-hold-tint)", border: "var(--level-hold-border)", label: "Hold" },
-  CONTAIN: { fg: "var(--level-contain)", bg: "var(--level-contain-tint)", border: "var(--level-contain-border)", label: "Contain" },
+  NORMAL: { fg: "var(--level-normal)", bg: "var(--level-normal-tint)", border: "var(--level-normal-border)", label: riskLevelLabel("NORMAL") },
+  WATCH: { fg: "var(--level-watch)", bg: "var(--level-watch-tint)", border: "var(--level-watch-border)", label: riskLevelLabel("WATCH") },
+  VERIFY: { fg: "var(--level-verify)", bg: "var(--level-verify-tint)", border: "var(--level-verify-border)", label: riskLevelLabel("VERIFY") },
+  HOLD: { fg: "var(--level-hold)", bg: "var(--level-hold-tint)", border: "var(--level-hold-border)", label: riskLevelLabel("HOLD") },
+  CONTAIN: { fg: "var(--level-contain)", bg: "var(--level-contain-tint)", border: "var(--level-contain-border)", label: riskLevelLabel("CONTAIN") },
 };
 export const levelOf = (l: string) => LEVEL[(l as Level) in LEVEL ? (l as Level) : "NORMAL"];
 
@@ -50,13 +50,6 @@ export function ShieldMark({ size = 28 }: { size?: number }) {
   );
 }
 
-const PERSONA_LABELS: Record<string, string> = {
-  presenter: "Presenter",
-  "operator-tunde": "Operator",
-  "reviewer-ada": "Independent Reviewer",
-  auditor: "Auditor",
-};
-
 export function TopBar() {
   const session = useSession();
   const menuRef = useRef<HTMLDetailsElement>(null);
@@ -74,7 +67,7 @@ export function TopBar() {
     window.location.assign("/login");
   };
   const username = session?.principal.username ?? "";
-  const persona = PERSONA_LABELS[username] ?? username;
+  const persona = roleLabel(username);
   return (
     <header className="topbar">
       <Link href="/" className="wordmark">
@@ -82,6 +75,9 @@ export function TopBar() {
         <span className="wordmark-copy"><strong>SENTRY</strong><span>Investigation workspace</span></span>
       </Link>
       <div className="topbar-spacer" />
+      <span className="environment-badge" title="SENTRY sandbox environment with a sample bank. Not connected to live banking systems.">
+        <span aria-hidden="true" /> Sandbox · sample data
+      </span>
       <div className="topbar-actions">
         <details className="account-menu" ref={menuRef}>
           <summary aria-label={`Account menu for ${persona || "current account"}`}>
@@ -101,7 +97,7 @@ export function TopBar() {
 const NAV = [
   { href: "/", label: "Console", icon: Monitor, match: (p: string) => p === "/" },
   { href: "/cases", label: "Cases", icon: FolderOpen, match: (p: string) => p.startsWith("/cases") || p.startsWith("/staff") },
-  { href: "/tracer", label: "Tracer", icon: Network, match: (p: string) => p.startsWith("/tracer") },
+  { href: "/tracer", label: "Data leak tracer", icon: Network, match: (p: string) => p.startsWith("/tracer") },
   { href: "/metrics", label: "Metrics", icon: BarChart3, match: (p: string) => p.startsWith("/metrics") },
 ];
 
@@ -129,7 +125,7 @@ export function NavRail() {
   );
 }
 
-/** Score steps over level bands, as in the case-view design. */
+/** Risk score steps over risk-level bands, as in the case-view design. */
 export function ScoreSteps({ points }: { points: { time: string; score: number; level: string }[] }) {
   const bands: Level[] = ["NORMAL", "WATCH", "VERIFY", "HOLD", "CONTAIN"];
   const ranges = ["0–14", "15–29", "30–59", "60–79", "80–100"];
@@ -144,7 +140,7 @@ export function ScoreSteps({ points }: { points: { time: string; score: number; 
       </div>
       <div className="score-points" style={{ gridTemplateColumns: `repeat(${Math.max(points.length, 1)}, minmax(78px, 1fr))` }}>
         <div style={{ position: "absolute", left: "8%", right: "8%", top: 34, height: 3, background: "var(--track)", borderRadius: 3 }} />
-        {points.length === 0 && <div className="muted small">No scores yet</div>}
+        {points.length === 0 && <div className="muted small">No risk scores yet</div>}
         {points.map((p, i) => {
           const c = levelOf(p.level);
           const last = i === points.length - 1;

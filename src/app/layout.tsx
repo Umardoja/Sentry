@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { AppShell } from "../components/AppShell";
 
-export const metadata: Metadata = { title: "SENTRY · Investigation workspace", description: "Purpose-bound investigation in a synthetic banking demo" };
+export const metadata: Metadata = { title: "SENTRY · Investigation workspace", description: "Purpose-bound investigation workspace" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

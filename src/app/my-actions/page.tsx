@@ -21,7 +21,7 @@ export default function MyActionsPage() {
   if (error && !data) return <div className="card" role="alert"><h1>Actions unavailable</h1><p className="muted">{error}</p><button className="btn" onClick={reload}>Try again</button></div>;
   return <div className="stack">
     <AccessBridgePanel />
-    <div className="card"><h1>Actions needing context</h1><p className="muted">Only sample actions assigned to your verified role are shown here.</p></div>
+    <div className="card"><h1>Actions needing context</h1><p className="muted">Only actions assigned to your verified role are shown here.</p></div>
     {!data && <div className="card loading-card" role="status">Loading your mapped actions…</div>}
     {error && <div className="card" role="alert">{error}</div>}{message && <div className="card" role="status">{message}</div>}
     {(data ?? []).map((action) => <div className="card" key={action.id}>
@@ -29,7 +29,7 @@ export default function MyActionsPage() {
       <div className="muted small">{formatSimulatedTime(action.ts)} · {action.amount === null ? "No amount" : `₦${action.amount.toLocaleString("en-US")}`}</div>
       <div className="stack" style={{ marginTop: 12 }}>{action.checks.map((check) => <div key={check.code}>{check.passed ? "✓" : "✕"} {purposeCheckDisplay(check.code, check.passed)}: {check.detail}</div>)}</div>
       <details className="technical-details"><summary>Technical details</summary><div>Action {action.id} · status {action.purpose_status}</div><div>Checks: {action.checks.map((check) => check.code).join(", ")}</div></details>
-      {action.purpose_status !== "MATCHED" && <div style={{ marginTop: 14 }}><div className="muted small" style={{ marginBottom: 6 }}>Sample ticket: TKT-2291</div><div className="row"><input className="input" aria-label="Ticket or case reference" placeholder="Sample ticket: TKT-2291" maxLength={128} value={refs[action.id] ?? ""} onChange={(e) => { setDraftRuns((old) => old[action.id] ? old : { ...old, [action.id]: action.run_id }); setRefs((old) => ({ ...old, [action.id]: e.target.value })); }} /><button className="btn dark" onClick={() => answer(action.id)}>Submit explanation</button></div></div>}
+      {action.purpose_status !== "MATCHED" && <div style={{ marginTop: 14 }}><div className="muted small" style={{ marginBottom: 6 }}>Ticket to use: TKT-2291</div><div className="row"><input className="input" aria-label="Ticket or case reference" placeholder="Ticket: TKT-2291" maxLength={128} value={refs[action.id] ?? ""} onChange={(e) => { setDraftRuns((old) => old[action.id] ? old : { ...old, [action.id]: action.run_id }); setRefs((old) => ({ ...old, [action.id]: e.target.value })); }} /><button className="btn dark" onClick={() => answer(action.id)}>Submit explanation</button></div></div>}
     </div>)}
   </div>;
 }

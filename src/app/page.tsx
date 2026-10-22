@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Activity, Ban, CheckCircle2, Eye, FolderOpen, Hourglass, Lock, User } from "lucide-react";
 import { Counter, LevelChip, levelOf, PurposeChip } from "@/components";
 import { naira, num, post, usePoll, useSession } from "@/lib/client";
-import { signalLabel } from "@/lib/presentation";
+import { riskLevelForScore, signalLabel } from "@/lib/presentation";
 import { formatSimulatedTime } from "@/shared/time";
 import { GuidedDemoPanel } from "./guided-demo-panel";
 
@@ -50,6 +50,13 @@ export default function ConsolePage() {
     setLiveBusy(false);
   };
   const ngozi = data.feed.filter((r) => r.staff_id === "STF-0042").length > 3 && data.state.last_step === "S1.1";
+  const currentRisk = new Map(data.top_risk.filter((item) => item.staff_id).map((item) => [item.staff_id!, item.score]));
+  const feedWithRisk = data.feed.map((row) => {
+    const after = row.staff_id ? currentRisk.get(row.staff_id) : undefined;
+    const riskScore = after ?? Math.max(0, row.points);
+    if (row.staff_id && after !== undefined) currentRisk.set(row.staff_id, Math.max(0, after - row.points));
+    return { ...row, riskScore, riskLevel: riskLevelForScore(riskScore) };
+  });
   return (
     <>
       {canControl && <GuidedDemoPanel />}
@@ -57,9 +64,9 @@ export default function ConsolePage() {
         <div className="live-bar">
           {data.live.enabled && (
             <div className="banner live" role="status">
-              <Activity size={18} aria-hidden="true" /> Live simulated activity · synthetic staff
+              <Activity size={18} aria-hidden="true" /> Live activity
               <span className="live-detail">
-                {data.live.clock ? `${formatSimulatedTime(data.live.clock)} · ` : ""}{num(data.live.totals.actions)} actions, {num(data.live.totals.matched)} matched · {num(data.live.totals.cases_opened)} cases opened
+                {data.live.clock ? `${formatSimulatedTime(data.live.clock)} · ` : ""}{num(data.live.totals.actions)} actions, {num(data.live.totals.matched)} reasons verified · {num(data.live.totals.cases_opened)} cases opened
               </span>
             </div>
           )}
@@ -90,16 +97,16 @@ export default function ConsolePage() {
           <table className="table console-feed-table">
             <thead>
               <tr>
-                <th>Simulated time</th>
-                <th>Pseudonym</th>
+                <th>Time</th>
+                <th>Staff ID</th>
                 <th>Action</th>
                 <th className="right">Amount</th>
                 <th>Reason check</th>
-                <th className="right">Points</th>
+                <th className="right">Risk level</th>
               </tr>
             </thead>
             <tbody>
-              {data.feed.map((r) => (
+              {feedWithRisk.map((r) => (
                 <tr key={r.key} className={r.highlight ? "hl" : ""}>
                   <td className="numeric simulated-time">{formatSimulatedTime(r.ts)}</td>
                   <td style={{ fontWeight: 600 }}>{r.pseudo_id}</td>
@@ -108,8 +115,9 @@ export default function ConsolePage() {
                   <td>
                     <PurposeChip ok={r.ok} label={r.purpose_label} />
                   </td>
-                  <td className="right numeric" style={{ fontWeight: r.points ? 700 : 400, color: r.points ? "var(--text)" : "var(--text-muted)" }}>
-                    +{r.points}
+                  <td className="right"><span className="row" style={{ justifyContent: "flex-end", flexWrap: "nowrap" }}>
+                    <LevelChip level={r.riskLevel} /><span className="numeric" style={{ fontWeight: 700 }}>{r.riskScore}</span>
+                  </span>
                   </td>
                 </tr>
               ))}
@@ -121,15 +129,15 @@ export default function ConsolePage() {
         <div className="stack">
           {reviewedDecision ? (
             <div className="card" style={{ borderLeft: "4px solid var(--level-hold)" }}>
-              <div className="simulation-outcome">Simulated control</div>
+              <div className="simulation-outcome">Response</div>
               <div className="row" style={{ color: "var(--level-hold)", font: "600 13px Plus Jakarta Sans", letterSpacing: "0.06em" }}>
                 <Hourglass size={16} /> {reviewedDecision.kicker.toUpperCase()}
               </div>
               <h2 style={{ fontSize: 22, lineHeight: "30px", margin: "8px 0 6px" }}>{reviewedDecision.title}</h2>
-              <div className="muted small" style={{ fontSize: 15 }}>{reviewedDecision.subtitle}</div>
+              <div className="muted small" style={{ fontSize: 15 }}>{reviewedDecision.subtitle.replace(/^Score /, "Risk score ").replace(" · Contain ·", " · Contained ·")}</div>
               <details className="technical-details">
                 <summary>Technical details</summary>
-                <div>Review reference {reviewedDecision.review_ref.slice(4, 12)} · score snapshot {reviewedDecision.freshness.score?.snapshot_id ?? "—"} · evidence evaluation {reviewedDecision.freshness.evidence?.evaluation_id ?? "—"}</div>
+                <div>Review reference {reviewedDecision.review_ref.slice(4, 12)} · risk-score snapshot {reviewedDecision.freshness.score?.snapshot_id ?? "—"} · evidence evaluation {reviewedDecision.freshness.evidence?.evaluation_id ?? "—"}</div>
                 <div>Evidence codes: {reviewedDecision.evidence_codes.map((code) => `${signalLabel(code, code)} (${code})`).join(", ") || "Unavailable — refresh required"}</div>
               </details>
               {data.decision && data.decision.review_ref !== reviewedDecision.review_ref && <button className="btn" style={{ marginTop: 10 }} onClick={() => { setReviewedDecision(data.decision); setDecisionMessage(""); }}>Evidence changed · review updated evidence</button>}
@@ -171,7 +179,7 @@ export default function ConsolePage() {
                           {r.role}
                           {r.employment_type === "CONTRACTOR" ? " · Contractor" : ""}
                         </div>
-                        {r.note && <div className="muted" style={{ fontSize: 13 }}>{r.note}</div>}
+                        {r.note && <div className="muted" style={{ fontSize: 13 }}>{r.note.replace(/^Raw /, "Risk before verified context ")}</div>}
                         {r.review.required && !r.review.score_threshold_met && <div style={{ color: "var(--level-verify)", fontSize: 13, fontWeight: 700 }}>Review needed · confirmed evidence</div>}
                       </div>
                     </div>
@@ -189,7 +197,7 @@ export default function ConsolePage() {
             <Counter label="Actions checked" value={num(data.metrics.actions_checked)} icon={<Eye size={18} />} />
             <Counter label="Cleared automatically" value={num(data.metrics.unusual_cleared)} icon={<CheckCircle2 size={18} />} />
             <Counter label="Cases opened" value={num(data.metrics.cases_opened)} icon={<FolderOpen size={18} />} />
-            <Counter label="Simulated transfers blocked" value={num(data.metrics.transfers_blocked)} icon={<Ban size={18} />} />
+            <Counter label="Transfers blocked" value={num(data.metrics.transfers_blocked)} icon={<Ban size={18} />} />
           </div>
         </div>
       </div>

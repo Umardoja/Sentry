@@ -58,11 +58,11 @@ export function AccessBridgePanel() {
   const heading = data.cases.some((item) => item.grant?.status === "ACTIVE") ? "Access granted" : data.cases.some((item) => item.status === "OPEN") ? "Access needed" : "Access ended";
   return <section className="card access-bridge" aria-labelledby="access-bridge-title">
     <div className="between">
-      <div><div className="eyebrow">Access Bridge</div><h2 id="access-bridge-title">{heading}</h2></div>
+      <div><div className="eyebrow">Temporary access</div><h2 id="access-bridge-title">{heading}</h2></div>
       <span className="chip grey"><LockKeyhole size={15} /> Read-only</span>
     </div>
     <p className="muted">Continue an assigned complaint while its ordinary owner is unavailable. Access is limited to one case, one customer and one approved operation.</p>
-    <div className="simulation-outcome">{data.notice}</div>
+    <div className="simulation-outcome">Every request is checked against the assigned case and permitted operation.</div>
     {message && <div className="access-message" role="status">{message}</div>}
     {data.cases.map((accessCase) => {
       const active = accessCase.grant?.status === "ACTIVE";

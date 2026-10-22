@@ -15,12 +15,12 @@ export default function CasesPage() {
     <div className="card" style={{ padding: 0 }}>
       <div style={{ padding: 24 }}>
         <h1 style={{ fontSize: 28 }}>Cases</h1>
-        <div className="muted">Investigations open when the risk score needs attention or verified evidence conflicts with the action. Review does not automatically approve a hold. Names remain hidden until an authorized reviewer records a reason to view the identity.</div>
+        <div className="muted">Investigations open when the risk score needs attention or verified evidence conflicts with the action. Review does not automatically approve a hold. Names remain hidden until an authorized reviewer records a reason to reveal the name.</div>
       </div>
       <div className="table-scroll" role="region" aria-label="Cases" tabIndex={0}>
       <table className="table">
         <thead>
-          <tr><th>Case</th><th>Pseudonym</th><th>Role</th><th>Simulated time</th><th className="right">Score</th><th>Level</th><th>Status</th></tr>
+          <tr><th>Case</th><th>Staff ID</th><th>Role</th><th>Time</th><th className="right">Risk score</th><th>Risk level</th><th>Status</th></tr>
         </thead>
         <tbody>
           {data.map((c) => (
@@ -31,7 +31,7 @@ export default function CasesPage() {
               <td className="numeric">{formatSimulatedTime(c.opened_at)}</td>
               <td className="right numeric" style={{ fontWeight: 700 }}>{c.score}</td>
               <td><LevelChip level={c.level} /></td>
-              <td>{c.case_status === "CONTAINED" ? "Control applied (simulated)" : c.review.required ? "Review needed" : "Open"}</td>
+              <td>{c.case_status === "CONTAINED" ? "Response applied" : c.review.required ? "Review needed" : "Open"}</td>
             </tr>
           ))}
           {data.length === 0 && (

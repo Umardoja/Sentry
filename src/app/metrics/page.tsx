@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Counter, LevelChip } from "@/components";
 import { naira, num, usePoll, useSession } from "@/lib/client";
 import { formatSimulatedTime } from "@/shared/time";
+import { auditActionLabel, roleLabel } from "@/lib/presentation";
 
 type FA = { seed: number; staff_days: number; events: number; cleared: number; false_alerts: number }[];
 type Metrics = {
@@ -24,20 +25,20 @@ export default function MetricsPage() {
     <div className="stack">
       <div>
         <h1 style={{ fontSize: 30 }}>Results</h1>
-        <div className="muted">Sample portfolio · 500 staff · 30-day observation window</div>
+        <div className="muted">Portfolio · 500 staff · 30-day observation window</div>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
         <Counter label="Actions checked" value={num(data.actions_checked)} />
         <Counter label="Cleared automatically" value={num(data.unusual_cleared)} />
         <Counter label="Cases opened" value={num(data.cases_opened)} />
-        <Counter label="Simulated transfers blocked" value={num(data.transfers_blocked)} />
-        <Counter label="Simulated funds held" value={naira(data.funds_held_naira)} />
+        <Counter label="Transfers blocked" value={num(data.transfers_blocked)} />
+        <Counter label="Funds held" value={naira(data.funds_held_naira)} />
       </div>
       <div className="grid-2">
         <div className="card" style={{ padding: 0 }}>
           <div style={{ padding: 24 }}>
             <div className="card-title">False-alarm test: unusual but legitimate activity</div>
-            <div className="muted small">Overtime bursts, refunds to a customer&apos;s other account, new-terminal logins, injected into clean simulated days.</div>
+            <div className="muted small">Overtime bursts, refunds to a customer&apos;s other account and new-terminal logins added to otherwise clean days.</div>
           </div>
           {fa.length ? (
             <div className="table-scroll" role="region" aria-label="False alarm exercise results" tabIndex={0}>
@@ -61,20 +62,20 @@ export default function MetricsPage() {
             {data.cases.map((c) => (
               <Link key={c.id} href={`/cases/${c.id}`} className="between" style={{ padding: "10px 0", borderBottom: "1px solid var(--border)" }}>
                 <span><strong>{c.pseudo_id}</strong> <span className="muted">· {c.id}</span></span>
-                <span className="row"><span className="numeric" style={{ fontWeight: 700 }}>{c.peak_score}</span><LevelChip level={c.level} /><span className="muted small">{c.case_status === "CONTAINED" ? "Control applied (simulated)" : "Open"}</span></span>
+                <span className="row"><span className="numeric" style={{ fontWeight: 700 }}>Risk score {c.peak_score}</span><LevelChip level={c.level} /><span className="muted small">{c.case_status === "CONTAINED" ? "Response applied" : "Open"}</span></span>
               </Link>
             ))}
             {data.cases.length === 0 && <div className="muted">No cases yet.</div>}
-            <div className="muted small" style={{ marginTop: 10 }}>Review-warranted cases {data.true_cases} · false alerts {data.false_alerts} · simulated watchlist entries {data.bvns_watchlisted}</div>
+            <div className="muted small" style={{ marginTop: 10 }}>Review-warranted cases {data.true_cases} · false alerts {data.false_alerts} · BVN watchlist entries {data.bvns_watchlisted}</div>
           </div>
           <div className="card">
             <div className="card-title" style={{ marginBottom: 12 }}>Audit log (latest)</div>
-            {!canReadAudit && <div className="muted small">Available to the Auditor persona.</div>}
+            {!canReadAudit && <div className="muted small">Available to the Auditor.</div>}
             {canReadAudit && (audit ?? []).map((a) => (
               <div key={a.id} className="row small" style={{ padding: "6px 0", borderBottom: "1px solid var(--border)" }}>
                 <span className="numeric muted">{formatSimulatedTime(a.ts)}</span>
-                <span style={{ fontWeight: 600 }}>{a.actor}</span>
-                <span>{a.action.replaceAll("_", " ").toLowerCase()}</span>
+                <span style={{ fontWeight: 600 }}>{roleLabel(a.actor)}</span>
+                <span>{auditActionLabel(a.action)}</span>
                 <span className="muted">{a.target_id}</span>
               </div>
             ))}

@@ -15,12 +15,12 @@ type Tracer = {
 };
 export default function TracerPage() {
   const { data } = usePoll<Tracer>(`/api/tracer/${encodeURIComponent("0700-000-0555")}`, 3000);
-  if (!data) return <div className="muted">Loading tracer…</div>;
+  if (!data) return <div className="muted">Loading data leak tracer…</div>;
   return (
     <div className="stack">
       <div className="row" style={{ alignItems: "baseline" }}>
-        <h1 style={{ fontSize: 30 }}>Reporting customers</h1>
-        <span className="muted">/ customer-data investigation</span>
+        <h1 style={{ fontSize: 30 }}>Data leak tracer</h1>
+        <span className="muted">/ reporting customers</span>
       </div>
       <div className="card between" style={{ alignItems: "stretch" }}>
         <div style={{ flex: 1 }}>
@@ -91,7 +91,7 @@ export default function TracerPage() {
             <div className="muted">{data.focus.role}</div>
             <div className="row" style={{ marginTop: 10 }}>
               <span className="chip grey">{data.focus.employment_type === "CONTRACTOR" ? "Contractor" : "Employee"}</span>
-              {data.focus.score > 0 ? <><span className="chip grey">Score: {data.focus.score}</span><LevelChip level={data.focus.level} /></> : <span className="chip grey">Not yet scored. Run step S4.1</span>}
+              {data.focus.score > 0 ? <><span className="chip grey">Risk score: {data.focus.score}</span><LevelChip level={data.focus.level} /></> : <span className="chip grey">No risk score yet. Run step S4.1</span>}
             </div>
             <div style={{ background: "var(--page)", borderRadius: 8, padding: 16, margin: "18px 0" }}>
               <div className="row" style={{ fontWeight: 600 }}><Lightbulb size={16} color="var(--zenith-red)" /> Key finding</div>
@@ -100,7 +100,7 @@ export default function TracerPage() {
             {data.focus.case_id ? (
               <Link href={`/cases/${data.focus.case_id}`} className="btn dark lg" style={{ width: "100%" }}><FolderOpen size={18} /> Open case</Link>
             ) : (
-              <div className="muted small">No linked sample activity is available in this workspace.</div>
+              <div className="muted small">No linked activity is available in this workspace.</div>
             )}
           </div>
         )}

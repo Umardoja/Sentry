@@ -10,7 +10,7 @@ describe("judge-facing deployment artifacts", () => {
     expect(falseAlarmResult.rows.reduce((sum, row) => sum + row.false_alerts, 0)).toBe(0);
   });
 
-  it("uses the declared judge-facing simulated timestamp format", () => {
-    expect(formatSimulatedTime("2026-10-16T22:15:00+01:00")).toBe("Fri 16 Oct · 22:15 (simulated)");
+  it("uses the declared judge-facing timestamp format", () => {
+    expect(formatSimulatedTime("2026-10-16T22:15:00+01:00")).toBe("Fri 16 Oct · 22:15");
   });
 });

@@ -26,8 +26,8 @@ export function MoneyGraph({ caseId }: { caseId: string }) {
     <div className="stack">
       {data.banks.length > 0 && (
         <div className={`banner ${blockedAll ? "CONTAIN" : "HOLD"}`} style={{ marginBottom: 0, justifyContent: "space-between" }}>
-          <span className="row"><ShieldCheck size={20} /> Simulated outcome · {data.transfers_blocked} transfers blocked · {data.watchlisted} sample watchlist entries</span>
-          {blockedAll && <span className="chip" style={{ background: "var(--surface)", color: "var(--zenith-red)" }}><CheckCircle2 size={16} /> Funds remained in sample bank accounts</span>}
+          <span className="row"><ShieldCheck size={20} /> {data.transfers_blocked} transfers blocked · {data.watchlisted} BVN watchlist entries</span>
+          {blockedAll && <span className="chip" style={{ background: "var(--surface)", color: "var(--zenith-red)" }}><CheckCircle2 size={16} /> Funds remained in originating accounts</span>}
         </div>
       )}
       <div className="card">
@@ -65,7 +65,7 @@ export function MoneyGraph({ caseId }: { caseId: string }) {
               <div style={{ font: "600 12px Plus Jakarta Sans", letterSpacing: "0.06em", color: "var(--on-ink-dim)" }}>SOURCE NODE</div>
               <div className="row jakarta" style={{ fontSize: 21, fontWeight: 700, margin: "8px 0 4px" }}><UserSquare2 size={20} /> {data.staff.pseudo_id}</div>
               <div style={{ fontSize: 14, color: "var(--on-ink-soft)" }}>Terminal {data.staff.terminal}</div>
-              <div style={{ fontSize: 13, color: "var(--on-ink-soft)", borderTop: "1px solid var(--ink-line)", marginTop: 10, paddingTop: 8 }}>{data.staff.credits} unmatched reversal credits</div>
+              <div style={{ fontSize: 13, color: "var(--on-ink-soft)", borderTop: "1px solid var(--ink-line)", marginTop: 10, paddingTop: 8 }}>{data.staff.credits} reversal credits without a verified reason</div>
             </div>
             {data.accounts.map((a, i) => (
               <div key={a.id} style={{ position: "absolute", left: 330, top: 12 + i * ROW + 4, width: 310, height: ROW - 8, background: "var(--level-contain-tint)", borderLeft: "3px solid var(--zenith-red)", padding: "8px 12px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -78,7 +78,7 @@ export function MoneyGraph({ caseId }: { caseId: string }) {
                 </div>
                 <div style={{ textAlign: "right" }}>
                   <div className="numeric" style={{ fontWeight: 700, color: "var(--zenith-red)" }}>{naira(a.amount)}</div>
-                  {a.watchlisted && <div style={{ fontSize: 11, fontWeight: 700, color: "var(--zenith-red)", letterSpacing: "0.03em" }}>SIMULATED WATCHLIST</div>}
+                  {a.watchlisted && <div style={{ fontSize: 11, fontWeight: 700, color: "var(--zenith-red)", letterSpacing: "0.03em" }}>BVN WATCHLIST</div>}
                 </div>
               </div>
             ))}
@@ -109,7 +109,7 @@ export function MoneyGraph({ caseId }: { caseId: string }) {
         <div className="between graph-summary" style={{ marginTop: 22, background: "var(--page)", borderRadius: 10, padding: "16px 20px" }}>
           <div className="row"><Landmark size={20} /> <div><div className="muted small">Total attempted diversion</div><div className="numeric" style={{ fontSize: 22, fontWeight: 700 }}>{naira(data.total_attempted)}</div></div></div>
           <div className="jakarta" style={{ background: "var(--surface)", borderRadius: 8, padding: "10px 22px", fontSize: 24, fontWeight: 700 }}>
-            Simulated hold {naira(data.held)} · <span style={{ color: data.left_bank === 0 ? "var(--ok)" : "var(--zenith-red)" }}>{naira(data.left_bank)} left the sample bank</span>
+            Hold {naira(data.held)} · <span style={{ color: data.left_bank === 0 ? "var(--ok)" : "var(--zenith-red)" }}>{naira(data.left_bank)} left the bank</span>
           </div>
           <div style={{ textAlign: "right" }}><div className="eyebrow">Watchlist expiry</div><div style={{ fontWeight: 600 }}>{data.watchlist_remaining ? `${data.watchlist_remaining} remaining` : "—"}</div></div>
         </div>

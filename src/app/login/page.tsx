@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation";
 import { Check, ClipboardCheck, Presentation, ScrollText, UserRound } from "lucide-react";
 import { ShieldMark } from "@/components";
 import { clearClientSession, getSession, post, primeClientSession, type ClientSession } from "@/lib/client";
+import { roleDescription, roleLabel } from "@/lib/presentation";
 
 type Persona = { id: "presenter" | "operator" | "reviewer" | "auditor"; label: string; roles: string[]; capabilities: string[]; description: string };
 type Mode = { demo_mode: boolean; personas: Persona[] };
 const PERSONA_META = {
-  presenter: { icon: Presentation, kicker: "Explore and present" },
+  presenter: { icon: Presentation, kicker: "Lead the investigation" },
   operator: { icon: UserRound, kicker: "Explain your action" },
   reviewer: { icon: ClipboardCheck, kicker: "Review independently" },
   auditor: { icon: ScrollText, kicker: "Inspect the record" },
@@ -40,7 +41,7 @@ export default function LoginPage() {
     // cookie-bound CSRF token instead of trusting a cached pre-navigation copy.
     await getSession(true);
     const response = await post<Partial<ClientSession> & { detail?: string }>("/api/auth/demo", { persona: selected });
-    if (!response.ok || !response.data.principal) { setError(response.data.detail ?? "Unable to open the workspace"); setBusy(false); return; }
+    if (!response.ok || !response.data.principal) { setError("Unable to open the workspace. Please try again."); setBusy(false); return; }
     clearClientSession();
     if (response.data.csrf_token && response.data.expires_at_ms) {
       primeClientSession({ principal: response.data.principal, csrf_token: response.data.csrf_token, expires_at_ms: response.data.expires_at_ms });
@@ -73,12 +74,12 @@ export default function LoginPage() {
     <header className="login-hero">
       <div className="login-brand"><ShieldMark size={44} /><span><strong>SENTRY</strong><small>Investigation workspace</small></span></div>
       <span className="login-eyebrow">Purpose-bound investigation</span>
-      <h1>Choose a role to explore SENTRY</h1>
-      <p>Each role sees the same sample investigation from a different responsibility and permission level.</p>
+      <h1>Sign in to SENTRY</h1>
+      <p>Choose your role</p>
     </header>
-    <section className="card login-card" aria-labelledby="demo-accounts-heading">
+    <section className="card login-card" aria-labelledby="role-accounts-heading">
       <div className="between login-card-heading">
-        <div><h2 id="demo-accounts-heading">Available roles</h2><p className="muted">No password or registration required.</p></div>
+        <div><h2 id="role-accounts-heading">Available roles</h2><p className="muted">No password or registration required.</p></div>
       </div>
       <div className="persona-grid">
         {mode.personas.map((persona) => {
@@ -86,20 +87,18 @@ export default function LoginPage() {
           const active = selected === persona.id;
           return <button key={persona.id} type="button" className={`persona-card ${active ? "selected" : ""}`} onClick={() => setSelected(persona.id)} aria-pressed={active}>
             <span className="persona-card-top"><span className="persona-icon"><MetaIcon size={20} /></span>{active && <span className="persona-check" aria-label="Selected"><Check size={15} /></span>}</span>
-            <span className="persona-title">{persona.label}</span>
+            <span className="persona-title">{roleLabel(persona.id)}</span>
             <span className="persona-kicker">{PERSONA_META[persona.id].kicker}</span>
-            <span className="muted small">{persona.description}</span>
+            <span className="muted small">{roleDescription(persona.id, persona.description)}</span>
           </button>;
         })}
       </div>
       {error && <div className="login-error" role="alert">{error}</div>}
       <div className="login-submit-row">
-        <div className="selected-account" aria-live="polite">{selectedPersona ? <><strong>{selectedPersona.label}</strong><span>{selectedPersona.description}</span></> : <span>Select an account to continue</span>}</div>
+        <div className="selected-account" aria-live="polite">{selectedPersona ? <><strong>{roleLabel(selectedPersona.id)}</strong><span>{roleDescription(selectedPersona.id, selectedPersona.description)}</span></> : <span>Select a role to continue</span>}</div>
         <button className="btn red lg login-submit" disabled={!selected || busy} onClick={enterDemo} aria-live="polite">{busy ? "Preparing workspace…" : "Open workspace"}</button>
       </div>
     </section>
-    <aside className="login-disclaimer">
-      <strong>Interactive prototype with sample records. No live banking connections.</strong> Identities, controls and outcomes are simulated.
-    </aside>
+    <aside className="login-disclaimer">Sandbox environment · sample bank data</aside>
   </div>;
 }

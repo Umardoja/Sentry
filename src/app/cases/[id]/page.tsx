@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { AlertTriangle, Ban, CheckCircle2, ClipboardCheck, Gavel, Lock, Power, ShieldAlert, Sparkles, XCircle } from "lucide-react";
 import { LevelChip, levelOf, ScoreSteps } from "@/components";
 import { post, usePoll, useSession } from "@/lib/client";
-import { purposeCheckDisplay, reviewReasonSentence, signalLabel } from "@/lib/presentation";
+import { purposeCheckDisplay, reviewReasonSentence, roleLabel, signalLabel } from "@/lib/presentation";
 import { formatSimulatedTime } from "@/shared/time";
 import { MoneyGraph } from "./graph";
 
@@ -30,7 +30,7 @@ const naira = (n?: number) => (n === undefined ? "" : `₦${n.toLocaleString("en
 function interventionText(i: Intervention, watch: number) {
   switch (i.type) {
     case "HOLD_FUNDS":
-      return { title: `Hold ${naira(i.target.amount)}${watch ? ` · ${watch} BVNs on 24-hour watchlist` : ""}`, sub: "Credits from unmatched reversals" };
+      return { title: `Hold ${naira(i.target.amount)}${watch ? ` · ${watch} BVNs on 24-hour watchlist` : ""}`, sub: "Reversal credits without a verified reason" };
     case "SUSPEND_SESSION":
       return { title: "Suspend this session", sub: "Suspends the user's active session until reviewed." };
     case "SECOND_APPROVER":
@@ -70,7 +70,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
       return next;
     });
   }, [data]);
-  if (error && !data) return <div className="card">Case {id} is not available in this synthetic workspace.</div>;
+  if (error && !data) return <div className="card">Case {id} is not available in this workspace.</div>;
   if (!data) return <div className="muted">Loading case…</div>;
   const c = levelOf(data.level);
   const decide = async (iid: string, verb: "approve" | "reject") => {
@@ -103,7 +103,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
     <>
       {data.banner && (
         <div className={`banner ${data.banner_level}`}>
-          <AlertTriangle size={18} /> Simulated control · {data.banner.replace("Contain · ", "").replace("Hold · ", "")}
+          <AlertTriangle size={18} /> Response · {data.banner.replace("Contain · ", "").replace("Hold · ", "")}
         </div>
       )}
       <div className="card" style={{ paddingBottom: 0 }}>
@@ -114,7 +114,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
               <h1 style={{ fontSize: 30 }}>{data.staff.pseudo_id}</h1>
               {canReveal && data.staff.employment_type !== "AGENT" && !data.staff.name && (
                 <button className="btn" style={{ height: 32 }} onClick={() => { setRevealRun(data.run_id); setUnmask(true); }}>
-                  <Lock size={14} /> View identity
+                  <Lock size={14} /> Reveal name
                 </button>
               )}
               <span className="muted" style={{ fontSize: 17 }}>{data.staff.role}</span>
@@ -130,7 +130,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
             <span className="score-xl" style={{ color: c.fg }}>{data.score}</span>
             <div className="stack" style={{ gap: 8 }}>
               <LevelChip level={data.level} />
-              <span className="chip grey">{data.status === "CONTAINED" ? "Control applied (simulated)" : "Open"}</span>
+              <span className="chip grey">{data.status === "CONTAINED" ? "Response applied" : "Open"}</span>
             </div>
           </div>
         </div>
@@ -139,7 +139,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
           <div style={{ marginTop: 10, padding: "10px 12px", border: "1px solid var(--level-verify-border)", borderRadius: 8, background: "var(--level-verify-tint)" }}>
             <div className="row" style={{ color: "var(--level-verify)", fontWeight: 700 }}><ShieldAlert size={16} /> Review needed</div>
             <div className="muted small" style={{ marginTop: 4 }}>
-              Score remains {data.score} ({levelOf(data.level).label}). Review is needed because {reviewReasonSentence(data.review.reason_codes)}.
+              Risk score remains {data.score} ({levelOf(data.level).label}). Review is needed because {reviewReasonSentence(data.review.reason_codes)}.
             </div>
           </div>
         )}
@@ -147,7 +147,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
           <summary>Technical details</summary>
           <div>Case {data.id} · run {data.run_id}</div>
           <div>Policy {data.review.policy_version} · outcome {data.review.outcome} · reason codes {data.review.reason_codes.join(", ") || "none"}</div>
-          <div>Score snapshot {data.freshness.score?.snapshot_id ?? "—"} · evidence evaluation {data.freshness.evidence?.evaluation_id ?? "—"} · trigger {data.freshness.evidence?.trigger ?? "—"}</div>
+          <div>Risk-score snapshot {data.freshness.score?.snapshot_id ?? "—"} · evidence evaluation {data.freshness.evidence?.evaluation_id ?? "—"} · trigger {data.freshness.evidence?.trigger ?? "—"}</div>
         </details>
         {actionMessage && <div className="muted small" style={{ marginTop: 6 }}>{actionMessage}</div>}
         <div className="tabs">
@@ -167,14 +167,17 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
             <div className="table-scroll" role="region" aria-label="Case evidence" tabIndex={0}>
             <table className="table">
               <thead>
-                <tr><th>Signal</th><th className="right">Points</th><th>Evidence rows</th></tr>
+                <tr><th>Risk factor</th><th className="right">Risk added</th><th>Evidence</th></tr>
               </thead>
               <tbody>
                 {data.signals.map((s) => (
                   <tr key={s.code}>
-                    <td>{signalLabel(s.code, s.label)}{s.waived ? " (waived)" : ""}<div className="technical-code">{s.code}</div></td>
+                    <td>{signalLabel(s.code, s.label)}{s.waived ? " (waived)" : ""}</td>
                     <td className="right numeric">+{s.effective_points}</td>
-                    <td className="muted small" style={{ whiteSpace: "normal" }}>{s.action_ids.slice(0, 8).join(", ")}{s.action_ids.length > 8 ? ` +${s.action_ids.length - 8} more` : ""}</td>
+                    <td className="muted small" style={{ whiteSpace: "normal" }}>
+                      {s.action_ids.length} linked record{s.action_ids.length === 1 ? "" : "s"}
+                      <details className="technical-details"><summary>Technical details</summary>Code {s.code} · records {s.action_ids.join(", ") || "none"}</details>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -186,12 +189,12 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
           <div className="grid-case">
             <div className="stack">
               <div className="card">
-                <div className="card-title" style={{ marginBottom: 16 }}>Score over time</div>
+                <div className="card-title" style={{ marginBottom: 16 }}>Risk score over time</div>
                 <ScoreSteps points={data.timeline} />
               </div>
               <div className="card">
                 <div className="between" style={{ marginBottom: 12 }}>
-                  <div className="card-title">Signals</div>
+                  <div className="card-title">Risk factors</div>
                   <span className="muted small">{data.signals.filter((s) => s.effective_points > 0).length} active</span>
                 </div>
                 <div className="stack" style={{ gap: 8 }}>
@@ -207,7 +210,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
                   ))}
                 </div>
                 <div className="between" style={{ marginTop: 16, padding: "0 8px" }}>
-                  <span className="jakarta" style={{ fontSize: 20, fontWeight: 700 }}>Total</span>
+                  <span className="jakarta" style={{ fontSize: 20, fontWeight: 700 }}>Risk score</span>
                   <span className="row">
                     <span className="score-lg" style={{ color: c.fg }}>{total}</span>
                     <span style={{ color: c.fg, fontWeight: 600 }}>· {c.label}</span>
@@ -216,7 +219,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
               </div>
               {data.purpose && (
                 <div className="card">
-                  <div className="card-title" style={{ marginBottom: 12 }}><ClipboardCheck size={20} /> Reason and transaction checks · {data.purpose.title}</div>
+                  <div className="card-title" style={{ marginBottom: 12 }}><ClipboardCheck size={20} /> Reason checks · {data.purpose.title}</div>
                   <div className="stack" style={{ gap: 8 }}>
                     {data.purpose.checks.map((ch) =>
                       ch.passed ? (
@@ -251,7 +254,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
             <div className="stack">
               <div className="card">
                 <div className="between" style={{ marginBottom: 14 }}>
-                  <div className="card-title"><Gavel size={20} /> Decisions</div>
+                  <div className="card-title"><Gavel size={20} /> Response</div>
                   {data.interventions.some((i) => i.status === "PENDING_APPROVAL") && <span style={{ color: "var(--zenith-red)", fontWeight: 600 }}>1 pending approval</span>}
                 </div>
                 <div className="stack" style={{ gap: 12 }}>
@@ -264,7 +267,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
                             {i.type === "HOLD_FUNDS" ? <ShieldAlert size={20} /> : <Ban size={20} />} {t.title}
                           </div>
                           <div className="muted small" style={{ margin: "6px 0 14px" }}>{t.sub}</div>
-                          <div className="simulation-outcome" style={{ marginBottom: 14 }}>Simulated control awaiting independent review</div>
+                          <div className="simulation-outcome" style={{ marginBottom: 14 }}>Response awaiting review</div>
                           <details className="technical-details" style={{ marginBottom: 14 }}><summary>Technical details</summary>Review reference: {i.review_ref?.slice(4, 12)} · Evidence codes: {i.evidence_codes?.join(", ")}</details>
                           <div className="row">
                             <button className="btn red lg" disabled={busy} onClick={() => decide(i.id, "approve")}>
@@ -288,7 +291,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
                           <div>
                             <div style={{ fontWeight: 600 }}>{t.title}</div>
                             <div className="muted small">
-                              {i.status === "APPROVED" ? `Approved by ${i.decided_by} · ${formatSimulatedTime(i.decided_time)}` : i.status === "REJECTED" ? `Rejected by ${i.decided_by}` : t.sub}
+                              {i.status === "APPROVED" ? `Approved by ${roleLabel(i.decided_by ?? "")} · ${formatSimulatedTime(i.decided_time)}` : i.status === "REJECTED" ? `Rejected by ${roleLabel(i.decided_by ?? "")}` : t.sub}
                             </div>
                           </div>
                         </div>
@@ -296,7 +299,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
                       </div>
                     );
                   })}
-                  {data.contact_tasks > 0 && <div className="muted small">{data.contact_tasks} simulated contact tasks created for sample watchlist entries.</div>}
+                  {data.contact_tasks > 0 && <div className="muted small">{data.contact_tasks} contact tasks created for BVN watchlist entries.</div>}
                 </div>
               </div>
 
@@ -339,14 +342,14 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
       {unmask && (
         <div className="overlay" onClick={() => setUnmask(false)} role="presentation">
           <div className="modal" role="dialog" aria-modal="true" aria-labelledby="reveal-dialog-title" onClick={(e) => e.stopPropagation()} onKeyDown={(e) => { if (e.key === "Escape") setUnmask(false); }}>
-            <h2 id="reveal-dialog-title" style={{ fontSize: 22 }}>View the identity for this case?</h2>
+            <h2 id="reveal-dialog-title" style={{ fontSize: 22 }}>Reveal the name for this case?</h2>
             <div className="muted small" style={{ margin: "4px 0 18px" }}>{data.staff.pseudo_id} · {data.staff.role}</div>
             <label className="small" style={{ fontWeight: 600 }}>Reason <span style={{ color: "var(--zenith-red)" }}>*</span></label>
             <input className="input" style={{ marginTop: 6 }} placeholder="Why do you need the name?" value={reason} onChange={(e) => setReason(e.target.value)} autoFocus />
             <div className="muted small" style={{ marginTop: 10 }}>This action is logged in the audit trail.</div>
             <div className="row" style={{ justifyContent: "flex-end", marginTop: 20 }}>
               <button className="btn" onClick={() => setUnmask(false)}>Cancel</button>
-              <button className="btn red" disabled={!reason.trim()} onClick={doUnmask}>View identity</button>
+              <button className="btn red" disabled={!reason.trim()} onClick={doUnmask}>Reveal name</button>
             </div>
           </div>
         </div>

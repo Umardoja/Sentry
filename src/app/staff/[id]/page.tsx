@@ -29,13 +29,13 @@ export default function StaffPage({ params }: { params: Promise<{ id: string }> 
           {data.case_id && <Link href={`/cases/${data.case_id}`} className="btn" style={{ marginTop: 12 }}>Open {data.case_id}</Link>}
         </div>
         <div className="row">
-          <span className="score-xl" style={{ color: c.fg }}>{data.score}</span>
+          <span><span className="muted small" style={{ display: "block" }}>Risk score</span><span className="score-xl" style={{ color: c.fg }}>{data.score}</span></span>
           <LevelChip level={data.level} size="lg" />
         </div>
       </div>
       <div className="card">
         <div className="card-title" style={{ marginBottom: 6 }}>Risk this week</div>
-        <div className="muted small" style={{ marginBottom: 14 }}>Mon 12 Oct · {data.monday.reversals} reversals, {data.monday.matched_pct}% matched · score 6</div>
+        <div className="muted small" style={{ marginBottom: 14 }}>Mon 12 Oct · {data.monday.reversals} reversals, {data.monday.matched_pct}% verified · risk score 6</div>
         <div style={{ height: 300 }}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data.week} margin={{ top: 10, right: 20, bottom: 0, left: -10 }}>
@@ -48,17 +48,17 @@ export default function StaffPage({ params }: { params: Promise<{ id: string }> 
               <XAxis dataKey="label" tick={{ fontSize: 13 }} />
               <YAxis domain={[0, 100]} ticks={[0, 15, 30, 60, 80, 100]} tick={{ fontSize: 13 }} />
               <Tooltip />
-              <Line type="stepAfter" dataKey="score" stroke="var(--ink)" strokeWidth={2.5} dot={{ r: 4 }} isAnimationActive={false} />
+              <Line name="Risk score" type="stepAfter" dataKey="score" stroke="var(--ink)" strokeWidth={2.5} dot={{ r: 4 }} isAnimationActive={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
         <div className="counter"><div className="muted small">Reversals on Monday</div><div className="v">{data.monday.reversals}</div></div>
-        <div className="counter"><div className="muted small">Matched to a failed transaction</div><div className="v">{data.monday.matched_pct}%</div></div>
+        <div className="counter"><div className="muted small">Verified against a failed transaction</div><div className="v">{data.monday.matched_pct}%</div></div>
         <div className="counter"><div className="muted small">Peer average</div><div className="v">{data.monday.peer_avg} a day</div></div>
       </div>
-      <div className="card muted">Volume above peers on Monday, but every reversal had a reason. SENTRY added 6 points and moved on.</div>
+      <div className="card muted">Volume was above peers on Monday, but every reversal had a verified reason. The risk score remained at 6.</div>
     </div>
   );
 }
